@@ -4,18 +4,11 @@
   "description": "chatbot for pepper money",
   "main": "index.js",
   "scripts": {
+	"test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aaronzimmermann/pepperz20.git"
-  },
-  "author": "",
+  "author": "Aaron Zimmermann",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/aaronzimmermann/pepperz20/issues"
-  },
-  "homepage": "https://github.com/aaronzimmermann/pepperz20#readme",
   "dependencies": {
     "botbuilder": "^3.2.3",
     "restify": "^4.1.1",
