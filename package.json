@@ -4,16 +4,13 @@
   "description": "chatbot for pepper money",
   "main": "index.js",
   "scripts": {
-	"test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
   "author": "Aaron Zimmermann",
   "license": "ISC",
   "dependencies": {
     "botbuilder": "^3.2.3",
-    "restify": "^4.1.1",
-	"body-parser": "^1.15.0",
-    "express": "^4.13.4",
-    "request": "^2.72.0"
+    "restify": "^4.1.1"
   }
 }
