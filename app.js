@@ -22,7 +22,8 @@ server.post('/api/messages', connector.listen());
 //=========================================================
 // Server frontpage
 //=========================================================
-var express = require('express');
+
+/*var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -30,7 +31,7 @@ app.use(bodyParser.json());
 app.listen((process.env.PORT || 3978));
 app.get('/', function (req, res) {
     res.send('Team20 Chatbot');
-});
+});*/
 
 //=========================================================
 // Bots Dialogs
