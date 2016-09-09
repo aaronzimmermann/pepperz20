@@ -2,7 +2,7 @@
   "name": "chatbot",
   "version": "1.0.0",
   "description": "chatbot for pepper money",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
@@ -18,8 +18,6 @@
   "homepage": "https://github.com/aaronzimmermann/pepperz20#readme",
   "dependencies": {
     "botbuilder": "^3.2.3",
-    "restify": "^4.1.1",
-	"express": "^4.13.4",
-	"body-parser": "^1.15.0"
+    "restify": "^4.1.1"
   }
 }
