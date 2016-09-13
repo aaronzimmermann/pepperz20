@@ -1,6 +1,9 @@
+//=========================================================
+// Requirements
+//=========================================================
+
 var restify = require('restify');
 var builder = require('botbuilder');
-var username = "Bob";
 
 //=========================================================
 // Bot Setup
@@ -21,12 +24,15 @@ var connector = new builder.ChatConnector({
 });
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
-var intents = new builder.IntentDialog();
-bot.dialog('/', intents);
+
+
 
 //=========================================================
 // Bots Dialogs
 //=========================================================
+
+var intents = new builder.IntentDialog();
+bot.dialog('/', intents);
 
 /*
 bot.dialog('/', function (session) {
@@ -45,7 +51,7 @@ bot.dialog('/', [
 ]);
 */
 
-intents.matches(/^change name/i, [
+intents.matches("/^change name/i", [
     function (session) {
         session.beginDialog('/profile');
     },
