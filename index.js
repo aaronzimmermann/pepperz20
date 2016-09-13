@@ -1,5 +1,11 @@
 var restify = require('restify');
 var builder = require('botbuilder');
+var username = "Bob";
+
+how much do I owe
+do I ower anything
+when will i be paid next
+when is the next train
 
 //=========================================================
 // Bot Setup
@@ -25,15 +31,17 @@ server.post('/api/messages', connector.listen());
 // Bots Dialogs
 //=========================================================
 
-bot.dialog('/', function (session) {
-    session.send("Sup from Aaron :)");
-});
-
-
 /*
-var http = require("http");
-http.createServer(function (request, response) {
-   response.writeHead(200, {'Content-Type': 'text/plain'});
-   response.end('Hello World\n');
-}).listen(8081);
+bot.dialog('/', function (session) {
+    session.send('Hello World');
+});
 */
+
+bot.dialog('/', [
+    function (session) {
+        builder.Prompts.text(session, 'Hi! What is your name?');
+    },
+    function (session, results) {
+        session.send('Hello %s!', results.response);
+    }
+]);
