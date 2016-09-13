@@ -2,11 +2,6 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var username = "Bob";
 
-how much do I owe
-do I ower anything
-when will i be paid next
-when is the next train
-
 //=========================================================
 // Bot Setup
 //=========================================================
