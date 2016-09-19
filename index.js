@@ -129,7 +129,7 @@ bot.dialog('/accountEnquiry', [
 bot.dialog('/getAccountName', [
     function (session) {
 		console.log(">> 1. Prompting the user for the account name.");
-		session.send("Which account are you interested in?");
+		builder.Prompts.text(session, "Which account are you interested in?");
     },
     function (session, results) {
 		
