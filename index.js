@@ -55,6 +55,7 @@ intents.matches('Enquiry', [
     function (session, args, next) {
 		
 		console.log(args);
+		console.logs(next);
 		
 		// Entities
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
