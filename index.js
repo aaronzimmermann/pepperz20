@@ -106,10 +106,10 @@ bot.dialog('/accountEnquiry', [
 		}
 		
 		else {
-			next(session, args);
+			next(session, accountType.entity);
 		}
     },
-	function (session, args, next) {
+	function (session, results) {
 
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
 
