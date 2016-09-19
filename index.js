@@ -106,7 +106,7 @@ bot.dialog('/accountEnquiry', [
 		}
 		
 		else {
-			next(session, accountType.entity);
+			next();
 		}
     },
 	function (session, results) {
