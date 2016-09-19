@@ -58,6 +58,7 @@ intents.matches('Enquiry', [
 		console.log(">> 1. Account enquiry.");
 		
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
+		console.log("accountType: " + accountType);
 		
 		// User did not state an account
 		if(accountType == null) {
