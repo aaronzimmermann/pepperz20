@@ -134,7 +134,7 @@ bot.dialog('/rephraseAccountName', [
     function (session, results) {
 		
 		// Check for quit
-		checkForQuit(results.response);
+		checkForQuit(results.response, session);
 		
 		// Get the account
 		console.log(results.response);
@@ -156,13 +156,12 @@ bot.dialog('/endCurrentDialog', [
     }
 ]);
 
-function checkForQuit(p_message) {
+function checkForQuit(p_message, p_session) {
 	var word = new String(p_message.toLowerCase());
 	var quitWords = ["don't worry, quit, stop, nevermind"];
 	for(var i = 0; i < quitWords.length; i++) {
 		if(word.valueOf == new String(quitWords[i]).valueOf) {
-			console.log(">> Quiting the current dialogue");
-			session.replaceDialog('/endCurrentDialog');
+			p_session.replaceDialog('/endCurrentDialog');
 		}
 	}
 }
