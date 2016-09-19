@@ -160,7 +160,7 @@ function checkForQuit(p_message, p_session) {
 	var word = new String(p_message.toLowerCase());
 	var quitWords = ["don't worry, quit, stop, nevermind"];
 	for(var i = 0; i < quitWords.length; i++) {
-		if(word.valueOf == new String(quitWords[i]).valueOf) {
+		if(word.valueOf() == new String(quitWords[i]).valueOf()) {
 			p_session.replaceDialog('/endCurrentDialog');
 		}
 	}
