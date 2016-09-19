@@ -71,7 +71,7 @@ intents.matches('Update', [
 			
 			// Update the amount
 			else {
-				session.userData.repayment.amount = amount.entity;
+				session.userData.repaymentAmount = amount.entity;
 				session.send("Your " + accountType.entity + " has been updated to " + amount.entity);
 			}
 			
