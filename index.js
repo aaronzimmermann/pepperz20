@@ -115,7 +115,6 @@ intents.matches('AccountUpdate', [
 		
 		// Select the account
 		if(accountType != null && checkValidAccountName(accountType.entity) && amount != null) {
-			amount = String(amount).replace(/\s+/g, ''); // remove spaces from the string
 			session.userData[accountType.entity + "Amount"] = amount.entity;
 			session.send("Your " + accountType.entity + " has been updated to " + amount.entity);
 		}
