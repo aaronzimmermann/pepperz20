@@ -74,16 +74,16 @@ intents.matches('Enquiry', [
 		
 		else {
 			console.log(">> Moving to next step of account enquiry.");
-			next(accountType.entity);
+			next({response: accountType.entity});
 		}
     },
 	function (session, results) {
 		
-		console.log(">> results: " + results);
+		console.log(">> results: " + results.response);
 
 		// Do the action for the account
-		if(results == "repayment") {
-			session.send("Your " + results + " is " + session.userData.repaymentAmount);
+		if(results.response == "repayment") {
+			session.send("Your " + results.response + " is " + session.userData.repaymentAmount);
 		}
 
 		// Nothing else to do
