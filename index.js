@@ -91,6 +91,8 @@ intents.matches('Update', [
 // Getting details of an account
 bot.dialog('/accountEnquiry', [
     function (session, args) {
+		console.log("args: " + args);
+		
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
 		
 		// User did not state an account
