@@ -136,13 +136,15 @@ bot.dialog('/rephraseAccountName', [
 		// Check for quit
 		checkForQuit(results.response, session);
 		
-		// Get the account
+		// Get the account name this time
 		console.log(results.response);
 		if(results.response == "repayment") {
 			session.send('Got it.');
+			session.endDialogWithResult(results);
 		}
 
 		// Still unsure about the account name
+		// Prompt again
 		else {
 			session.replaceDialog('/rephraseAccountName');
 		}
@@ -157,67 +159,11 @@ bot.dialog('/endCurrentDialog', [
 ]);
 
 function checkForQuit(p_message, p_session) {
-	var word = new String(p_message.toLowerCase());
+	var word = p_message.toLowerCase();
 	var quitWords = ["don't worry, quit, stop, nevermind"];
 	for(var i = 0; i < quitWords.length; i++) {
-		if(word.valueOf() == new String(quitWords[i]).valueOf()) {
+		if(word == quitWords[i]) {
 			p_session.replaceDialog('/endCurrentDialog');
 		}
 	}
 }
-
-
-/*
-var intents = new builder.IntentDialog();
-bot.dialog('/', intents);
-*/
-
-/*
-bot.dialog('/', function (session) {
-    session.send('Hello World');
-});
-*/
-
-/*
-bot.dialog('/', [
-    function (session) {
-        builder.Prompts.text(session, 'Hi! What is your name?');
-    },
-    function (session, results) {
-        session.send('Hello %s!', results.response);
-    }
-]);
-*/
-/*
-intents.matches(/^change name/i, [
-    function (session) {
-        session.beginDialog('/profile');
-    },
-    function (session, results) {
-        session.send('Ok... Changed your name to %s', session.userData.name);
-    }
-]);
-
-intents.onDefault([
-    function (session, args, next) {
-        if (!session.userData.name) {
-            session.beginDialog('/profile');
-        } else {
-            next();
-        }
-    },
-    function (session, results) {
-        session.send('Hello %s!', session.userData.name);
-    }
-]);
-
-bot.dialog('/profile', [
-    function (session) {
-        builder.Prompts.text(session, 'Hi! What is your name?');
-    },
-    function (session, results) {
-        session.userData.name = results.response;
-        session.endDialog();
-    }
-]);
-*/
