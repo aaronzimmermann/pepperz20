@@ -52,12 +52,9 @@ intents.matches('Greeting', [
 
 // Enquiry
 intents.matches('Enquiry', [
-    /*function (session, args, next) {
-		session.beginDialog('/accountEnquiry', args);
-	}*/
 	function (session, args, next) {
 		
-		console.log("args: " + args);
+		console.log(">> 1. Account enquiry.");
 		
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
 		
@@ -125,7 +122,7 @@ intents.matches('Update', [
 */
 
 // Getting details of an account
-bot.dialog('/accountEnquiry', [
+/*bot.dialog('/accountEnquiry', [
     function (session, args, next) {
 		
 		console.log("args: " + args);
@@ -160,7 +157,7 @@ bot.dialog('/accountEnquiry', [
 			session.endDialog("Nothing to be done here.");
 		}
     }
-]);
+]);*/
 
 // Getting the account name from the user
 bot.dialog('/getAccountName', [
