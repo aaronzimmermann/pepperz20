@@ -53,9 +53,11 @@ intents.matches('Greeting', [
 // Update
 intents.matches('Update', [
     function (session, args, next) {
-		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'Account');
+		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
 		console.log(accountType);
-		if(accountType.entity == "repayment") {
+		if(accountType == null) {
+			session.send("You need to say which account you would like to update.");
+		} else if(accountType.entity == "repayment") {
 			session.send('Your repayment is...');
 		} else {
 			session.send('Could you rephrase which account you want to update?');
