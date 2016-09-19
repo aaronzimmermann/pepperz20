@@ -53,38 +53,7 @@ intents.matches('Greeting', [
 // Enquiry
 intents.matches('Enquiry', [
     function (session, args, next) {
-
-		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-		
-		// User did not state an account
-		if(accountType == null) {
-			session.beginDialog('/getAccountName');
-		}
-		
-		// User states an unknown account
-		else if(!checkValidAccountName(accountType.entity)) {
-			session.beginDialog('/rephraseAccountName');
-		}
-		
-		else {
-			next();
-		}
-    },
-	function (session, args, next) {
-
-		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-
-
-		// Do the action for the account
-		if(accountType.entity == "repayment") {
-			session.send("Your " + accountType.entity + " is " + session.userData.repaymentAmount);
-		}
-
-		// Nothing else to do
-		else {
-			session.send("Nothing to be done here.");
-		}
-    }
+		session.beginDialog('/accountEnquiry', args);
 ]);
 
 // Update
@@ -114,6 +83,41 @@ intents.matches('Update', [
 			
 		} else {
 			session.send('Could you rephrase which account you want to update?');
+		}
+    }
+]);
+
+// Getting details of an account
+bot.dialog('/accountEnquiry', [
+    function (session, args) {
+		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
+		
+		// User did not state an account
+		if(accountType == null) {
+			session.beginDialog('/getAccountName');
+		}
+		
+		// User states an unknown account
+		else if(!checkValidAccountName(accountType.entity)) {
+			session.beginDialog('/rephraseAccountName');
+		}
+		
+		else {
+			next(session, args);
+		}
+    },
+	function (session, args, next) {
+
+		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
+
+		// Do the action for the account
+		if(accountType.entity == "repayment") {
+			session.send("Your " + accountType.entity + " is " + session.userData.repaymentAmount);
+		}
+
+		// Nothing else to do
+		else {
+			session.send("Nothing to be done here.");
 		}
     }
 ]);
