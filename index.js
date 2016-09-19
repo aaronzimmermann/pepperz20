@@ -50,6 +50,28 @@ intents.matches('Greeting', [
     }
 ]);
 
+// Enquiry
+intents.matches('Enquiry', [
+    function (session, args, next) {
+		
+		// Entities
+		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
+		console.log(accountType);
+		
+		// Select the account
+		if(accountType == null) {
+			session.send("Which account do you want to know about?");
+		} else if(accountType.entity == "repayment") {
+			
+			// Get the amount
+			session.send("Your " + accountType.entity + " is " + session.userData.repaymentAmount);
+			
+		} else {
+			session.send('Could you rephrase which account you want to know about?');
+		}
+    }
+]);
+
 // Update
 intents.matches('Update', [
     function (session, args, next) {
