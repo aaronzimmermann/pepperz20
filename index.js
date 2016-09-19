@@ -159,9 +159,9 @@ bot.dialog('/endCurrentDialog', [
 ]);
 
 function checkForQuit(p_message, p_session) {
-	console.log(p_message);
+	console.log(typeof p_message);
 	var word = p_message.toLowerCase();
-	var quitWords = ["don't worry, quit, stop, nevermind"];
+	var quitWords = ["don't", "worry", "quit", "stop", "nevermind"];
 	for(var i = 0; i < quitWords.length; i++) {
 		if(word == quitWords[i]) {
 			p_session.replaceDialog('/endCurrentDialog');
