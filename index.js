@@ -54,6 +54,13 @@ intents.matches('Greeting', [
     }
 ]);
 
+// Help
+intents.matches('Help', [
+    function (session, args, next) {
+        session.send('I can show you an amount in an account or update a balance in one of your accounts.');
+    }
+]);
+
 // Enquire about an account
 intents.matches('Enquiry', [
 	function (session, args, next) {
