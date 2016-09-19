@@ -109,6 +109,8 @@ bot.dialog('/accountEnquiry', [
 		}
     },
 	function (session, results) {
+		
+		console.log("results: " + results);
 
 		// Do the action for the account
 		if(results == "repayment") {
@@ -117,7 +119,7 @@ bot.dialog('/accountEnquiry', [
 
 		// Nothing else to do
 		else {
-			session.send("Nothing to be done here.");
+			session.endDialog("Nothing to be done here."));
 		}
     }
 ]);
