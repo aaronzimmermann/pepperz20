@@ -119,7 +119,7 @@ bot.dialog('/accountEnquiry', [
 
 		// Nothing else to do
 		else {
-			session.endDialog("Nothing to be done here."));
+			session.endDialog("Nothing to be done here.");
 		}
     }
 ]);
