@@ -137,6 +137,7 @@ bot.dialog('/rephraseAccountName', [
 		checkForQuit(results.response);
 		
 		// Get the account
+		console.log(results.response);
 		if(results.response == "repayment") {
 			session.send('Got it.');
 		}
