@@ -43,9 +43,23 @@ bot.dialog('/', intents );
 // Default message
 intents.onDefault(builder.DialogAction.send('Sorry could you rephrase that?'));
 
+// Greeting
 intents.matches('Greeting', [
     function (session, args, next) {
         session.send('Hi how can I help you?');
+    }
+]);
+
+// Update
+intents.matches('Update', [
+    function (session, args, next) {
+		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'Account');
+		
+		if(accountType == "repayment") {
+			session.send('Your repayment is...');
+		} else {
+			session.send('Could you rephrase which account you want to update?');
+		}
     }
 ]);
 
