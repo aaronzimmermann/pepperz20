@@ -32,8 +32,7 @@ var intents  = new builder.IntentDialog({ recognizers: [recognizer] });
 bot.dialog('/', intents );
 
 // Add intent handlers
-dialog.matches('builtin.intent.greeting', builder.DialogAction.send('Greeting User'));
-dialog.onDefault(builder.DialogAction.send('Sorry could you rephrase that?'));
+
 
 
 
@@ -41,7 +40,10 @@ dialog.onDefault(builder.DialogAction.send('Sorry could you rephrase that?'));
 // Bots Dialogs
 //=========================================================
 
-dialog.matches('Greeting', [
+// Default message
+intents.onDefault(builder.DialogAction.send('Sorry could you rephrase that?'));
+
+intents.matches('Greeting', [
     function (session, args, next) {
         session.send('Hi how can I help you?');
     }
