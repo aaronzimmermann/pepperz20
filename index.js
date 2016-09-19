@@ -61,16 +61,22 @@ intents.matches('Enquiry', [
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
 		console.log(accountType);
 		
-		// Select the account
+		// User did not state an account
 		if(accountType == null) {
 			session.send("Which account do you want to know about?");
-		} else if(accountType.entity == "repayment") {
+		}
+
+		// Select the account
+		else if(accountType.entity == "repayment") {
 			
 			// Get the amount
 			session.send("Your " + accountType.entity + " is " + session.userData.repaymentAmount);
 			
-		} else {
-			session.beginDialog('/getAccountName');
+		}
+
+		// Not sure what account this is
+		else {
+			session.beginDialog('/rephraseAccountName');
 		}
     }
 ]);
