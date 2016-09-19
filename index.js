@@ -92,8 +92,16 @@ intents.matches('AccountEnquiry', [
     },
 	function (session, results) {
 		
+		
+		var amount = session.userData[results.response + "Amount"];
+		if(amount == null) {
+			session.send("You don't have anything in your " + results.response + ". If you tell me I can put an amount into one of your accounts.");
+		} 
+		
 		// Display the amount to the user
-		session.send("Your " + results.response + " is " + session.userData[results.response + "Amount"]);
+		else {
+			session.send("Your " + results.response + " is " + amount);
+		}
     }
 ]);
 
