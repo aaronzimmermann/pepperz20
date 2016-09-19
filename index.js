@@ -155,7 +155,7 @@ bot.dialog('/rephraseAccountName', [
 // Ending the dialogue
 bot.dialog('/endCurrentDialog', [
     function (session) {
-		session.send('Okay no worries. Is there anything else I can help with?');
+		session.endDialog('Okay no worries. Is there anything else I can help with?');
     }
 ]);
 
