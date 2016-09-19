@@ -72,7 +72,7 @@ intents.matches('Enquiry', [
 		}
 		
 		else {
-			next(session, accountType.entity);
+			next(accountType.entity);
 		}
     },
 	function (session, results) {
