@@ -128,6 +128,7 @@ bot.dialog('/accountEnquiry', [
 // Getting the account name from the user
 bot.dialog('/getAccountName', [
     function (session) {
+		console.log(">> 1. Prompting the user for the account name.");
 		session.send("Which account are you interested in?");
     },
     function (session, results) {
@@ -137,11 +138,13 @@ bot.dialog('/getAccountName', [
 		
 		// The account name is valid
 		else if(checkValidAccountName(results.response)) {
+			console.log(">> 1. Gotten the account name from the user.");
 			session.endDialogWithResult(results);
 		}
 		
 		// The account name is not valid
 		else {
+			console.log(">> 1. Need the user to rephrase the account name.");
 			session.replaceDialog('/rephraseAccountName');
 		}
     }
@@ -161,6 +164,7 @@ bot.dialog('/rephraseAccountName', [
 		
 		// Get the account name this time
 		else if(checkValidAccountName(results.response)) {
+			console.log(">> 2. Gotten the account name from the user.");
 			session.send('Oh I see what you mean.');
 			session.endDialogWithResult(results);
 		}
@@ -168,6 +172,7 @@ bot.dialog('/rephraseAccountName', [
 		// Still unsure about the account name
 		// Prompt again
 		else {
+			console.log(">> 2. Need the user to rephrase the account name.");
 			session.replaceDialog('/rephraseAccountName');
 		}
     }
@@ -176,6 +181,7 @@ bot.dialog('/rephraseAccountName', [
 // Ending the dialogue
 bot.dialog('/endCurrentDialog', [
     function (session) {
+		console.log(">> 1. Ending current dialogue stack.");
 		session.endDialog('Okay no worries. Is there anything else I can help with?');
     }
 ]);
