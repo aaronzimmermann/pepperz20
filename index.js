@@ -25,14 +25,33 @@ var connector = new builder.ChatConnector({
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
+// Create LUIS recognizer that points at our model and add it as the root '/' dialog for our Cortana Bot.
+var model = 'https://api.projectoxford.ai/luis/v1/application?id=9eec8197-9eaa-49e2-8d39-69c6807bba42&subscription-key=54ced78cc26941b2b0c2048ea4e32fb8';
+var recognizer = new builder.LuisRecognizer(model);
+var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
+bot.dialog('/', dialog);
+
+// Add intent handlers
+dialog.matches('builtin.intent.greeting', builder.DialogAction.send('Greeting User'));
+dialog.onDefault(builder.DialogAction.send("I'm sorry could you rephrase that?"));
+
 
 
 //=========================================================
 // Bots Dialogs
 //=========================================================
 
+dialog.matches('builtin.intent.greeting', [
+    function (session, args, next) {
+        session.send('Hi how can I help you?');
+    }
+]);
+
+
+/*
 var intents = new builder.IntentDialog();
 bot.dialog('/', intents);
+*/
 
 /*
 bot.dialog('/', function (session) {
@@ -50,8 +69,8 @@ bot.dialog('/', [
     }
 ]);
 */
-
-intents.matches("/^change name/i", [
+/*
+intents.matches(/^change name/i, [
     function (session) {
         session.beginDialog('/profile');
     },
@@ -82,3 +101,4 @@ bot.dialog('/profile', [
         session.endDialog();
     }
 ]);
+*/
