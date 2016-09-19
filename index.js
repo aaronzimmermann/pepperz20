@@ -70,7 +70,7 @@ intents.matches('Enquiry', [
 			session.send("Your " + accountType.entity + " is " + session.userData.repaymentAmount);
 			
 		} else {
-			session.send('Could you rephrase which account you want to know about?');
+			session.beginDialog('/getAccountName');
 		}
     }
 ]);
@@ -106,16 +106,57 @@ intents.matches('Update', [
     }
 ]);
 
-// Getting the account name from the user
+/*// Getting the account name from the user
 bot.dialog('/getAccountName', [
     function (session) {
-		builder.Prompts.text(session, "Which account?");
-    }/*,
+		builder.Prompts.text(session, "Which account would you like to update?");
+    },
     function (session, results) {
+		if(checkForQuit(results.response == "quit" || results.response == "nevermind") {
+			
+		}
         session.userData.name = results.response;
         session.endDialog();
-    }*/
+    }
+]);*/
+
+// Getting the user to rephrase the account name
+bot.dialog('/rephraseAccountName', [
+    function (session) {
+		builder.Prompts.text(session, "Could you rephrase that account name?");
+    },
+    function (session, results) {
+		
+		// Check for quit
+		checkForQuit(results.response);
+		
+		// Get the account
+		if(results.response == "repayment") {
+			session.send('Got it.');
+		}
+
+		// Still unsure about the account name
+		else {
+			session.replaceDialog('/rephraseAccountName');
+		}
+    }
 ]);
+
+// Ending the dialogue
+bot.dialog('/endCurrentDialog', [
+    function (session) {
+		session.send('Okay no worries. Is there anything else I can help with?');
+    }
+]);
+
+function checkForQuit(p_message) {
+	var quitWords = ["don't worry, quit, stop, nevermind"];
+	for(var i = 0; i < quitWords.length; i++) {
+		if(p_message == quitWords[i]) {
+			session.replaceDialog('/endCurrentDialog');
+		}
+	}
+}
 
 
 /*
