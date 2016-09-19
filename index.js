@@ -60,11 +60,13 @@ intents.matches('Enquiry', [
 		
 		// User did not state an account
 		if(accountType == null) {
+			console.log(">> accountType == null");
 			session.beginDialog('/getAccountName');
 		}
 		
 		// User states an unknown account
 		else if(!checkValidAccountName(accountType.entity)) {
+			console.log(">> !checkValidAccountName(accountType.entity)");
 			session.beginDialog('/rephraseAccountName');
 		}
 		
@@ -75,7 +77,7 @@ intents.matches('Enquiry', [
     },
 	function (session, results) {
 		
-		console.log("results: " + results);
+		console.log(">> results: " + results);
 
 		// Do the action for the account
 		if(results == "repayment") {
