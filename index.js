@@ -54,7 +54,7 @@ intents.matches('Greeting', [
 intents.matches('Update', [
     function (session, args, next) {
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'Account');
-		
+		console.log(accountType);
 		if(accountType == "repayment") {
 			session.send('Your repayment is...');
 		} else {
