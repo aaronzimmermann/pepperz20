@@ -91,7 +91,6 @@ intents.matches('Update', [
 // Getting details of an account
 bot.dialog('/accountEnquiry', [
     function (session, args, next) {
-		console.log("args: " + args);
 		
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
 		
@@ -106,7 +105,7 @@ bot.dialog('/accountEnquiry', [
 		}
 		
 		else {
-			next();
+			next(session, accountType.entity);
 		}
     },
 	function (session, results) {
