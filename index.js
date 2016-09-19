@@ -164,7 +164,7 @@ function checkForQuit(p_message, p_session) {
 	var quitWords = ["don't", "worry", "quit", "stop", "nevermind"];
 	for(var i = 0; i < quitWords.length; i++) {
 		if(word == quitWords[i]) {
-			session.cancelDialog(0, '/endCurrentDialog');
+			p_session.cancelDialog(0, '/endCurrentDialog');
 		}
 	}
 }
