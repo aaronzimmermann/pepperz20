@@ -59,7 +59,7 @@ intents.matches('Enquiry', [
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
 		
 		// User did not state an account
-		if(accountType == null) {
+		if(accountType.entity == null) {
 			console.log(">> accountType == null");
 			session.beginDialog('/getAccountName');
 		}
