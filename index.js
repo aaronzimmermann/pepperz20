@@ -157,9 +157,11 @@ bot.dialog('/endCurrentDialog', [
 ]);
 
 function checkForQuit(p_message) {
+	var word = new String(p_message.toLowerCase());
 	var quitWords = ["don't worry, quit, stop, nevermind"];
 	for(var i = 0; i < quitWords.length; i++) {
-		if(p_message == quitWords[i]) {
+		if(word.valueOf == new String(quitWords[i]).valueOf) {
+			console.log(">> Quiting the current dialogue");
 			session.replaceDialog('/endCurrentDialog');
 		}
 	}
