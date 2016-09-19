@@ -178,7 +178,7 @@ bot.dialog('/getAccountName', [
 		// The account name is valid
 		else if(checkValidAccountName(results.response)) {
 			console.log(">> 1. Gotten the account name from the user.");
-			session.endDialogWithResult(results.response);
+			session.endDialogWithResult(results);
 		}
 		
 		// The account name is not valid
@@ -205,7 +205,7 @@ bot.dialog('/rephraseAccountName', [
 		else if(checkValidAccountName(results.response)) {
 			console.log(">> 2. Gotten the account name from the user.");
 			session.send('Oh I see what you mean.');
-			session.endDialogWithResult(results.response);
+			session.endDialogWithResult(results);
 		}
 
 		// Still unsure about the account name
