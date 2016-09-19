@@ -53,12 +53,28 @@ intents.matches('Greeting', [
 // Update
 intents.matches('Update', [
     function (session, args, next) {
+		
+		// Entities
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
+		var amount = builder.EntityRecognizer.findEntity(args.entities, 'builtin.money');
 		console.log(accountType);
+		
+		// Select the account
 		if(accountType == null) {
-			session.send("You need to say which account you would like to update.");
+			session.send("Which account do you want to update?");
 		} else if(accountType.entity == "repayment") {
-			session.send('Your repayment is...');
+			
+			// No amount was specified
+			if(amount == null) {
+				session.send("What would you like the new amount to be?");
+			} 
+			
+			// Update the amount
+			else {
+				session.userData.repayment.amount = amount.entity;
+				session.send("Your " + accountType.entity + " has been updated to " + amount.entity);
+			}
+			
 		} else {
 			session.send('Could you rephrase which account you want to update?');
 		}
