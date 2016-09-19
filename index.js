@@ -134,11 +134,12 @@ bot.dialog('/rephraseAccountName', [
     function (session, results) {
 		
 		// Check for quit
-		checkForQuit(results.response, session);
+		if(checkForQuit(results.response, session)) {
+			
+		}
 		
 		// Get the account name this time
-		console.log(results.response);
-		if(results.response == "repayment") {
+		else if(results.response == "repayment") {
 			session.send('Got it.');
 			session.endDialogWithResult(results);
 		}
@@ -165,6 +166,7 @@ function checkForQuit(p_message, p_session) {
 	for(var i = 0; i < quitWords.length; i++) {
 		if(word == quitWords[i]) {
 			p_session.cancelDialog(0, '/endCurrentDialog');
+			return true;
 		}
 	}
 }
