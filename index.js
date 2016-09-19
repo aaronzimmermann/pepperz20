@@ -54,6 +54,7 @@ intents.matches('Greeting', [
 intents.matches('Enquiry', [
     function (session, args, next) {
 		session.beginDialog('/accountEnquiry', args);
+	}
 ]);
 
 // Update
