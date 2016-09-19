@@ -69,6 +69,7 @@ intents.matches('Enquiry', [
 		}
 		
 		else {
+			console.log(">> Moving to next step of account enquiry.");
 			next(accountType.entity);
 		}
     },
