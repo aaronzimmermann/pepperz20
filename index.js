@@ -111,11 +111,9 @@ bot.dialog('/accountEnquiry', [
     },
 	function (session, results) {
 
-		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-
 		// Do the action for the account
-		if(accountType.entity == "repayment") {
-			session.send("Your " + accountType.entity + " is " + session.userData.repaymentAmount);
+		if(results == "repayment") {
+			session.send("Your " + results + " is " + session.userData.repaymentAmount);
 		}
 
 		// Nothing else to do
