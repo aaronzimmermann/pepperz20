@@ -159,6 +159,7 @@ bot.dialog('/endCurrentDialog', [
 ]);
 
 function checkForQuit(p_message, p_session) {
+	console.log(p_message);
 	var word = p_message.toLowerCase();
 	var quitWords = ["don't worry, quit, stop, nevermind"];
 	for(var i = 0; i < quitWords.length; i++) {
