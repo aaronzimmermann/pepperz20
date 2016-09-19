@@ -61,8 +61,16 @@ intents.matches('Help', [
     }
 ]);
 
+// List the user's accounts
+intents.matches('ListAccounts', [
+    function (session, args, next) {
+		var accountNamesString = listAccounts();
+        session.send('The accounts you have are ' + accountNamesString + ".");
+    }
+]);
+
 // Enquire about an account
-intents.matches('Enquiry', [
+intents.matches('AccountEnquiry', [
 	function (session, args, next) {
 		
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
@@ -90,7 +98,7 @@ intents.matches('Enquiry', [
 ]);
 
 // Update an amount in an account
-intents.matches('Update', [
+intents.matches('AccountUpdate', [
     function (session, args, next) {
 		
 		// Entities
@@ -139,18 +147,7 @@ bot.dialog('/getAccountName', [
 // Getting the user to rephrase the account name
 bot.dialog('/rephraseAccountName', [
     function (session) {
-		
-		// Make a list of account names
-		var accountNamesString = "";
-		for(var i = 0; i < accountNames.length; i++) {
-			if(i != 0 && i == accountNames.length - 1) {
-				accountNamesString += " and ";
-			} else if(i != 0) {
-				accountNamesString += ", ";
-			}
-			accountNamesString += accountNames[i];
-		}
-		
+		var accountNamesString = listAccounts();
 		builder.Prompts.text(session, "Could you rephrase that account name? The accounts you have are " + accountNamesString + ".");
     },
     function (session, results) {
@@ -203,4 +200,18 @@ function checkValidAccountName(p_message) {
 	}
 	
 	return false;
+}
+
+// Returns a string in natural language listing all the accounts.
+function listAccounts() {
+	var accountNamesString = "";
+	for(var i = 0; i < accountNames.length; i++) {
+		if(i != 0 && i == accountNames.length - 1) {
+			accountNamesString += " and ";
+		} else if(i != 0) {
+			accountNamesString += ", ";
+		}
+		accountNamesString += accountNames[i];
+	}
+	return accountNamesString;
 }
