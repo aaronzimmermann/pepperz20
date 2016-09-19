@@ -187,7 +187,7 @@ function checkValidAccountName(p_message) {
 	var word = p_message.toLowerCase();
 	
 	// All the valid accounts here
-	var words = ["repayment, debit, credit"];
+	var words = ["repayment", "debit", "credit"];
 	for(var i = 0; i < words.length; i++) {
 		if(word == words[i]) {
 			return true;
