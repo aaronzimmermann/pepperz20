@@ -33,11 +33,15 @@ bot.dialog('/', intents );
 
 // Add intent handlers
 
-
+//=========================================================
+// In the future these should be added to Luis
+//=========================================================
+var accountNames = ["repayment", "payout", "mortgage", "debit", "credit", "savings"];
+var quitWords = ["don't worry", "dont worry", "quit", "stop", "nevermind", "cancel", "exit", "changed my mind", "no"];
 
 
 //=========================================================
-// Bots Dialogs
+// Intents
 //=========================================================
 
 // Default message
@@ -50,44 +54,35 @@ intents.matches('Greeting', [
     }
 ]);
 
-// Enquiry
+// Enquire about an account
 intents.matches('Enquiry', [
 	function (session, args, next) {
 		
-		console.log(args);
-		console.log(">> 1. Account enquiry.");
-		
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-		console.log("accountType: " + accountType);
 		
 		// User did not state an account
 		if(accountType == null) {
-			console.log(">> accountType == null");
 			session.beginDialog('/getAccountName');
 		}
 		
 		// User states an unknown account
 		else if(!checkValidAccountName(accountType.entity)) {
-			console.log(">> !checkValidAccountName(accountType.entity)");
 			session.beginDialog('/rephraseAccountName');
 		}
 		
 		// We have a valid account name, move onto the next step
 		else {
-			console.log(">> Moving to next step of account enquiry.");
 			next({response: accountType.entity});
 		}
     },
 	function (session, results) {
 		
-		console.log(">> results: " + results.response);
-
+		// Display the amount to the user
 		session.send("Your " + results.response + " is " + session.userData[results.response + "Amount"]);
     }
 ]);
 
-// Update
-
+// Update an amount in an account
 intents.matches('Update', [
     function (session, args, next) {
 		
@@ -99,16 +94,22 @@ intents.matches('Update', [
 		if(accountType != null && checkValidAccountName(accountType.entity) && amount != null) {
 			session.userData[accountType.entity + "Amount"] = amount.entity;
 			session.send("Your " + accountType.entity + " has been updated to " + amount.entity);
-		} else {
+		}
+
+		// One of the bits of information needed above was wrong
+		else {
 			session.send("Try saying that again please.");
 		}
     }
 ]);
 
+//=========================================================
+// Bots Dialogs
+//=========================================================
+
 // Getting the account name from the user
 bot.dialog('/getAccountName', [
     function (session) {
-		console.log(">> 1. Prompting the user for the account name.");
 		builder.Prompts.text(session, "Which account are you interested in?");
     },
     function (session, results) {
@@ -118,13 +119,11 @@ bot.dialog('/getAccountName', [
 		
 		// The account name is valid
 		else if(checkValidAccountName(results.response)) {
-			console.log(">> 1. Gotten the account name from the user.");
 			session.endDialogWithResult(results);
 		}
 		
 		// The account name is not valid
 		else {
-			console.log(">> 1. Need the user to rephrase the account name.");
 			session.replaceDialog('/rephraseAccountName');
 		}
     }
@@ -133,36 +132,42 @@ bot.dialog('/getAccountName', [
 // Getting the user to rephrase the account name
 bot.dialog('/rephraseAccountName', [
     function (session) {
-		builder.Prompts.text(session, "Could you rephrase that account name?");
+		
+		// Make a list of account names
+		var accountNamesString = "";
+		for(var i = 0; i < accountNames.length; i++) {
+			if(i != 0 && i == accountNames.length - 1) {
+				accountNamesString += " and ";
+			} else if(i != 0) {
+				accountNamesString += ", ";
+			}
+			accountNamesString += accountNames[i];
+		}
+		
+		builder.Prompts.text(session, "Could you rephrase that account name? The accounts you have are " + accountNamesString + ".");
     },
     function (session, results) {
 		
 		// Check for quit
-		if(checkForQuit(results.response, session)) {
-			// Do nothing
-		}
+		if(checkForQuit(results.response, session)) { /* Do nothing */}
 		
 		// Get the account name this time
 		else if(checkValidAccountName(results.response)) {
-			console.log(">> 2. Gotten the account name from the user.");
-			session.send('Oh I see what you mean.');
+			session.send('Ah I see what you mean.');
 			session.endDialogWithResult(results);
 		}
 
-		// Still unsure about the account name
-		// Prompt again
+		// Still unsure about the account name, prompt again
 		else {
-			console.log(">> 2. Need the user to rephrase the account name.");
 			session.replaceDialog('/rephraseAccountName');
 		}
     }
 ]);
 
-// Ending the dialogue
+// End the conversation
 bot.dialog('/endCurrentDialog', [
     function (session) {
-		console.log(">> 1. Ending current dialogue stack.");
-		session.endDialog('Okay no worries. Is there anything else I can help with?');
+		session.endDialog('Okay no worries. Let me know if there is anything else I can help with.');
     }
 ]);
 
@@ -170,8 +175,6 @@ bot.dialog('/endCurrentDialog', [
 function checkForQuit(p_message, p_session) {
 	var word = p_message.toLowerCase();
 	
-	// All the quit words here
-	var quitWords = ["don't worry", "quit", "stop", "nevermind", "cancel", "exit"];
 	for(var i = 0; i < quitWords.length; i++) {
 		if(word == quitWords[i]) {
 			p_session.cancelDialog(0, '/endCurrentDialog');
@@ -186,10 +189,8 @@ function checkForQuit(p_message, p_session) {
 function checkValidAccountName(p_message) {
 	var word = p_message.toLowerCase();
 	
-	// All the valid accounts here
-	var words = ["repayment", "debit", "credit"];
-	for(var i = 0; i < words.length; i++) {
-		if(word == words[i]) {
+	for(var i = 0; i < accountNames.length; i++) {
+		if(word == accountNames[i]) {
 			return true;
 		}
 	}
