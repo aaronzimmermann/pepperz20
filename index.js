@@ -52,12 +52,47 @@ intents.matches('Greeting', [
 
 // Enquiry
 intents.matches('Enquiry', [
-    function (session, args, next) {
+    /*function (session, args, next) {
 		session.beginDialog('/accountEnquiry', args);
-	}
+	}*/
+	function (session, args, next) {
+		
+		console.log("args: " + args);
+		
+		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
+		
+		// User did not state an account
+		if(accountType == null) {
+			session.beginDialog('/getAccountName');
+		}
+		
+		// User states an unknown account
+		else if(!checkValidAccountName(accountType.entity)) {
+			session.beginDialog('/rephraseAccountName');
+		}
+		
+		else {
+			next(session, accountType.entity);
+		}
+    },
+	function (session, results) {
+		
+		console.log("results: " + results);
+
+		// Do the action for the account
+		if(results == "repayment") {
+			session.send("Your " + results + " is " + session.userData.repaymentAmount);
+		}
+
+		// Nothing else to do
+		else {
+			session.endDialog("Nothing to be done here.");
+		}
+    }
 ]);
 
 // Update
+/*
 intents.matches('Update', [
     function (session, args, next) {
 		
@@ -87,6 +122,7 @@ intents.matches('Update', [
 		}
     }
 ]);
+*/
 
 // Getting details of an account
 bot.dialog('/accountEnquiry', [
