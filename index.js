@@ -33,7 +33,7 @@ bot.dialog('/', dialog);
 
 // Add intent handlers
 //dialog.matches('builtin.intent.greeting', builder.DialogAction.send('Greeting User'));
-dialog.onDefault(builder.DialogAction.send('I'm sorry could you rephrase that?'));
+dialog.onDefault(builder.DialogAction.send('Sorry could you rephrase that?'));
 
 
 
