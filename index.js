@@ -121,7 +121,7 @@ intents.matches('AccountUpdate', [
 
 		// One of the bits of information needed above was wrong
 		else {
-			session.send("Try saying that again please.");
+			session.send("Try saying that again please. If you are updating an account I need to know which account and the amount.");
 		}
     }
 ]);
