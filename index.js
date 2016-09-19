@@ -54,6 +54,8 @@ intents.matches('Greeting', [
 intents.matches('Enquiry', [
     function (session, args, next) {
 		
+		console.log(args);
+		
 		// Entities
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
 		console.log(accountType);
@@ -83,7 +85,7 @@ intents.matches('Update', [
 		
 		// Select the account
 		if(accountType == null) {
-			session.send("Which account do you want to update?");
+			session.beginDialog('/getAccountName');
 		} else if(accountType.entity == "repayment") {
 			
 			// No amount was specified
@@ -101,6 +103,17 @@ intents.matches('Update', [
 			session.send('Could you rephrase which account you want to update?');
 		}
     }
+]);
+
+// Getting the account name from the user
+bot.dialog('/getAccountName', [
+    function (session) {
+		builder.Prompts.text(session, "Which account?");
+    }/*,
+    function (session, results) {
+        session.userData.name = results.response;
+        session.endDialog();
+    }*/
 ]);
 
 
