@@ -67,7 +67,6 @@ bot.dialog('/', intents );
 //=========================================================
 // In the future these should be added to Luis
 //=========================================================
-var accountNames = ["repayment", "payout", "mortgage", "debit", "credit", "savings"];
 var quitWords = ["don't worry", "dont worry", "quit", "stop", "nevermind", "cancel", "exit", "changed my mind", "no"];
 
 
@@ -157,27 +156,6 @@ intents.matches('AccountEnquiry', [
     }
 ]);
 
-// Update an amount in an account
-intents.matches('AccountUpdate', [
-    function (session, args, next) {
-		
-		// Entities
-		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-		var amount = builder.EntityRecognizer.findEntity(args.entities, 'builtin.money');
-		
-		// Select the account
-		if(accountType != null && checkValidAccountName(accountType.entity) && amount != null) {
-			session.userData[accountType.entity + "Amount"] = amount.entity;
-			session.send("Your " + accountType.entity + " has been updated to " + amount.entity);
-		}
-
-		// One of the bits of information needed above was wrong
-		else {
-			session.send("Try saying that again please. If you are updating an account I need to know which account and the amount.");
-		}
-    }
-]);
-
 //=========================================================
 // Bots Dialogs
 //=========================================================
@@ -263,7 +241,23 @@ function getCurrentUser(p_session) {
 	return p_session.userData.currentUser;
 }
 
-// Checks it the user wants to quit
+// Returns the data for the current user
+function getCurrentUserData(p_session) {
+	
+	// Get the username
+	var username = getCurrentUser(p_session);
+	
+	// Get the user data
+	for(var i = 0; i < customerData.customers.length; i++) {
+		if(customerData.customers[i].name == username) {
+			return customerData.customers[i];
+		}
+	}
+
+	return null;
+}
+
+// Checks if the user wants to quit
 function checkForQuit(p_message, p_session) {
 	var word = p_message.toLowerCase();
 	
@@ -277,12 +271,19 @@ function checkForQuit(p_message, p_session) {
 	return false;
 }
 
-// Checks if the account name is valid
+// Checks if the user has the current account
 function checkValidAccountName(p_message) {
+	
+	// Convert input to lower case
 	var word = p_message.toLowerCase();
 	
-	for(var i = 0; i < accountNames.length; i++) {
-		if(word == accountNames[i]) {
+	// Get data
+	var data = getCurrentUserData(p_session);
+	
+	// Iterate through accounts
+	var numAccounts = data.accounts.length;
+	for(var i = 0; i < numAccounts; i++) {
+		if(data.accounts[i].type == word) {
 			return true;
 		}
 	}
@@ -291,15 +292,28 @@ function checkValidAccountName(p_message) {
 }
 
 // Returns a string in natural language listing all the accounts.
-function listAccounts() {
+function listAccounts(p_session) {
+	
+	// Get data
+	var data = getCurrentUserData(p_session);
+	
+	// Add account names to string
 	var accountNamesString = "";
-	for(var i = 0; i < accountNames.length; i++) {
-		if(i != 0 && i == accountNames.length - 1) {
+	
+	// Iterate through accounts
+	var numAccounts = data.accounts.length;
+	for(var i = 0; i < numAccounts; i++) {
+		
+		// Add grammar
+		if(i != 0 && i == numAccounts - 1) {
 			accountNamesString += " and ";
 		} else if(i != 0) {
 			accountNamesString += ", ";
 		}
-		accountNamesString += accountNames[i];
+		
+		// Add the name of the account
+		accountNamesString += data.accounts[i].type;
 	}
+	
 	return accountNamesString;
 }
