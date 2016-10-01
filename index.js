@@ -94,7 +94,7 @@ intents.matches('NewLogin', [
 		if(!loginAsUser(accountType.entity, session)) {
 			session.send('That user does not exist.');
 		} else {
-			session.send('Now logged in as: ' + currentUser);
+			session.send('Now logged in as: ' + getCurrentUser(session));
 		}
     }
 ]);
@@ -245,7 +245,7 @@ function loginAsUser(p_newUserName, p_session) {
 	for(var i = 0; i < customerData.customers.length; i++) {
 		
 		if(customerData.customers[i].name.toLowerCase() == p_newUserName.toLowerCase()) {
-			p_session.userData.currentUser = p_newUserName;
+			p_session.userData.currentUser = p_newUserName.toLowerCase();
 			return true;
 		}
 	}
