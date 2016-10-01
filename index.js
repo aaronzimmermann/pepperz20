@@ -148,6 +148,18 @@ intents.matches('AccountEnquiry', [
     }
 ]);
 
+// Statement
+intents.matches('Statement', [
+    function (session, args, next) {
+		session.send("Here is your statement: ");
+        var msg = new builder.Message(session).attachments([{
+			contentType: "application/pdf",
+			contentUrl: "http://aaronzimmermann.net/statement.pdf"
+		}]);
+		session.send(msg);
+    }
+]);
+
 //=========================================================
 // Bots Dialogs
 //=========================================================
@@ -314,10 +326,8 @@ function listAccounts(p_session) {
 function getAccountValue(p_accountName, p_session) {
 	var accountData = getAccount(p_accountName, p_session);
 	if(accountData != null) {
-		console.log("PP: Account data found.");
 		return accountData.amount;
 	} else {
-		console.log("PP: Account data null.");
 		return null;
 	}
 }
@@ -332,10 +342,8 @@ function getAccount(p_accountName, p_session) {
 	var numAccounts = data.accounts.length;
 	for(var i = 0; i < numAccounts; i++) {
 		if(data.accounts[i].type == p_accountName.toLowerCase()) {
-			console.log("PP: Account found.");
 			return data.accounts[i];
 		}
 	}
-	console.log("PP: Account not found.");
 	return null;
 }
