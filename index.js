@@ -330,9 +330,10 @@ function getAccount(p_accountName, p_session) {
 	var numAccounts = data.accounts.length;
 	for(var i = 0; i < numAccounts; i++) {
 		if(data.accounts[i].type == p_accountName.toLowerCase()) {
+			console.log("PP: Account found.");
 			return data.accounts[i];
 		}
 	}
-	
+	console.log("PP: Account not found.");
 	return null;
 }
