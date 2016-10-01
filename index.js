@@ -133,7 +133,7 @@ intents.matches('AccountEnquiry', [
 		
 		// User states an account they do not have
 		else if(!checkValidAccountName(accountType.entity, session)) {
-			session.beginDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
+			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
 		}
 		
 		// We have a valid account name, move onto the next step
