@@ -26,8 +26,8 @@ request({
 }, function (error, response, body) {
 
     if (!error && response.statusCode === 200) {
-		console.log(body);
-		customerData = JSON.parse({ '"customers" : [{	"name" : "Alice"},{"name" : "Bob"}]}');
+		console.log("LOADED: " + body);
+		customerData = JSON.parse('{ "customers" : [{	"name" : "Alice"},{"name" : "Bob"}]}');
 		console.log("PP: Customer data loaded.");
 		
 		// Load the default user
