@@ -249,7 +249,7 @@ function getCurrentUserData(p_session) {
 	
 	// Get the user data
 	for(var i = 0; i < customerData.customers.length; i++) {
-		if(customerData.customers[i].name == username) {
+		if(customerData.customers[i].name.toLowerCase() == username) {
 			return customerData.customers[i];
 		}
 	}
