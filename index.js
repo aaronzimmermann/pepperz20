@@ -24,7 +24,7 @@ require('http').createServer(function(request, response) {
 //=========================================================
 // Bot Setup
 //=========================================================
-/*
+
 // Setup Restify Server
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function () {
@@ -238,4 +238,4 @@ function listAccounts() {
 		accountNamesString += accountNames[i];
 	}
 	return accountNamesString;
-}*/
+}
