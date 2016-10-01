@@ -314,8 +314,10 @@ function listAccounts(p_session) {
 function getAccountValue(p_accountName, p_session) {
 	var accountData = getAccount(p_accountName, p_session);
 	if(accountData != null) {
-		accountData.amount;
+		console.log("PP: Account data found.");
+		return accountData.amount;
 	} else {
+		console.log("PP: Account data null.");
 		return null;
 	}
 }
