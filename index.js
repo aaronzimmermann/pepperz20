@@ -131,9 +131,9 @@ intents.matches('AccountEnquiry', [
 			session.beginDialog('/getAccountName');
 		}
 		
-		// User states an unknown account
+		// User states an account they do not have
 		else if(!checkValidAccountName(accountType.entity, session)) {
-			session.beginDialog('/rephraseAccountName');
+			session.beginDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
 		}
 		
 		// We have a valid account name, move onto the next step
@@ -143,16 +143,8 @@ intents.matches('AccountEnquiry', [
     },
 	function (session, results) {
 		
-		
-		var amount = session.userData[results.response + "Amount"];
-		if(amount == null) {
-			session.send("You don't have anything in your " + results.response + ". If you tell me I can put an amount into one of your accounts.");
-		} 
-		
 		// Display the amount to the user
-		else {
-			session.send("Your " + results.response + " is " + amount);
-		}
+		session.send("Your " + results.response + " account is " + getAccountValue(results.response, session));
     }
 ]);
 
@@ -316,4 +308,31 @@ function listAccounts(p_session) {
 	}
 	
 	return accountNamesString;
+}
+
+// Returns the value in an account
+function getAccountValue(p_accountName, p_session) {
+	var accountData = getAccount(p_accountName, p_session);
+	if(accountData != null) {
+		accountData.amount;
+	} else {
+		return null;
+	}
+}
+
+// Returns the account data
+function getAccount(p_accountName, p_session) {
+	
+	// Get data
+	var data = getCurrentUserData(p_session);
+	
+	// Iterate through accounts and return the target account
+	var numAccounts = data.accounts.length;
+	for(var i = 0; i < numAccounts; i++) {
+		if(data.accounts[i].type == p_accountName.toLowerCase()) {
+			return data.accounts[i];
+		}
+	}
+	
+	return null;
 }
