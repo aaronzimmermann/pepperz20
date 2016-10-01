@@ -154,7 +154,7 @@ bot.dialog('/getAccountName', [
     function (session, results) {
 		
 		// Check for quit
-		if(checkForQuit(results.response, session)) { /* Do nothing */}
+		if(checkForQuit(results.response, session)) { }
 		
 		// The account name is valid
 		else if(checkValidAccountName(results.response)) {
@@ -177,7 +177,7 @@ bot.dialog('/rephraseAccountName', [
     function (session, results) {
 		
 		// Check for quit
-		if(checkForQuit(results.response, session)) { /* Do nothing */}
+		if(checkForQuit(results.response, session)) { }
 		
 		// Get the account name this time
 		else if(checkValidAccountName(results.response)) {
