@@ -81,7 +81,7 @@ intents.onDefault(builder.DialogAction.send('Sorry could you rephrase that?'));
 // Log in as new user
 intents.matches('CurrentUser', [
     function (session, args, next) {
-        session.send('You are currently: ' + session.userData.currentUser);
+        session.send('You are currently: ' + getCurrentUser(session));
     }
 ]);
 
@@ -250,6 +250,17 @@ function loginAsUser(p_newUserName, p_session) {
 		}
 	}
 	return false;
+}
+
+// Returns the name of the current user
+function getCurrentUser(p_session) {
+	
+	// Load the first user by default if no user has been selected
+	if(p_session.userData.currentUser == null) {
+		p_session.userData.currentUser = customerData.customers[0].name;
+	}
+	
+	return p_session.userData.currentUser;
 }
 
 // Checks it the user wants to quit
