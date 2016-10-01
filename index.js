@@ -24,7 +24,7 @@ require('http').createServer(function(request, response) {
 //=========================================================
 // Bot Setup
 //=========================================================
-
+/*
 // Setup Restify Server
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function () {
@@ -33,8 +33,8 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
   
 // Create chat bot
 var connector = new builder.ChatConnector({
-    /*appId: process.env.MICROSOFT_APP_ID,
-    appPassword: process.env.MICROSOFT_APP_PASSWORD*/
+    //appId: process.env.MICROSOFT_APP_ID,
+    //appPassword: process.env.MICROSOFT_APP_PASSWORD
 	appId: "afa947e1-f598-4479-9727-e7fc8136ab83",
     appPassword: "RMZKjeLjJJWaOvfXnpfacie"
 });
@@ -238,4 +238,4 @@ function listAccounts() {
 		accountNamesString += accountNames[i];
 	}
 	return accountNamesString;
-}
+}*/
