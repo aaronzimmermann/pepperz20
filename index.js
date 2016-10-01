@@ -6,20 +6,29 @@
 var restify = require('restify');
 var builder = require('botbuilder');
 
-// File Server
-var static = require('node-static');
+// Loading external JSON
+var request = require("request");
+
+
 
 //=========================================================
-// File Server Setup
+// Load date file
 //=========================================================
 
-var file = new static.Server();
-require('http').createServer(function(request, response) {
-  //request.addListener('end', function() {
-    file.serve(request, response);
-  //}).resume();
-}).listen(3000);
+var url = "http://aaronzimmermann.net/data.json";
+var customerData = null;
 
+
+// Load the file
+request({
+    url: url,
+    json: true
+}, function (error, response, body) {
+
+    if (!error && response.statusCode === 200) {
+        console.log(body) // Print the json response
+    }
+})
 
 //=========================================================
 // Bot Setup
