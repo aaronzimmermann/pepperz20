@@ -2,8 +2,24 @@
 // Requirements
 //=========================================================
 
+// Chatbot
 var restify = require('restify');
 var builder = require('botbuilder');
+
+// File Server
+var static = require('node-static');
+
+//=========================================================
+// File Server Setup
+//=========================================================
+
+var file = new static.Server();
+require('http').createServer(function(request, response) {
+  request.addListener('end', function() {
+    file.serve(request, response);
+  }).resume();
+}).listen(process.env.PORT || 3000);
+
 
 //=========================================================
 // Bot Setup
