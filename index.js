@@ -115,7 +115,7 @@ intents.matches('Help', [
 // List the user's accounts
 intents.matches('ListAccounts', [
     function (session, args, next) {
-		var accountNamesString = listAccounts();
+		var accountNamesString = listAccounts(session);
         session.send('The accounts you have are ' + accountNamesString + ".");
     }
 ]);
@@ -132,7 +132,7 @@ intents.matches('AccountEnquiry', [
 		}
 		
 		// User states an unknown account
-		else if(!checkValidAccountName(accountType.entity)) {
+		else if(!checkValidAccountName(accountType.entity, session)) {
 			session.beginDialog('/rephraseAccountName');
 		}
 		
@@ -171,7 +171,7 @@ bot.dialog('/getAccountName', [
 		if(checkForQuit(results.response, session)) { }
 		
 		// The account name is valid
-		else if(checkValidAccountName(results.response)) {
+		else if(checkValidAccountName(results.response, session)) {
 			session.endDialogWithResult(results);
 		}
 		
@@ -185,7 +185,7 @@ bot.dialog('/getAccountName', [
 // Getting the user to rephrase the account name
 bot.dialog('/rephraseAccountName', [
     function (session) {
-		var accountNamesString = listAccounts();
+		var accountNamesString = listAccounts(session);
 		builder.Prompts.text(session, "Could you rephrase that account name? The accounts you have are " + accountNamesString + ".");
     },
     function (session, results) {
@@ -194,7 +194,7 @@ bot.dialog('/rephraseAccountName', [
 		if(checkForQuit(results.response, session)) { }
 		
 		// Get the account name this time
-		else if(checkValidAccountName(results.response)) {
+		else if(checkValidAccountName(results.response, session)) {
 			session.send('Ah I see what you mean.');
 			session.endDialogWithResult(results);
 		}
@@ -272,7 +272,7 @@ function checkForQuit(p_message, p_session) {
 }
 
 // Checks if the user has the current account
-function checkValidAccountName(p_message) {
+function checkValidAccountName(p_message, p_session) {
 	
 	// Convert input to lower case
 	var word = p_message.toLowerCase();
