@@ -26,8 +26,9 @@ request({
 }, function (error, response, body) {
 
     if (!error && response.statusCode === 200) {
-		console.log("LOADED: " + body.customers);
-		customerData = JSON.parse('{ "customers" : [{	"name" : "Alice"},{"name" : "Bob"}]}');
+		customerData = body;
+		//console.log("LOADED: " + body.customers);
+		//customerData = JSON.parse('{ "customers" : [{	"name" : "Alice"},{"name" : "Bob"}]}');
 		console.log("PP: Customer data loaded.");
 		
 		// Load the default user
@@ -247,7 +248,8 @@ bot.dialog('/endCurrentDialog', [
 // Returns true on sucess
 function loginAsUser(p_newUserName) {
 	for(var i = 0; i < customerData.customers.length; i++) {
-		if(customerData.customers[i].name == p_newUserName) {
+		
+		if(customerData.customers[i].name.toLowerCase() == p_newUserName.toLowerCase()) {
 			currentUser = p_newUserName;
 			return true;
 		}
