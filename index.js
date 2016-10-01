@@ -26,7 +26,7 @@ request({
 }, function (error, response, body) {
 
     if (!error && response.statusCode === 200) {
-		console.log("LOADED: " + body);
+		console.log("LOADED: " + body.customers);
 		customerData = JSON.parse('{ "customers" : [{	"name" : "Alice"},{"name" : "Bob"}]}');
 		console.log("PP: Customer data loaded.");
 		
@@ -90,11 +90,18 @@ intents.matches('CurrentUser', [
 ]);
 
 // Who is currently logged in
-/*intents.matches('NewLogin', [
+intents.matches('NewLogin', [
     function (session, args, next) {
-        session.send('Hi how can I help you?');
+        
+		// Get new user
+		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'User');
+		if(!loginAsUser(accountType.entity)) {
+			session.send('That user does not exist.');
+		} else {
+			session.send('Now logged in as: ' + currentUser);
+		}
     }
-]);*/
+]);
 
 // Greeting
 intents.matches('Greeting', [
@@ -231,6 +238,22 @@ bot.dialog('/endCurrentDialog', [
 		session.endDialog('Okay no worries. Let me know if there is anything else I can help with.');
     }
 ]);
+
+//=========================================================
+// Functions
+//=========================================================
+
+// Logs in as the new user
+// Returns true on sucess
+function loginAsUser(p_newUserName) {
+	for(var i = 0; i < customerData.customers.length; i++) {
+		if(customerData.customers[i].name == p_newUserName) {
+			currentUser = p_newUserName;
+			return true;
+		}
+	}
+	return false;
+}
 
 // Checks it the user wants to quit
 function checkForQuit(p_message, p_session) {
