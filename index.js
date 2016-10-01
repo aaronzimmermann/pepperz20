@@ -30,7 +30,7 @@ request({
 		console.log("PP: Customer data loaded.");
 		
 		// Load the default user
-		customerData.customerData[0].name;
+		customerData.customers[0].name;
     }
 })
 
