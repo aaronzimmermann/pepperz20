@@ -12,7 +12,7 @@ var request = require("request");
 
 
 //=========================================================
-// Load date file
+// Load data file
 //=========================================================
 
 var url = "http://aaronzimmermann.net/data.json";
@@ -26,9 +26,18 @@ request({
 }, function (error, response, body) {
 
     if (!error && response.statusCode === 200) {
-        console.log(body) // Print the json response
+		customerData = JSON.parse(body);
+		console.log("PP: Customer data loaded.");
+		
+		// Load the default user
+		customerData.customerData[0].name;
     }
 })
+
+//=========================================================
+// Properties
+//=========================================================
+var currentUser = "";
 
 //=========================================================
 // Bot Setup
@@ -71,6 +80,20 @@ var quitWords = ["don't worry", "dont worry", "quit", "stop", "nevermind", "canc
 
 // Default message
 intents.onDefault(builder.DialogAction.send('Sorry could you rephrase that?'));
+
+// Log in as new user
+intents.matches('CurrentUser', [
+    function (session, args, next) {
+        session.send('You are currently: ' + currentUser);
+    }
+]);
+
+// Who is currently logged in
+/*intents.matches('NewLogin', [
+    function (session, args, next) {
+        session.send('Hi how can I help you?');
+    }
+]);*/
 
 // Greeting
 intents.matches('Greeting', [
