@@ -12,6 +12,6 @@
   "dependencies": {
     "botbuilder": "^3.2.3",
     "restify": "^4.1.1",
-	"request"
+	"request": "^2.75.0"
   }
 }
