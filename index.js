@@ -27,19 +27,14 @@ request({
 
     if (!error && response.statusCode === 200) {
 		customerData = body;
-		//console.log("LOADED: " + body.customers);
-		//customerData = JSON.parse('{ "customers" : [{	"name" : "Alice"},{"name" : "Bob"}]}');
 		console.log("PP: Customer data loaded.");
-		
-		// Load the default user
-		currentUser = customerData.customers[0].name;
     }
 })
 
 //=========================================================
 // Properties
 //=========================================================
-var currentUser = "";
+
 
 //=========================================================
 // Bot Setup
@@ -86,7 +81,7 @@ intents.onDefault(builder.DialogAction.send('Sorry could you rephrase that?'));
 // Log in as new user
 intents.matches('CurrentUser', [
     function (session, args, next) {
-        session.send('You are currently: ' + currentUser);
+        session.send('You are currently: ' + session.userData.currentUser);
     }
 ]);
 
@@ -96,7 +91,7 @@ intents.matches('NewLogin', [
         
 		// Get new user
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'User');
-		if(!loginAsUser(accountType.entity)) {
+		if(!loginAsUser(accountType.entity, session)) {
 			session.send('That user does not exist.');
 		} else {
 			session.send('Now logged in as: ' + currentUser);
@@ -246,11 +241,11 @@ bot.dialog('/endCurrentDialog', [
 
 // Logs in as the new user
 // Returns true on sucess
-function loginAsUser(p_newUserName) {
+function loginAsUser(p_newUserName, p_session) {
 	for(var i = 0; i < customerData.customers.length; i++) {
 		
 		if(customerData.customers[i].name.toLowerCase() == p_newUserName.toLowerCase()) {
-			currentUser = p_newUserName;
+			p_session.userData.currentUser = p_newUserName;
 			return true;
 		}
 	}
