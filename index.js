@@ -17,8 +17,8 @@ var request = require("request");
 
 var url = "http://aaronzimmermann.net/data.json";
 var customerData = null;
-var users = [{name: 'Alice', date: 12 , amount: 1200},
-             {name: 'Bob', date: 15 , amount: 1400]}];
+var u//sers = [{name: 'Alice', date: 12 , amount: 1200},
+       //      {name: 'Bob', date: 15 , amount: 1400]}];
 
 // Load the file
 request({
@@ -28,6 +28,7 @@ request({
 
     if (!error && response.statusCode === 200) {
 		customerData = body;
+		customer
 		console.log("PP: Customer data loaded.");
     }
 })
