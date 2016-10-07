@@ -345,7 +345,8 @@ function getAccountValue(p_accountName, p_session) {
 	}
 }
 // Returns the date a
-function get Account(p_accountname, 
+//function get Account(p_accountname, 
+
 // Returns the account data
 function getAccount(p_accountName, p_session) {
 	
