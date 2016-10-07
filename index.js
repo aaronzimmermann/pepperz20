@@ -17,7 +17,8 @@ var request = require("request");
 
 var url = "http://aaronzimmermann.net/data.json";
 var customerData = null;
-
+var users = [{name: 'Alice', date: 12 , amount: 1200},
+             {name: 'Bob', date: 15 , amount: 1400]}];
 
 // Load the file
 request({
@@ -147,6 +148,17 @@ intents.matches('AccountEnquiry', [
 		session.send("Your " + results.response + " account is " + getAccountValue(results.response, session));
     }
 ]);
+// Auto 
+intents.matches('List', [
+    function (session, args, next) {
+		session.send("Type “List” to get guided help anytime. I’m learning more everyday. Here are some things I can help you with:, Balance,Transactions,Live Help,Auto,Credit Cards,Mortgage,Interest Rates : ");
+]);
+// Auto Repayment
+intents.matches('Auto Repayment', [
+    function (session, args, next) {
+		session.send("I can help with that! Here are some things you can ask me under this category: Auto Repayment,Auto Payout,Auto Statement, Auto Balance/Account,Auto Credit Reference,Auto Insurance");
+]);
+
 
 // Statement
 intents.matches('Statement', [
@@ -331,7 +343,8 @@ function getAccountValue(p_accountName, p_session) {
 		return null;
 	}
 }
-
+// Returns the date a
+function get Account(p_accountname, 
 // Returns the account data
 function getAccount(p_accountName, p_session) {
 	
