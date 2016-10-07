@@ -28,7 +28,6 @@ request({
 
     if (!error && response.statusCode === 200) {
 		customerData = body;
-		customer
 		console.log("PP: Customer data loaded.");
     }
 })
