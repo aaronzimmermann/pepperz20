@@ -153,12 +153,12 @@ intents.matches('AccountEnquiry', [
 intents.matches('List', [
     function (session, args, next) {
 		session.send("Type “List” to get guided help anytime. I’m learning more everyday. Here are some things I can help you with:, Balance,Transactions,Live Help,Auto,Credit Cards,Mortgage,Interest Rates : ");
-]);
+}]);
 // Auto Repayment
 intents.matches('Auto Repayment', [
     function (session, args, next) {
 		session.send("I can help with that! Here are some things you can ask me under this category: Auto Repayment,Auto Payout,Auto Statement, Auto Balance/Account,Auto Credit Reference,Auto Insurance");
-]);
+}]);
 
 
 // Statement
