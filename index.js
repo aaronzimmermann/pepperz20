@@ -160,7 +160,9 @@ intents.matches('List', [
 }]);
 // Auto Repayment Date
 intents.matches('Auto Repayment Date', [
-    function (session, args, next) {var accountData = getAccount(p_accountName, p_session);
+    function (session, args, next)
+     {
+     var accountData = getAccount(p_accountName, p_session);
 	if(accountData != null) {
 		return accountData.Date;
 	} else {
