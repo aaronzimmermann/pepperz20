@@ -323,6 +323,8 @@ function listAccounts(p_session) {
 	
 	// Get data
 	var data = getCurrentUserData(p_session);
+	console.log(">>>> " + data);
+	console.log("---- " + data.accounts);
 	
 	// Add account names to string
 	var accountNamesString = "";
