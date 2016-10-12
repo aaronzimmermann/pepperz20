@@ -152,7 +152,6 @@ intents.matches('AccountEnquiry', [
 // Auto 
 intents.matches('List', [
     function (session, args, next) {
-    	var accountDate = getAccount("auto", session).date;
     	
 		session.send("Type “List” to get guided help anytime. I’m learning more everyday. Here are some things I can help you with:, Balance,Transactions,Live Help,Auto,Credit Cards,Mortgage,Interest Rates : ");
 }]);
