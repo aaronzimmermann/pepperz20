@@ -31,9 +31,7 @@ request({
 		console.log("PP: Customer data loaded.");
     }
 })
-if 
-customers[1].accounts[0].date
-customers[0].accounts[0].date
+
 
 //=========================================================
 // Properties
