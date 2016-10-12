@@ -159,11 +159,11 @@ intents.matches('List', [
 intents.matches('Auto Repayment Date', [
     function (session, args, next)
      {
-     var accountData = getAccount(p_accountName, p_session);
+     var accountData = getAccount("auto", session);
 	if(accountData != null) {
-		return accountData.Date;
+		session.send("Date:" + accountData.date);
 	} else {
-		return null;
+		session.send("Sorry the user doesnt have an account for auto");
 	}
 		
 //session.send(accountDate);
