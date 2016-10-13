@@ -172,7 +172,7 @@ intents.matches('Auto Repayment Amount', [
      {
      var accountData = getAccount("auto", session);
 	if(accountData != null) {
-		session.send("Date:" + accountData.amount);
+		session.send("Amount:" + accountData.amount);
 	} else {
 		session.send("Sorry the user doesnt have an account for auto");
 	}
