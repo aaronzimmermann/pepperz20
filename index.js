@@ -165,19 +165,6 @@ intents.matches('Auto Repayment Date', [
 	} else {
 		session.send("Sorry the user doesnt have an account for auto");
 	}
-	// Auto Repayment Amount
-intents.matches('Auto Repayment Amount', [
-    function (session, args, next)
-     {
-     var accountData = getAccount("auto", session);
-	if(accountData != null) {
-		session.send("Date:" + accountData.date);
-	} else {
-		session.send("Sorry the user doesnt have an account for auto");
-	}
-	
-		
-//session.send(accountDate);
 }]);
 // Auto Repayment Amount
 intents.matches('Auto Repayment Amount', [
@@ -185,12 +172,12 @@ intents.matches('Auto Repayment Amount', [
      {
      var accountData = getAccount("auto", session);
 	if(accountData != null) {
-		session.send("Amount :" + accountData.amount);
+		session.send("Date:" + accountData.amount);
 	} else {
-		session.send("Sorry the user doesn't have an account for auto");
+		session.send("Sorry the user doesnt have an account for auto");
 	}
-	}]);
-		
+}]);
+
 
 // Statement
 intents.matches('Statement', [
