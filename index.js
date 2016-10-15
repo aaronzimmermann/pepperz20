@@ -203,7 +203,7 @@ bot.dialog('/authentication', [
     },
 	function (session, results) {
 		session.send(results.response);
-		sendAnEmail("noreply", "aaronzimmermann92@gmail.com", "Pepper Bot Authentication", "Test");
+		sendAnEmail("noreply@pepperbot.com", "aaronzimmermann92@gmail.com", "Pepper Bot Authentication", "Test");
         session.endDialog("We are going to authenticate your ID via your E-mail. You will need to enter the authentication code you receive via email into this chat. You should receive an email shortly");
     }
 ]);
