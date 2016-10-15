@@ -297,6 +297,7 @@ function loginAsUser(p_newUserName, p_session) {
 	for(var i = 0; i < customerData.customers.length; i++) {
 		if(customerData.customers[i].firstName.toLowerCase() == p_newUserName.toLowerCase()) {
 			p_session.userData.currentUser = customerData.customers[i].id;
+			console.log("Found " + customerData.customers[i].firstName)
 			return true;
 		}
 	}
