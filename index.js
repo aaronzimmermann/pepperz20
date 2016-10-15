@@ -197,7 +197,7 @@ intents.matches('Statement', [
 // Authentication
 bot.dialog('/authentication', [
     function (session) {
-		session.send("Hi " + getUserFirstName(session) "! We've noticed this is your first time using the Pepper Money Chatbot.");
+		session.send("Hi " + getUserFirstName(session) + "! We've noticed this is your first time using the Pepper Money Chatbot.");
 		session.send("Before we get started we need to authenticate who you are and which Pepper Money account you are using :)");
 		builder.Prompts.text(session, "Please enter in your Pepper Money UserID?");
     },
