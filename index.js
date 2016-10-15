@@ -300,6 +300,7 @@ function loginAsUser(p_newUserName, p_session) {
 			return true;
 		}
 	}
+	console.log("User not found");
 	return false;
 }
 
