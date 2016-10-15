@@ -265,13 +265,28 @@ bot.dialog('/endCurrentDialog', [
 // Functions
 //=========================================================
 
+// Generates a random number
+function randomInt (low, high) {
+    return Math.floor(Math.random() * (high - low) + low);
+}
+
+// Sends an authentication email
+// Returns the authentication code the user needs to enter
+function sendAuthenticationEmail(p_session) {
+	var userEmail = getUserEmail(p_session);
+	var acode = randomInt(10000, 19999);
+	var emailMessage = "Hi, please find below your authentication code:\n\n" + acode;
+	sendAnEmail("noreply@pepperbot.com", userEmail, "Pepper Bot Authentication Code", emailMessage);
+	return acode;
+}
+
 // Sends an email
 function sendAnEmail(p_fromEmail, p_toEmail, p_subject, p_content) {
     var helper = require('sendgrid').mail;
     var from_email = new helper.Email(p_fromEmail);
     var to_email = new helper.Email(p_toEmail);
     var subject = p_subject;
-    var content = new helper.Content('text/plain', 'Hello, Email!');
+    var content = new helper.Content('text/plain', p_content);
     var mail = new helper.Mail(from_email, subject, to_email, content);
     
     var sg = require("sendgrid")("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");
@@ -439,4 +454,10 @@ function isUserAuthenticated(p_session) {
 function getUserFirstName(p_session) {
 	var data = getCurrentUserData(p_session);
 	return data.firstName;
+}
+
+// gets the user's email
+function getUserEmail(p_session) {
+	var data = getCurrentUserData(p_session);
+	return data.email;
 }
