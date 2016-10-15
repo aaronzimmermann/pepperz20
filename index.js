@@ -219,12 +219,19 @@ bot.dialog('/authentication', [
 		}
     },
 	function (session, results) {
-		session.send("hello!");
 		
 		// Get the code the user entered
 		var userEnteredCode = results.response;
 		
-		session.send(session.dialogData.code + ", " + results.response);
+		// Code matches
+		if(userEnteredCode == "" + session.dialogData.code) {
+			session.endDialog('Awesome! Welcome ' + getUserFirstName(session) + '! We have successfully authenticated and linked your Facebook account with Pepper Money.');
+		} 
+		
+		// Code fails
+		else {
+			session.endDialog('Oops that code was incorrect. Authentication failed');
+		}
 	}
 ]);
 
