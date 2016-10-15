@@ -214,8 +214,8 @@ bot.dialog('/authentication', [
 			session.send("There was a problem looking up this UserID. Let's try again.")
 			session.replaceDialog('/authentication');
 		} else {
-			session.send("We are going to authenticate your ID via your E-mail. Next you will need to enter the authentication code you receive via email into this chat. You should receive an email shortly, please enter the authentcation code below.");
 			session.dialogData.code = acode;
+			builder.Prompts.text("We are going to authenticate your ID via your E-mail. Next you will need to enter the authentication code you receive via email into this chat. You should receive an email shortly, please enter the authentcation code below.");
 		}
     },
 	function (session, results) {
