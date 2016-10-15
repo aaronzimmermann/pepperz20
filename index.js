@@ -291,7 +291,7 @@ function randomInt (low, high) {
 
 // Sends an authentication email
 // Returns the authentication code the user needs to enter
-function sendAuthenticationEmail(p_p_session, p_id) {
+function sendAuthenticationEmail(p_session, p_id) {
 	
 	// Get email address corresponding to user ID
 	var userEmail = getEmailFromID(p_session, p_id);
