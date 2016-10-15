@@ -293,6 +293,7 @@ function sendAnEmail(p_fromEmail, p_toEmail, p_subject, p_content) {
 // Logs in as the new user
 // Returns true on sucess (the user exists)
 // If there was a problem switching user then returns false
+function loginAsUser(p_newUserName, p_session) {
 	for(var i = 0; i < customerData.customers.length; i++) {
 		if(customerData.customers[i].firstName.toLowerCase() == p_newUserName.toLowerCase()) {
 			p_session.userData.currentUser = customerData.customers[i].id;
