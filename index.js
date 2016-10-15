@@ -215,7 +215,7 @@ bot.dialog('/authentication', [
 			session.replaceDialog('/authentication');
 		} else {
 			session.dialogData.code = acode;
-			builder.Prompts.text("We are going to authenticate your ID via your E-mail. Next you will need to enter the authentication code you receive via email into this chat. You should receive an email shortly, please enter the authentcation code below.");
+			builder.Prompts.text(session, "We are going to authenticate your ID via your E-mail. Next you will need to enter the authentication code you receive via email into this chat. You should receive an email shortly, please enter the authentcation code below.");
 		}
     },
 	function (session, results) {
