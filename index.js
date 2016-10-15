@@ -197,10 +197,14 @@ intents.matches('Statement', [
 // Authentication
 bot.dialog('/authentication', [
     function (session) {
-		var message = "I have noticed that this is the first time you are using PepperBot.";
-		message += "\n";
-		message += "I will need to authenticate who you are. Could you please enter your Pepper Money UserID.";
-		session.endDialog(message);
+		session.send("Hi " + getUserFirstName(session) "! We've noticed this is your first time using the Pepper Money Chatbot.");
+		session.send("Before we get started we need to authenticate who you are and which Pepper Money account you are using :)");
+		builder.Prompts.text(session, "Please enter in your Pepper Money UserID?");
+    },
+	function (session, results) {
+		session.send(results.response);
+        session.send("We are going to authenticate your ID via your E-mail. You will need to enter the authentication code you receive\
+			via email into this chat. You should receive an email shortly");
     }
 ]);
 
@@ -396,4 +400,10 @@ function getAccount(p_accountName, p_session) {
 function isUserAuthenticated(p_session) {
 	var data = getCurrentUserData(p_session);
 	return data.authenticated;
+}
+
+// gets the user's first name
+function getUserFirstName(p_session) {
+	var data = getCurrentUserData(p_session);
+	return data.firstName;
 }
