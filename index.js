@@ -214,7 +214,7 @@ bot.dialog('/authentication', [
 			session.send("There was a problem looking up this UserID. Let's try again.")
 			session.replaceDialog('/authentication');
 		} else {
-			builder.Prompts.text("We are going to authenticate your ID via your E-mail. Next you will need to enter the authentication code you receive via email into this chat. You should receive an email shortly, please enter the authentcation code below.");
+			session.send("We are going to authenticate your ID via your E-mail. Next you will need to enter the authentication code you receive via email into this chat. You should receive an email shortly, please enter the authentcation code below.");
 			next({code: acode});
 		}
     },
@@ -305,7 +305,7 @@ function sendAuthenticationEmail(p_session, p_id) {
 	var acode = randomInt(10000, 19999);
 	
 	// Send email
-	var emailMessage = "Hi, please find below your authentication code:\n\n" + acode + "\n\nKind regads,\nPepper Chatbot";
+	var emailMessage = "Hi, please find below your authentication code:\n\n" + acode + "\n\nKind regads,\n\nPepper Chatbot";
 	sendAnEmail("noreply@pepperbot.com", userEmail, "Pepper Bot Authentication Code", emailMessage);
 	
 	return acode;
