@@ -66,9 +66,11 @@ var quitWords = ["don't worry", "dont worry", "quit", "stop", "nevermind", "canc
 
 // Check if the user is authenticated
 intents.matches = (/hello/i, [
-	console.log(">>>> Checking for authentication");
-	if(!isUserAuthenticated(session)) {
-		session.beginDialog('/authentication');
+	function (session, args, next) {
+		console.log(">>>> Checking for authentication");
+		if(!isUserAuthenticated(session)) {
+			session.beginDialog('/authentication');
+		}
 	}
 ]);
 
