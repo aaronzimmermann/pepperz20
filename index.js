@@ -202,8 +202,8 @@ bot.dialog('/authentication', [
 		builder.Prompts.text(session, "Please enter in your Pepper Money UserID?");
     },
 	function (session, results) {
-		session.send(results.response);
-		sendAnEmail("noreply@pepperbot.com", "aaronzimmermann92@gmail.com", "Pepper Bot Authentication", "Test");
+		var enteredUserId = results.response;
+		var acode = sendAuthenticationEmail(session);
         session.endDialog("We are going to authenticate your ID via your E-mail. You will need to enter the authentication code you receive via email into this chat. You should receive an email shortly");
     }
 ]);
