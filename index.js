@@ -268,8 +268,10 @@ bot.dialog('/endCurrentDialog', [
 // Logs in as the new user
 // Returns true on sucess
 function loginAsUser(p_newUserName, p_session) {
+	console.log("! " + customerData);
+	console.log("! " + customerData.customers);
+	console.log("! " + customerData.customers[0].name);
 	for(var i = 0; i < customerData.customers.length; i++) {
-		
 		if(customerData.customers[i].name.toLowerCase() == p_newUserName.toLowerCase()) {
 			p_session.userData.currentUser = p_newUserName.toLowerCase();
 			return true;
