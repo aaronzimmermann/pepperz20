@@ -65,7 +65,7 @@ var quitWords = ["don't worry", "dont worry", "quit", "stop", "nevermind", "canc
 //=========================================================
 
 // Check if the user is authenticated
-intents.begin(session) {
+intents.begin = function(session) {
 	if(!isUserAuthenticated(session)) {
 		session.beginDialog('/authentication');
 	}
