@@ -68,6 +68,8 @@ var quitWords = ["don't worry", "dont worry", "quit", "stop", "nevermind", "canc
 intents.matches(/authenticate/i, [
 	function (session, args, next) {
 		if(!isUserAuthenticated(session)) {
+			session.send("Hi " + getUserFirstName(session) + "! We've noticed this is your first time using the Pepper Money Chatbot.");
+			session.send("Before we get started we need to authenticate who you are and which Pepper Money account you are using :)");
 			session.beginDialog('/authentication');
 		} else {
 			session.send('You are authenthicated');
@@ -197,15 +199,32 @@ intents.matches('Statement', [
 // Authentication
 bot.dialog('/authentication', [
     function (session) {
-		session.send("Hi " + getUserFirstName(session) + "! We've noticed this is your first time using the Pepper Money Chatbot.");
-		session.send("Before we get started we need to authenticate who you are and which Pepper Money account you are using :)");
-		builder.Prompts.text(session, "Please enter in your Pepper Money UserID?");
+		builder.Prompts.text(session, "Please enter in your Pepper Money UserID.");
     },
 	function (session, results) {
+		
+		// Get the user's response
 		var enteredUserId = results.response;
-		var acode = sendAuthenticationEmail(session);
-        session.endDialog("We are going to authenticate your ID via your E-mail. You will need to enter the authentication code you receive via email into this chat. You should receive an email shortly");
+		
+		// Get the authentcation code
+		var acode = sendAuthenticationEmail(session, enteredUserId);
+		
+		// There was a problem getting the user's email
+		if(acode == null) {
+			session.send("There was a problem looking up this UserID. Let's try again.")
+			session.replaceDialog('/authentication');
+		} else {
+			builder.Prompts.text("We are going to authenticate your ID via your E-mail. Next you will need to enter the authentication code you receive via email into this chat. You should receive an email shortly, please enter the authentcation code below.");
+			next({code: acode});
+		}
     }
+	function (session, results) {
+		
+		// Get the code the user entered
+		var userEnteredCode = results.response;
+		
+		session.send(results.code + ", " + results.response);
+	}
 ]);
 
 // Getting the account name from the user
@@ -272,11 +291,23 @@ function randomInt (low, high) {
 
 // Sends an authentication email
 // Returns the authentication code the user needs to enter
-function sendAuthenticationEmail(p_session) {
-	var userEmail = getUserEmail(p_session);
+function sendAuthenticationEmail(p_p_session, p_id) {
+	
+	// Get email address corresponding to user ID
+	var userEmail = getEmailFromID(p_session, p_id);
+	
+	// Dont send an email if the user does not exist
+	if(userEmail == null) {
+		return null;
+	}
+	
+	// Generate random authentication code
 	var acode = randomInt(10000, 19999);
-	var emailMessage = "Hi, please find below your authentication code:\n\n" + acode;
+	
+	// Send email
+	var emailMessage = "Hi, please find below your authentication code:\n\n" + acode + "\n\nKind regads,\nPepper Chatbot";
 	sendAnEmail("noreply@pepperbot.com", userEmail, "Pepper Bot Authentication Code", emailMessage);
+	
 	return acode;
 }
 
@@ -454,6 +485,16 @@ function isUserAuthenticated(p_session) {
 function getUserFirstName(p_session) {
 	var data = getCurrentUserData(p_session);
 	return data.firstName;
+}
+
+// get email corresponding the id
+function getEmailFromID(p_session, p_id) {
+	for(int i = 0; i < customerData.customers.length; i++) {
+		if(customerData.customers[i].id == p_id) {
+			return customerData.customers[i].email;
+		}
+	}
+	return null;
 }
 
 // gets the user's email
