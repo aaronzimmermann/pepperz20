@@ -198,10 +198,10 @@ intents.matches('Statement', [
 
 // Authentication
 bot.dialog('/authentication', [
-    function (session) {
+    function (session, args, next) {
 		builder.Prompts.text(session, "Please enter in your Pepper Money UserID.");
     },
-	function (session, results) {
+	function (session, results, next) {
 		
 		// Get the user's response
 		var enteredUserId = results.response;
