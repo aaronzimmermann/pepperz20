@@ -217,7 +217,7 @@ bot.dialog('/authentication', [
 			builder.Prompts.text("We are going to authenticate your ID via your E-mail. Next you will need to enter the authentication code you receive via email into this chat. You should receive an email shortly, please enter the authentcation code below.");
 			next({code: acode});
 		}
-    }
+    },
 	function (session, results) {
 		
 		// Get the code the user entered
