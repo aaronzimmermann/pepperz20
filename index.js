@@ -219,6 +219,7 @@ bot.dialog('/authentication', [
 		}
     },
 	function (session, results) {
+		session.send("hello!");
 		
 		// Get the code the user entered
 		var userEnteredCode = results.response;
