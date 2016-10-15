@@ -203,15 +203,15 @@ bot.dialog('/authentication', [
     },
 	function (session, results) {
 		session.send(results.response);
-        session.send("We are going to authenticate your ID via your E-mail. You will need to enter the authentication code you receive\
-			via email into this chat. You should receive an email shortly");
+		sendAnEmail("noreply", "aaronzimmermann92@gmail.com", "Pepper Bot Authentication", "Test");
+        session.endDialog("We are going to authenticate your ID via your E-mail. You will need to enter the authentication code you receive via email into this chat. You should receive an email shortly");
     }
 ]);
 
 // Getting the account name from the user
 bot.dialog('/getAccountName', [
     function (session) {
-		builder.Prompts.text(session, "Which account are you interested in?");
+		builder.Prompts.text(session, "Whichnam account are you interested in?");
     },
     function (session, results) {
 		
@@ -265,50 +265,73 @@ bot.dialog('/endCurrentDialog', [
 // Functions
 //=========================================================
 
+// Sends an email
+function sendAnEmail(p_fromEmail, p_toEmail, p_subject, p_content) {
+    var helper = require('sendgrid').mail;
+    var from_email = new helper.Email(p_fromEmail);
+    var to_email = new helper.Email(p_toEmail);
+    var subject = p_subject;
+    var content = new helper.Content('text/plain', 'Hello, Email!');
+    var mail = new helper.Mail(from_email, subject, to_email, p_content);
+    
+    var sg = require("sendgrid")("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");
+    var request = sg.emptyRequest({
+      method: 'POST',
+      path: '/v3/mail/send',
+      body: mail.toJSON(),
+    });
+    sg.API(request, function(error, response) {
+		console.log(response.statusCode);
+		console.log(response.body);
+		console.log(response.headers);
+    });
+}
+
+
+
+
 // Logs in as the new user
-// Returns true on sucess
-function loginAsUser(p_newUserName, p_session) {
-	console.log("! " + customerData);
-	console.log("! " + customerData.customers);
-	console.log("! " + customerData.customers[0].name);
-	console.log("! " + customerData.customers[0].firstName);
+// Returns true on sucess (the user exists)
+// If there was a problem switching user then returns false
 	for(var i = 0; i < customerData.customers.length; i++) {
-		if(customerData.customers[i].name.toLowerCase() == p_newUserName.toLowerCase()) {
-			p_session.userData.currentUser = p_newUserName.toLowerCase();
+		if(customerData.customers[i].firstName.toLowerCase() == p_newUserName.toLowerCase()) {
+			p_session.userData.currentUser = customerData.customers[i].id;
 			return true;
 		}
 	}
 	return false;
 }
 
-// Returns the name of the current user
-function getCurrentUser(p_session) {
+// Returns the ID of the current user
+function getCurrentUserID(p_session) {
 	
 	// Load the first user by default if no user has been selected
 	if(p_session.userData.currentUser == null) {
-		p_session.userData.currentUser = customerData.customers[0].name;
+		p_session.userData.currentUser = customerData.customers[0].id;
 	}
 	
 	return p_session.userData.currentUser;
 }
 
-// Returns the data for the current user
+// Returns the data object for the current user
 function getCurrentUserData(p_session) {
 	
 	// Get the username
-	var username = getCurrentUser(p_session);
+	var userid = getCurrentUserID(p_session);
 	
 	// Get the user data
 	for(var i = 0; i < customerData.customers.length; i++) {
-		if(customerData.customers[i].name.toLowerCase() == username) {
+		if(customerData.customers[i].id == userid) {
 			return customerData.customers[i];
 		}
 	}
-
+	
+	// Return null if the user wasnt found
 	return null;
 }
 
 // Checks if the user wants to quit
+// Should be done a better way
 function checkForQuit(p_message, p_session) {
 	var word = p_message.toLowerCase();
 	
@@ -323,6 +346,9 @@ function checkForQuit(p_message, p_session) {
 }
 
 // Checks if the user has the current account
+// Returns true if the user does have the current account
+// Otherwise returns false
+// p_message: the name of the account e.g. "auto"
 function checkValidAccountName(p_message, p_session) {
 	
 	// Convert input to lower case
@@ -332,8 +358,7 @@ function checkValidAccountName(p_message, p_session) {
 	var data = getCurrentUserData(p_session);
 	
 	// Iterate through accounts
-	var numAccounts = data.accounts.length;
-	for(var i = 0; i < numAccounts; i++) {
+	for(var i = 0; i < data.accounts.length; i++) {
 		if(data.accounts[i].type == word) {
 			return true;
 		}
@@ -347,8 +372,6 @@ function listAccounts(p_session) {
 	
 	// Get data
 	var data = getCurrentUserData(p_session);
-	console.log(">>>> " + data);
-	console.log("---- " + data.accounts);
 	
 	// Add account names to string
 	var accountNamesString = "";
@@ -368,16 +391,10 @@ function listAccounts(p_session) {
 		accountNamesString += data.accounts[i].type;
 	}
 	
-	return accountNamesString;
-}
-
-// Returns the value in an account
-function getAccountValue(p_accountName, p_session) {
-	var accountData = getAccount(p_accountName, p_session);
-	if(accountData != null) {
-		return accountData.amount;
+	if(accountNamesString == "") {
+		return "no accounts"
 	} else {
-		return null;
+		return accountNamesString;
 	}
 }
 
@@ -395,6 +412,16 @@ function getAccount(p_accountName, p_session) {
 		}
 	}
 	return null;
+}
+
+// Returns the value in an account
+function getAccountValue(p_accountName, p_session) {
+	var accountData = getAccount(p_accountName, p_session);
+	if(accountData != null) {
+		return accountData.amount;
+	} else {
+		return null;
+	}
 }
 
 // Checks if the user is authenthicated
