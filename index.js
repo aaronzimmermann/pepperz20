@@ -94,7 +94,6 @@ intents.matches('NewLogin', [
 		if(!loginAsUser(accountType.entity, session)) {
 			session.send('That user does not exist.');
 		} else {
-			session.send("Current: " + getCurrentUserID(session));
 			session.send('Now logged in as: ' + getUserFirstName(session));
 		}
     }
@@ -273,7 +272,7 @@ function sendAnEmail(p_fromEmail, p_toEmail, p_subject, p_content) {
     var to_email = new helper.Email(p_toEmail);
     var subject = p_subject;
     var content = new helper.Content('text/plain', 'Hello, Email!');
-    var mail = new helper.Mail(from_email, subject, to_email, p_content);
+    var mail = new helper.Mail(from_email, subject, to_email, content);
     
     var sg = require("sendgrid")("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");
     var request = sg.emptyRequest({
