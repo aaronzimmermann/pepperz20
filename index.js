@@ -81,7 +81,7 @@ intents.onDefault(builder.DialogAction.send('Sorry could you rephrase that?'));
 // Log in as new user
 intents.matches('CurrentUser', [
     function (session, args, next) {
-        session.send('You are currently: ' + getCurrentUser(session));
+        session.send('You are currently: ' + getUserFirstName(session));
     }
 ]);
 
@@ -94,7 +94,7 @@ intents.matches('NewLogin', [
 		if(!loginAsUser(accountType.entity, session)) {
 			session.send('That user does not exist.');
 		} else {
-			session.send('Now logged in as: ' + getCurrentUser(session));
+			session.send('Now logged in as: ' + getUserFirstName(session));
 		}
     }
 ]);
