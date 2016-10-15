@@ -9,16 +9,12 @@ var builder = require('botbuilder');
 // Loading external JSON
 var request = require("request");
 
-
-
 //=========================================================
 // Load data file
 //=========================================================
 
 var url = "http://aaronzimmermann.net/data.json";
 var customerData = null;
-//var u//sers = [{name: 'Alice', date: 12 , amount: 1200},
-       //      {name: 'Bob', date: 15 , amount: 1400]}];
 
 // Load the file
 request({
@@ -28,15 +24,9 @@ request({
 
     if (!error && response.statusCode === 200) {
 		customerData = body;
-		console.log("PP: Customer data loaded.");
+		console.log("Customer data JSON file loaded.");
     }
 })
-
-
-//=========================================================
-// Properties
-//=========================================================
-
 
 //=========================================================
 // Bot Setup
@@ -64,8 +54,6 @@ var recognizer = new builder.LuisRecognizer(model);
 var intents  = new builder.IntentDialog({ recognizers: [recognizer] });
 bot.dialog('/', intents );
 
-// Add intent handlers
-
 //=========================================================
 // In the future these should be added to Luis
 //=========================================================
@@ -75,6 +63,13 @@ var quitWords = ["don't worry", "dont worry", "quit", "stop", "nevermind", "canc
 //=========================================================
 // Intents
 //=========================================================
+
+// Check if the user is authenticated
+intents.begin(session) {
+	if(!isUserAuthenticated(session)) {
+		session.beginDialog('/authentication');
+	}
+}
 
 // Default message
 intents.onDefault(builder.DialogAction.send('Sorry could you rephrase that?'));
@@ -194,6 +189,14 @@ intents.matches('Statement', [
 //=========================================================
 // Bots Dialogs
 //=========================================================
+
+// Authentication
+bot.dialog('/authentication', [
+    function (session) {
+		session.send("I have noticed that this is the first time you are using our chatbot.");
+		session.send("We will need to authenticate who you are. Could you please enter your Pepper Money UserID.");
+    }
+]);
 
 // Getting the account name from the user
 bot.dialog('/getAccountName', [
@@ -364,8 +367,6 @@ function getAccountValue(p_accountName, p_session) {
 		return null;
 	}
 }
-// Returns the date a
-//function get Account(p_accountname, 
 
 // Returns the account data
 function getAccount(p_accountName, p_session) {
@@ -381,4 +382,12 @@ function getAccount(p_accountName, p_session) {
 		}
 	}
 	return null;
+}
+
+// Checks if the user is authenthicated
+// Returns true if the user is authenthicated
+// Otherwise returns false if the user has not been authenticated
+function isUserAuthenticated(p_session) {
+	var data = getCurrentUserData(p_session);
+	return data.authenticated;
 }
