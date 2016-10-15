@@ -65,11 +65,12 @@ var quitWords = ["don't worry", "dont worry", "quit", "stop", "nevermind", "canc
 //=========================================================
 
 // Check if the user is authenticated
-intents.matches(/hello/i, [
+intents.matches(/authenticate/i, [
 	function (session, args, next) {
-		console.log(">>>> Checking for authentication");
 		if(!isUserAuthenticated(session)) {
 			session.beginDialog('/authentication');
+		} else {
+			session.send('You are authenthicated');
 		}
 	}
 ]);
@@ -196,8 +197,10 @@ intents.matches('Statement', [
 // Authentication
 bot.dialog('/authentication', [
     function (session) {
-		session.send("I have noticed that this is the first time you are using our chatbot.");
-		session.send("We will need to authenticate who you are. Could you please enter your Pepper Money UserID.");
+		var message = "I have noticed that this is the first time you are using PepperBot.";
+		message += "\n";
+		message += "I will need to authenticate who you are. Could you please enter your Pepper Money UserID.";
+		session.endDialog(message);
     }
 ]);
 
