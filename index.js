@@ -489,7 +489,7 @@ function getUserFirstName(p_session) {
 
 // get email corresponding the id
 function getEmailFromID(p_session, p_id) {
-	for(int i = 0; i < customerData.customers.length; i++) {
+	for(var i = 0; i < customerData.customers.length; i++) {
 		if(customerData.customers[i].id == p_id) {
 			return customerData.customers[i].email;
 		}
