@@ -94,7 +94,7 @@ intents.matches('NewLogin', [
 		if(!loginAsUser(accountType.entity, session)) {
 			session.send('That user does not exist.');
 		} else {
-			session.send(getCurrentUserID(session));
+			session.send("Current: " + getCurrentUserID(session));
 			session.send('Now logged in as: ' + getUserFirstName(session));
 		}
     }
