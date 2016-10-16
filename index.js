@@ -204,7 +204,7 @@ intents.matches('Statement', [
 	function (session, results) {
 		
 		// Show a text summary
-		session.send("Here is your" + results.response + " statement: ");
+		session.send("Here is your " + results.response + " statement: ");
 		
 		// Send an image
 		var msg = new builder.Message(session).attachments([{
