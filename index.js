@@ -91,9 +91,11 @@ intents.matches('CurrentUser', [
 intents.matches('NewLogin', [
     function (session, args, next) {
         
-		// Get new user
-		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'User');
-		if(!loginAsUser(accountType.entity, session)) {
+		// Get the new user's name
+		var userName = builder.EntityRecognizer.findEntity(args.entities, 'User');
+		
+		// Log in as the new user
+		if(!loginAsUser(userName.entity, session)) {
 			session.send('That user does not exist.');
 		} else {
 			session.send('Now logged in as: ' + getUserFirstName(session));
@@ -184,7 +186,7 @@ intents.matches('Auto Repayment Amount', [
 }]);
 
 
-// Statement for any account
+// Statement for any account (auto and mortgage)
 intents.matches('Statement', [
     function (session, args, next) {
 		
@@ -280,7 +282,7 @@ bot.dialog('/getAccountName', [
 		
 		// If the user only has one account then just assume that account
 		else if(getNumAccounts(session) == 1) {
-			var defaultAccountName = getDefaultAccount(session);
+			var defaultAccountName = getDefaultAccountName(session);
 			session.endDialogWithResult({response: defaultAccountName});
 		}
 		
