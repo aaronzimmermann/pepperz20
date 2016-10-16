@@ -13,7 +13,7 @@ var request = require("request");
 // Load data file
 //=========================================================
 
-var url = "http://aaronzimmermann.net/data.json";
+var url = "http://aaronzimmermann.net/pb/data.json";
 var customerData = null;
 
 // Load the file
@@ -180,16 +180,39 @@ intents.matches('Auto Repayment Amount', [
 }]);
 
 
-// Statement
+// Statement for any account
 intents.matches('Statement', [
     function (session, args, next) {
-		session.send("Here is your statement: ");
-        var msg = new builder.Message(session).attachments([{
-			contentType: "application/pdf",
-			contentUrl: "http://aaronzimmermann.net/statement.pdf"
+		
+		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
+		
+		// User did not state an account
+		if(accountType == null) {
+			session.beginDialog('/getAccountName');
+		}
+		
+		// User states an account they do not have
+		else if(!checkValidAccountName(accountType.entity, session)) {
+			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
+		}
+		
+		// We have a valid account name, move onto the next step
+		else {
+			next({response: accountType.entity});
+		}
+	},
+	function (session, args) {
+		
+		// Show a text summary
+		session.send("Here is your" + results.response + " statement: ");
+		
+		// Send an image
+		var msg = new builder.Message(session).attachments([{
+			contentType: "image/png",
+			contentUrl: getStatementImageUrl(results.response, session)
 		}]);
 		session.send(msg);
-    }
+	}
 ]);
 
 //=========================================================
@@ -455,7 +478,7 @@ function listAccounts(p_session) {
 	}
 }
 
-// Returns the account data
+// Returns the account data for the specified account name
 function getAccount(p_accountName, p_session) {
 	
 	// Get data
@@ -479,6 +502,12 @@ function getAccountValue(p_accountName, p_session) {
 	} else {
 		return null;
 	}
+}
+
+// Returns the URL to the specified account's statement
+function getStatementImageUrl(p_accountName, p_session) {
+	var accountData = getAccount(p_accountName, p_session);
+	return accountData.statement.img;
 }
 
 // Checks if the user is authenthicated
