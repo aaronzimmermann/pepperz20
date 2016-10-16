@@ -201,7 +201,7 @@ intents.matches('Statement', [
 			next({response: accountType.entity});
 		}
 	},
-	function (session, args) {
+	function (session, results) {
 		
 		// Show a text summary
 		session.send("Here is your" + results.response + " statement: ");
