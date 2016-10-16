@@ -131,7 +131,11 @@ intents.matches('AccountEnquiry', [
 		
 		// User did not state an account
 		if(accountType == null) {
-			session.beginDialog('/getAccountName');
+			if(getNumAccounts(session) == 0) {
+				session.endDialog("I'm sorry but you don't have any accounts.");
+			} else {
+				session.beginDialog('/getAccountName');
+			}
 		}
 		
 		// User states an account they do not have
@@ -188,7 +192,11 @@ intents.matches('Statement', [
 		
 		// User did not state an account
 		if(accountType == null) {
-			session.beginDialog('/getAccountName');
+			if(getNumAccounts(session) == 0) {
+				session.endDialog("I'm sorry but you don't have any accounts.");
+			} else {
+				session.beginDialog('/getAccountName');
+			}
 		}
 		
 		// User states an account they do not have
@@ -259,9 +267,27 @@ bot.dialog('/authentication', [
 ]);
 
 // Getting the account name from the user
+// This is used when the user specified an intent but not the account name
+// If the user has no accounts then the dialog will return immediately with "NULL"
+// If the user has only one account then the dialog will return immediately with that account name
 bot.dialog('/getAccountName', [
     function (session) {
-		builder.Prompts.text(session, "Whichnam account are you interested in?");
+		
+		// If the user does not have any accounts
+		if(getNumAccounts(session) == 0) {
+			session.endDialogWithResult({response: "NULL"});
+		}
+		
+		// If the user only has one account then just assume that account
+		else if(getNumAccounts(session) == 1) {
+			var defaultAccountName = getDefaultAccount(session);
+			session.endDialogWithResult({response: defaultAccountName});
+		}
+		
+		// Ask the user which account they would like
+		else {
+			builder.Prompts.text(session, "Which account are you interested in?");
+		}
     },
     function (session, results) {
 		
@@ -275,31 +301,8 @@ bot.dialog('/getAccountName', [
 		
 		// The account name is not valid
 		else {
-			session.replaceDialog('/rephraseAccountName');
-		}
-    }
-]);
-
-// Getting the user to rephrase the account name
-bot.dialog('/rephraseAccountName', [
-    function (session) {
-		var accountNamesString = listAccounts(session);
-		builder.Prompts.text(session, "Could you rephrase that account name? The accounts you have are " + accountNamesString + ".");
-    },
-    function (session, results) {
-		
-		// Check for quit
-		if(checkForQuit(results.response, session)) { }
-		
-		// Get the account name this time
-		else if(checkValidAccountName(results.response, session)) {
-			session.send('Ah I see what you mean.');
-			session.endDialogWithResult(results);
-		}
-
-		// Still unsure about the account name, prompt again
-		else {
-			session.replaceDialog('/rephraseAccountName');
+			session.send("You don't have an " + results.response + " account. Could you try rephrasing that account.")
+			session.replaceDialog('/getAccountName');
 		}
     }
 ]);
@@ -501,6 +504,24 @@ function getAccountValue(p_accountName, p_session) {
 		return accountData.amount;
 	} else {
 		return null;
+	}
+}
+
+// Gets the number of accounts the user has
+function getNumAccounts(p_session) {
+	var data = getCurrentUserData(p_session);
+	return data.accounts.length;
+}
+
+// Get's the user's default account
+// The default account is the first account in their list
+// Returns null if there is no accounts
+function getDefaultAccountName(p_session) {
+	if(getNumAccounts(p_session) == 0) {
+		return null;
+	} else {
+		var data = getCurrentUserData(p_session);
+		return data.accounts[0].type;
 	}
 }
 
