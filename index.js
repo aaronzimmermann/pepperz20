@@ -213,8 +213,12 @@ intents.matches('Statement', [
 	},
 	function (session, results) {
 		
+		// Get account info
+		var accountInfo = getAccount(results.response, session);
+		
 		// Show a text summary
-		session.send("Here is your " + results.response + " statement: ");
+		session.send("Here is a summary of your " + results.response + " statement: ");
+		session.send("Balance: " + accountInfo.amount + "\nInterest: " + accountInfo.interest + "\nPayment summary:");
 		
 		// Send an image
 		var msg = new builder.Message(session).attachments([{
@@ -222,6 +226,14 @@ intents.matches('Statement', [
 			contentUrl: getStatementImageUrl(results.response, session)
 		}]);
 		session.send(msg);
+		
+		/*// Email button
+		var emailStatement = {
+			"Email Statement": {
+			}
+		};
+        builder.Prompts.choice(session, "", emailStatement); 
+		accountInfo.amount*/
 	}
 ]);
 
