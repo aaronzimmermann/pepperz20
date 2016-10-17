@@ -156,13 +156,12 @@ intents.matches('AccountEnquiry', [
 		session.send("Your " + results.response + " account is " + getAccountValue(results.response, session));
     }
 ]);
-//Auto
+// Auto 
 intents.matches('List', [
     function (session, args, next) {
     	
 		session.send("Type “List” to get guided help anytime. I’m learning more everyday. Here are some things I can help you with:, Balance,Transactions,Live Help,Auto,Credit Cards,Mortgage,Interest Rates : ");
 }]);
-
 // Auto Repayment Date
 intents.matches('Auto Repayment Date', [
     function (session, args, next)
