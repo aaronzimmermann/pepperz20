@@ -223,7 +223,43 @@ intents.matches('Auto Repayment Amount', [
 		session.send("Sorry the user doesnt have an account for auto");
 	}
 }]);
-
+//payment for any account (auto and mortgage)
+intents.matches('Repayment', [
+    function (session, args, next) {
+		
+		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
+		
+		// User did not state an account
+		if(accountType == null) {
+			if(getNumAccounts(session) == 0) {
+				session.endDialog("I'm sorry but you don't have any accounts.");
+			} else {
+				session.beginDialog('/getAccountName');
+			}
+		}
+		
+		// User states an account they do not have
+		else if(!checkValidAccountName(accountType.entity, session)) {
+			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
+		}
+		
+		// We have a valid account name, move onto the next step
+		else {
+			next({responses: accountType.entity});
+		}
+	},
+	function (session, result) {
+		
+		// Get account info
+		var accountInfo = getAccount(result.responses, session);
+		
+		// Show a text summary
+		session.send("Balance: " + accountInfo.amount + "\nInterest: " + accountInfo.interest + "\nBalance"+accountInfo.balance);
+		
+		}]);
+		session.send(msg);
+	}
+]);
 
 // Statement for any account (auto and mortgage)
 intents.matches('Statement', [
