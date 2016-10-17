@@ -194,9 +194,6 @@ intents.matches('AccountDischarge', [
 ]);
 
 
-
-
-//payment for any account (auto and mortgage)
 intents.matches('Repayment', [
     function (session, args, next) {
 		
@@ -222,11 +219,51 @@ intents.matches('Repayment', [
 		}
 	},
 	function (session, results) {
+		
+		// Get account info
+		var accountInfo = getAccount(results.response, session);
+		
+		// Show a text summary
+		session.send("Here is a summary of your " + results.response + " statement: ");
+		session.send("amount: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nBalance :"+accountInfo.balance);
+		
+		
+		
+	}
+]);
+
+
+//payment for any account (auto and mortgage)
+//intents.matches('Repayment', [
+  //  function (session, args, next) {
+		
+	//	var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
+		
+		// User did not state an account
+	//	if(accountType == null) {
+	//		if(getNumAccounts(session) == 0) {
+	//			session.endDialog("I'm sorry but you don't have any accounts.");
+	//		} else {
+	//			session.beginDialog('/getAccountName');
+	//		}
+	//	}
+		
+	//	// User states an account they do not have
+	//	else if(!checkValidAccountName(accountType.entity, session)) {
+	//		session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
+	//	}
+		
+		// We have a valid account name, move onto the next step
+	//	else {
+	//		next({response: accountType.entity});
+	//	}
+	//},
+	//function (session, results) {
 	
-			var accountInfo = getAccount(results.response, session);
+	//		var accountInfo = getAccount(results.response, session);
 		//if(accountInfo != null) {
 		// Show a text summary
-		session.send("Interest: " + accountInfo.interest + "\nBalance"+accountInfo.balance);
+	//	session.send("Interest: " + accountInfo.interest + "\nBalance"+accountInfo.balance);
 		//session.send("Sorry the you don't have an account, would you like to open one??? if you do then this would be helpful https://www.pepper.com.au");
 	
 //	} else {
