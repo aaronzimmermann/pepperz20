@@ -127,6 +127,7 @@ intents.matches('ListAccounts', [
 
 // Enquire about an account
 // (deprecated)
+/*
 intents.matches('AccountEnquiry', [
 	function (session, args, next) {
 		
@@ -157,7 +158,7 @@ intents.matches('AccountEnquiry', [
 		session.send("Your " + results.response + " account is " + getAccountValue(results.response, session));
     }
 ]);
-
+*/
 
 // Enquire about an account discharge amount
 intents.matches('AccountDischarge', [
