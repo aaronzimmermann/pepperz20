@@ -224,7 +224,6 @@ intents.matches('Repayment', [
 		var accountInfo = getAccount(results.response, session);
 		
 		// Show a text summary
-		session.send("Here is a summary of your " + results.response + " statement: ");
 		session.send("amount: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nBalance :"+accountInfo.balance);
 		
 		
@@ -272,8 +271,8 @@ intents.matches('Repayment', [
 //	}
 		
 		
-	}
-]);
+	//}
+//]);
 
 // Statement for any account (auto and mortgage)
 intents.matches('Statement', [
