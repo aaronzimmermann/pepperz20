@@ -245,13 +245,13 @@ intents.matches('Repayment', [
 		
 		// We have a valid account name, move onto the next step
 		else {
-			next({responses: accountType.entity});
+			next({response: accountType.entity});
 		}
 	},
-	function (session, result) {
+	function (session, results) {
 		
 		// Get account info
-		var accountInfo = getAccount(result.responses, session);
+		var accountInfo = getAccount(results.response, session);
 		
 		// Show a text summary
 		session.send("Balance: " + accountInfo.amount + "\nInterest: " + accountInfo.interest + "\nBalance"+accountInfo.balance);
