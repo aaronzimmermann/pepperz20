@@ -268,7 +268,7 @@ intents.matches('Statement', [
 		
 		// Show a text summary
 		session.send("Here is a summary of your " + results.response + " statement: ");
-		session.send("Balance: " + accountInfo.amount + "\nInterest: " + accountInfo.interest + "\nPayment summary:");
+		session.send("Balance: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nPayment summary:");
 		
 		// Send an image
 		var msg = new builder.Message(session).attachments([{
