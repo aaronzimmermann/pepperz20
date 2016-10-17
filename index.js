@@ -212,7 +212,8 @@ intents.matches('Repayment', [
 		// User states an account they do not have
 		else if(!checkValidAccountName(accountType.entity, session)) {
 			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account, if you want to open an account here is the link https://www.pepper.com.au ");
-			builder.Prompts.confirm(session, "Are you sure you wish to cancel your order?");
+			builder.Prompts.confirm(session, "Do you want to create a new account?");
+			
 		}
 		
 		// We have a valid account name, move onto the next step
