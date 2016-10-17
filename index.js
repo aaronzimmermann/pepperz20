@@ -160,7 +160,8 @@ intents.matches('AccountEnquiry', [
 ]);
 */
 
-// Enquire about an account discharge amount
+// Enquire about an account discharge/payout amount
+// For auto and mortgage
 intents.matches('AccountDischarge', [
 	function (session, args, next) {
 		
