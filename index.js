@@ -255,9 +255,7 @@ intents.matches('Repayment', [
 		
 		// Show a text summary
 		session.send("Balance: " + accountInfo.amount + "\nInterest: " + accountInfo.interest + "\nBalance"+accountInfo.balance);
-		
-		
-		session.send(msg);
+	
 	}
 ]);
 
