@@ -48,19 +48,16 @@ var connector = new builder.ChatConnector({
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
-/*
+
 // Create LUIS recognizer that points at our model and add it as the root '/' dialog for our Cortana Bot.
 var model = 'https://api.projectoxford.ai/luis/v1/application?id=9eec8197-9eaa-49e2-8d39-69c6807bba42&subscription-key=54ced78cc26941b2b0c2048ea4e32fb8';
 var recognizer = new builder.LuisRecognizer(model);
 var intents  = new builder.IntentDialog({ recognizers: [recognizer] });
 bot.dialog('/', intents );
-*/
 
 bot.dialog('/', function (session) {
     session.send("Hello World");
 });
-
-/*
 
 //=========================================================
 // In the future these should be added to Luis
@@ -573,4 +570,4 @@ function getEmailFromID(p_session, p_id) {
 function getUserEmail(p_session) {
 	var data = getCurrentUserData(p_session);
 	return data.email;
-}*/
+}
