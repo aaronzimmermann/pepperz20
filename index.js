@@ -193,36 +193,9 @@ intents.matches('AccountDischarge', [
     }
 ]);
 
-// Auto 
-intents.matches('List', [
-    function (session, args, next) {
-    	
-		session.send("Type “List” to get guided help anytime. I’m learning more everyday. Here are some things I can help you with:, Balance,Transactions,Live Help,Auto,Credit Cards,Mortgage,Interest Rates : ");
-}]);
 
-// Auto Repayment Date
-intents.matches('Auto Repayment Date', [
-    function (session, args, next)
-     {
-     var accountData = getAccount("auto", session);
-	if(accountData != null) {
-		session.send("Date:" + accountData.date);
-	} else {
-		session.send("Sorry the user doesnt have an account for auto");
-	}
-}]);
 
-// Auto Repayment Amount
-intents.matches('Auto Repayment Amount', [
-    function (session, args, next)
-     {
-     var accountData = getAccount("auto", session);
-	if(accountData != null) {
-		session.send("Amount:" + accountData.amount);
-	} else {
-		session.send("Sorry the user doesnt have an account for auto");
-	}
-}]);
+
 //payment for any account (auto and mortgage)
 intents.matches('Repayment', [
     function (session, args, next) {
@@ -249,13 +222,17 @@ intents.matches('Repayment', [
 		}
 	},
 	function (session, results) {
-		
-		// Get account info
-		var accountInfo = getAccount(results.response, session);
+	if(accountData != null) {
+			var accountInfo = getAccount(results.response, session);
 		
 		// Show a text summary
-		session.send("Balance: " + accountInfo.amount + "\nInterest: " + accountInfo.interest + "\nBalance"+accountInfo.balance);
+		session.send("\nInterest: " + accountInfo.interest + "\nBalance"+accountInfo.balance);
 	
+	} else {
+		session.send("Sorry the user doesnt have an account for auto, would you like to open one??? if you do then this would be helpful https://www.pepper.com.au");
+	}
+		
+		
 	}
 ]);
 
