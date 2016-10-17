@@ -199,7 +199,7 @@ intents.matches('Repayment', [
 		
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
 		
-		// User did not state an account
+		// User does not have any accoutns
 		if(accountType == null) {
 			if(getNumAccounts(session) == 0) {
 				session.endDialog("I'm sorry but you don't have any  accounts, if you want to open an account here is the link https://www.pepper.com.au");
@@ -209,14 +209,12 @@ intents.matches('Repayment', [
 			}
 		}
 		
-		// User states an account they do not have
+		// User asks for an account they do not have
 		else if(!checkValidAccountName(accountType.entity, session)) {
-			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account, if you want to open an account here is the link https://www.pepper.com.au ");
-			
-			
+			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account,if you want to open an account here is the link https://www.pepper.com.au ");
 		}
 		
-		// We have a valid account name, move onto the next step
+		// everything is valid we can move to the next step
 		else {
 			next({response: accountType.entity});
 		}
