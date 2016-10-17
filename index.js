@@ -202,7 +202,8 @@ intents.matches('Repayment', [
 		// User did not state an account
 		if(accountType == null) {
 			if(getNumAccounts(session) == 0) {
-				session.endDialog("I'm sorry but you don't have any accounts.");
+				//session.endDialog("I'm sorry but you don't have any accounts.");
+				builder.Prompts.confirm(session, "Are you sure you wish to cancel your order?");
 			} else {
 				session.beginDialog('/getAccountName');
 			}
