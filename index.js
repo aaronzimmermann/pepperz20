@@ -212,6 +212,8 @@ intents.matches('Repayment', [
 		// User asks for an account they do not have
 		else if(!checkValidAccountName(accountType.entity, session)) {
 			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account,if you want to open an account here is the link https://www.pepper.com.au ");
+		builder.Prompts.confirm(session, "Do you want to create a new account ?");
+		
 		}
 		
 		// everything is valid we can move to the next step
@@ -227,14 +229,14 @@ intents.matches('Repayment', [
 		// Show a text summary
 		session.send("amount: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nBalance :"+accountInfo.balance);
 		}
-	//function (session, results,next) {	
-	//	if(results.response == confirm_yes)
-	//	{
-	//	session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account, if you want to open an account here is the link https://www.pepper.com.au ");
-	//}else{
-	//session.endDialog("no worries thanks for visiting");
-	//}	
-	//}
+	function (session, results,next) {	
+		if(response == confirm_yes)
+		{
+	session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account, if you want to open an account here is the link https://www.pepper.com.au ");
+	}else{
+	session.endDialog("no worries thanks for visiting");
+	}	
+	}
 ]);
 
 
