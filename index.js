@@ -224,15 +224,15 @@ intents.matches('Repayment', [
 	function (session, results) {
 	
 			var accountInfo = getAccount(results.response, session);
-		if(accountInfo != null) {
+		//if(accountInfo != null) {
 		// Show a text summary
 		session.send("Interest: " + accountInfo.interest + "\nBalance"+accountInfo.balance);
 		//session.send("Sorry the you don't have an account, would you like to open one??? if you do then this would be helpful https://www.pepper.com.au");
 	
-	} else {
+//	} else {
 			session.send("Sorry the you don't have an account, would you like to open one??? if you do then this would be helpful https://www.pepper.com.au");
 			//session.send("Interest: " + accountInfo.interest + "\nBalance"+accountInfo.balance);
-	}
+//	}
 		
 		
 	}
