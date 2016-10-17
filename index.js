@@ -202,7 +202,7 @@ intents.matches('Repayment', [
 		// User did not state an account
 		if(accountType == null) {
 			if(getNumAccounts(session) == 0) {
-				session.endDialog("I'm sorry but you don't have any accounts.");
+				session.endDialog("I'm sorry but you don't have any  accounts, if you want to open an account here is the link https://www.pepper.com.au");
 				
 			} else {
 				session.beginDialog('/getAccountName');
