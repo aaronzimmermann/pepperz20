@@ -229,7 +229,7 @@ intents.matches('Repayment', [
 		session.send("Interest: " + accountInfo.interest + "\nBalance"+accountInfo.balance);
 	
 	} else {
-		session.send("Sorry the user doesnt have an account for auto, would you like to open one??? if you do then this would be helpful https://www.pepper.com.au");
+		session.send("Sorry the you don't have an account, would you like to open one??? if you do then this would be helpful https://www.pepper.com.au");
 	}
 		
 		
