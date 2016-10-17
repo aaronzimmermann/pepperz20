@@ -126,6 +126,7 @@ intents.matches('ListAccounts', [
 ]);
 
 // Enquire about an account
+// (deprecated)
 intents.matches('AccountEnquiry', [
 	function (session, args, next) {
 		
@@ -156,12 +157,47 @@ intents.matches('AccountEnquiry', [
 		session.send("Your " + results.response + " account is " + getAccountValue(results.response, session));
     }
 ]);
+
+
+// Enquire about an account discharge amount
+intents.matches('AccountDischarge', [
+	function (session, args, next) {
+		
+		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
+		
+		// User did not state an account
+		if(accountType == null) {
+			if(getNumAccounts(session) == 0) {
+				session.endDialog("I'm sorry but you don't have any accounts.");
+			} else {
+				session.beginDialog('/getAccountName');
+			}
+		}
+		
+		// User states an account they do not have
+		else if(!checkValidAccountName(accountType.entity, session)) {
+			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
+		}
+		
+		// We have a valid account name, move onto the next step
+		else {
+			next({response: accountType.entity});
+		}
+    },
+	function (session, results) {
+		
+		// Display the discharge amount to the user
+		session.send("For your current " + results.response + " loan you have " + getAccountDischarge(results.response, session) + " to complete the loan.");
+    }
+]);
+
 // Auto 
 intents.matches('List', [
     function (session, args, next) {
     	
 		session.send("Type “List” to get guided help anytime. I’m learning more everyday. Here are some things I can help you with:, Balance,Transactions,Live Help,Auto,Credit Cards,Mortgage,Interest Rates : ");
 }]);
+
 // Auto Repayment Date
 intents.matches('Auto Repayment Date', [
     function (session, args, next)
@@ -173,6 +209,7 @@ intents.matches('Auto Repayment Date', [
 		session.send("Sorry the user doesnt have an account for auto");
 	}
 }]);
+
 // Auto Repayment Amount
 intents.matches('Auto Repayment Amount', [
     function (session, args, next)
@@ -501,6 +538,12 @@ function getAccount(p_accountName, p_session) {
 		}
 	}
 	return null;
+}
+
+// Returns the discharge/payout amount for an account
+function getAccountDischarge(p_accountName, p_session) {
+	var accountData = getAccount(p_accountName, p_session);
+	return accountData.discharge;
 }
 
 // Returns the value in an account
