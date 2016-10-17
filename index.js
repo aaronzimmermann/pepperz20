@@ -226,7 +226,7 @@ intents.matches('Repayment', [
 			var accountInfo = getAccount(results.response, session);
 		
 		// Show a text summary
-		session.send("\nInterest: " + accountInfo.interest + "\nBalance"+accountInfo.balance);
+		session.send("deduction " + accountInfo.amount + "\nInterest: " + accountInfo.interest + "\nBalance"+accountInfo.balance);
 	
 	} else {
 		session.send("Sorry the user doesnt have an account for auto, would you like to open one??? if you do then this would be helpful https://www.pepper.com.au");
