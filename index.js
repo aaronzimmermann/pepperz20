@@ -292,7 +292,7 @@ intents.matches('Repayment', [
 	//	else {
 	//		next({response: accountType.entity});
 	//	}
-	//},
+	// },
 	//function (session, results) {
 	
 	//		var accountInfo = getAccount(results.response, session);
