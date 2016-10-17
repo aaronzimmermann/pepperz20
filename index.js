@@ -202,8 +202,8 @@ intents.matches('Repayment', [
 		// User did not state an account
 		if(accountType == null) {
 			if(getNumAccounts(session) == 0) {
-				//session.endDialog("I'm sorry but you don't have any accounts.");
-				builder.Prompts.confirm(session, "Are you sure you wish to cancel your order?");
+				session.endDialog("I'm sorry but you don't have any accounts.");
+				
 			} else {
 				session.beginDialog('/getAccountName');
 			}
@@ -212,6 +212,7 @@ intents.matches('Repayment', [
 		// User states an account they do not have
 		else if(!checkValidAccountName(accountType.entity, session)) {
 			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account, if you want to open an account here is the link https://www.pepper.com.au ");
+			builder.Prompts.confirm(session, "Are you sure you wish to cancel your order?");
 		}
 		
 		// We have a valid account name, move onto the next step
