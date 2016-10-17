@@ -221,7 +221,7 @@ intents.matches('Repayment', [
 			next({response: accountType.entity});
 		}
 	},
-	function (session, results) {
+	function (session, results,next) {
 		
 		// Get account info
 		var accountInfo = getAccount(results.response, session);
@@ -229,8 +229,12 @@ intents.matches('Repayment', [
 		// Show a text summary
 		session.send("amount: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nBalance :"+accountInfo.balance);
 		
-		
-		
+		if(results.response == yes)
+		{
+		session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account, if you want to open an account here is the link https://www.pepper.com.au ");
+	}else{
+	session.endDialog("no worries thanks for visiting");
+	}	
 	}
 ]);
 
