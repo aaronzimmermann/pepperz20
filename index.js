@@ -203,7 +203,7 @@ intents.matches('Repayment', [
 		if(accountType == null) {
 			if(getNumAccounts(session) == 0) {
 				session.endDialog("I'm sorry but you don't have any  accounts, if you want to open an account here is the link https://www.pepper.com.au");
-				
+				builder.Prompts.confirm(session, "Do you want to create a new account ?");
 			} else {
 				session.beginDialog('/getAccountName');
 			}
