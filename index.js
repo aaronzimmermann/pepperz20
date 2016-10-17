@@ -203,6 +203,7 @@ intents.matches('Repayment', [
 		if(accountType == null) {
 			if(getNumAccounts(session) == 0) {
 				session.endDialog("I'm sorry but you don't have any accounts.");
+				
 			} else {
 				session.beginDialog('/getAccountName');
 			}
@@ -210,7 +211,9 @@ intents.matches('Repayment', [
 		
 		// User states an account they do not have
 		else if(!checkValidAccountName(accountType.entity, session)) {
-			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
+			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account, if you want to open an account here is the link https://www.pepper.com.au ");
+			
+			
 		}
 		
 		// We have a valid account name, move onto the next step
@@ -224,48 +227,17 @@ intents.matches('Repayment', [
 		var accountInfo = getAccount(results.response, session);
 		
 		// Show a text summary
-		session.send("amount: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nBalance" + accountInfo+);
-		
-		
-	}
+		session.send("amount: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nBalance :"+accountInfo.balance);
+		}
+	//function (session, results,next) {	
+	//	if(results.response == confirm_yes)
+	//	{
+	//	session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account, if you want to open an account here is the link https://www.pepper.com.au ");
+	//}else{
+	//session.endDialog("no worries thanks for visiting");
+	//}	
+	//}
 ]);
-
-//intents.matches('Repayment', [
-  //  function (session, args, next) {
-		
-	//	var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-		
-		// User did not state an account
-	//	if(accountType == null) {
-	//		if(getNumAccounts(session) == 0) {
-	//			session.endDialog("I'm sorry but you don't have any accounts.");
-				
-	//		} else {
-	//			session.beginDialog('/getAccountName');
-	//		}
-	//	}
-		
-		// User states an account they do not have
-	//	else if(!checkValidAccountName(accountType.entity, session)) {
-	//		session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account, if you want to open an account here is the link https://www.pepper.com.au ");
-			
-			
-	//	}
-		
-		// We have a valid account name, move onto the next step
-	//	else {
-	//		next({response: accountType.entity});
-	//	}
-	//},
-//	function (session, results) {
-//		
-		// Get account info
-//		var accountInfo = getAccount(results.response, session);
-		
-		// Show a text summary
-//		session.send("amount: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nBalance :"+accountInfo.balance);
-//		}
-//]);
 
 
 //payment for any account (auto and mortgage)
@@ -292,7 +264,7 @@ intents.matches('Repayment', [
 	//	else {
 	//		next({response: accountType.entity});
 	//	}
-	// },
+	//},
 	//function (session, results) {
 	
 	//		var accountInfo = getAccount(results.response, session);
