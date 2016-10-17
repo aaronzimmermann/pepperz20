@@ -193,7 +193,7 @@ intents.matches('AccountDischarge', [
     }
 ]);
 
-
+// Repayment for both auto and mortgage
 intents.matches('Repayment', [
     function (session, args, next) {
 		
@@ -210,7 +210,7 @@ intents.matches('Repayment', [
 		
 		// User states an account they do not have
 		else if(!checkValidAccountName(accountType.entity, session)) {
-			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
+			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account, if you want to open an account here is the link https://www.pepper.com.au ");
 		}
 		
 		// We have a valid account name, move onto the next step
