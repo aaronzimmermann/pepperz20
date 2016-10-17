@@ -224,7 +224,7 @@ intents.matches('Repayment', [
 	function (session, results) {
 	
 			var accountInfo = getAccount(results.response, session);
-		if(response.Data != null) {
+		if(results.Data != null) {
 		// Show a text summary
 		session.send("deduction " + accountInfo.amount + "\nInterest: " + accountInfo.interest + "\nBalance"+accountInfo.balance);
 	
