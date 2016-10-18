@@ -264,11 +264,8 @@ intents.matches('Repayment', [
 		
 		// Show a text summary
 		//session.send("Here is a summary of your " + results.response + " statement: ");
-		session.send("Balance: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nPayment summary:");
+		session.send("Balance: " + accountInfo.balance + "\n\nInterest: " + accountInfo.interest + );
 		
-		// Send an image
-		//}]);
-		//session.send(msg);
 	}
 ]);
 
