@@ -227,7 +227,7 @@ intents.matches('AccountDischarge', [
 //		var accountInfo = getAccount(results.response, session);
 //		if (response != yes){
 //		// Show a text summary
-//		session.send("amount: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nBalance :"+accountInfo.balance+);
+//		session.send("amount: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nBalance :"+accountInfo.balance);
 //		}else{ session.send("if you want to open an account here is the link https://www.pepper.com.au");
 //		}
 //	}
@@ -243,7 +243,7 @@ intents.matches('Repayment', [
 			if(getNumAccounts(session) == 0) {
 				session.endDialog("I'm sorry but you don't have any accounts.");
 			} else {
-			session.beginDialog('/getAccountName');
+				session.beginDialog('/getAccountName');
 			}
 		}
 		
@@ -253,9 +253,9 @@ intents.matches('Repayment', [
 		}
 		
 		// We have a valid account name, move onto the next step
-			else {
-				next({response: accountType.entity});
-	}
+		else {
+			next({response: accountType.entity});
+		}
 	},
 	function (session, results) {
 		
@@ -306,7 +306,7 @@ intents.matches('Statement', [
 		
 		// Show a text summary
 		session.send("Here is a summary of your " + results.response + " statement: ");
-		session.send("amount: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nBalance :"+accountInfo.balance+);
+		session.send("Balance: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nPayment summary:");
 		
 		// Send an image
 		var msg = new builder.Message(session).attachments([{
