@@ -221,7 +221,7 @@ intents.matches('AccountDischarge', [
 			next({response: accountType.entity});
 		}
 	},
-	//function (session, results) {
+	function (session, results) {
 			// Get account info
 		var accountInfo = getAccount(results.response, session);
 		if (response != yes){
