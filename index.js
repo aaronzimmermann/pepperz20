@@ -264,7 +264,7 @@ intents.matches('Repayment', [
 		
 		
 		session.send("Amount due for " + results.response + " is: ");
-		session.send("Balance left is : " + accountInfo.balance + "\n\nInterest: " + accountInfo.interest + "\n\n\n amount: " + accountInfo.amount+ "\n\n\n\n due on: " + accountInfo.date);
+		session.send("Amount that's going to be cut is : " + accountInfo.amount + "\n\n With an Interest of : " + accountInfo.interest + "\n\n\n Due on " + accountInfo.date+ "\n\n\n\nBalance left is: " + accountInfo.balance);
 		
 		// Send an image
 		//}]);
