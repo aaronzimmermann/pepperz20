@@ -262,9 +262,9 @@ intents.matches('Repayment', [
 		// Get account info
 		var accountInfo = getAccount(results.response, session);
 		
-		// Show a text summary
-		//session.send("Here is a summary of your " + results.response + " statement: ");
-		session.send("Balance: " + accountInfo.balance + "\n\nInterest: " + accountInfo.interest );
+		
+		session.send("Here is a summary of your " + results.response + " statement: ");
+		session.send("Balance: " + accountInfo.balance + "\n\nInterest: " + accountInfo.interest + "amount: " + accountInfo.amount);
 		
 		// Send an image
 		//}]);
@@ -283,7 +283,7 @@ intents.matches('Statement', [
 		// User did not state an account
 		if(accountType == null) {
 			if(getNumAccounts(session) == 0) {
-				session.endDialog("I'm sorry but you don't have any accounts.");
+				session.endDialog("I'm sorry but you don't have any accounts.if you want to open an account here is the link https://www.pepper.com.au");
 			} else {
 				session.beginDialog('/getAccountName');
 			}
@@ -291,7 +291,7 @@ intents.matches('Statement', [
 		
 		// User states an account they do not have
 		else if(!checkValidAccountName(accountType.entity, session)) {
-			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
+			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.if you want to open an account here is the link https://www.pepper.com.au");
 		}
 		
 		// We have a valid account name, move onto the next step
