@@ -263,7 +263,7 @@ intents.matches('Repayment', [
 		var accountInfo = getAccount(results.response, session);
 		
 		
-		session.send("Here is a summary of your " + results.response + " statement: ");
+		session.send("Amount due for " + results.response + " is: ");
 		session.send("Balance: " + accountInfo.balance + "\n\nInterest: " + accountInfo.interest + "/n/n/n amount: " + accountInfo.amount+ "/n/n/ndue on: " + accountInfo.date);
 		
 		// Send an image
