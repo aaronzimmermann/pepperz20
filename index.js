@@ -232,7 +232,7 @@ intents.matches('AccountDischarge', [
 //		}
 //	}
 //  ]);
-// Statement for any account (auto and mortgage)
+// Repayment for any account (auto and mortgage)
 intents.matches('Repayment', [
     function (session, args, next) {
 		
