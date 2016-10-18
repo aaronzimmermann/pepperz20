@@ -247,11 +247,12 @@ intents.matches('Repayment', [
 			}
 		}
 		
+		// User states an account they do not have
 		else if(!checkValidAccountName(accountType.entity, session)) {
 			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
 		}
 		
-		
+		// We have a valid account name, move onto the next step
 		else {
 			next({response: accountType.entity});
 		}
@@ -261,10 +262,13 @@ intents.matches('Repayment', [
 		// Get account info
 		var accountInfo = getAccount(results.response, session);
 		
-		
+		// Show a text summary
 		//session.send("Here is a summary of your " + results.response + " statement: ");
 		session.send("Balance: " + accountInfo.balance + "\n\nInterest: " + accountInfo.interest + );
 		
+		// Send an image
+		//}]);
+		//session.send(msg);
 	}
 ]);
 
