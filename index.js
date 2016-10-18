@@ -226,7 +226,7 @@ intents.matches('AccountDischarge', [
 		var accountInfo = getAccount(results.response, session);
 		if (response != yes){
 		// Show a text summary
-		session.send("amount: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nBalance :"+ accountInfo.balance +);
+		session.send("amount: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nBalance :" + accountInfo.balance +);
 		}else{ session.send("if you want to open an account here is the link https://www.pepper.com.au");
 		}
 	}
