@@ -42,8 +42,6 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
 var connector = new builder.ChatConnector({
     appId: process.env.MICROSOFT_APP_ID,
     appPassword: process.env.MICROSOFT_APP_PASSWORD
-	//appId: "afa947e1-f598-4479-9727-e7fc8136ab83",
-    //appPassword: "Bgjmxi66hb0XVXyUtFkR5Tb"
 });
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
@@ -63,6 +61,28 @@ var quitWords = ["don't worry", "dont worry", "quit", "stop", "nevermind", "canc
 //=========================================================
 // Intents
 //=========================================================
+
+// Greeting
+intents.matches('Greeting', [
+    function (session, args, next) {
+        session.send('Hi how can I help you?');
+    }
+]);
+
+// Help
+intents.matches('Help', [
+    function (session, args, next) {
+        session.send('I can show you an amount in an account or update a balance in one of your accounts.');
+    }
+]);
+
+// List the user's accounts
+intents.matches('ListAccounts', [
+    function (session, args, next) {
+		var accountNamesString = listAccounts(session);
+        session.send('The accounts you have are ' + accountNamesString + ".");
+    }
+]);
 
 // Check if the user is authenticated
 intents.matches(/authenticate/i, [
@@ -103,65 +123,10 @@ intents.matches('NewLogin', [
     }
 ]);
 
-// Greeting
-intents.matches('Greeting', [
-    function (session, args, next) {
-        session.send('Hi how can I help you?');
-    }
-]);
-
-// Help
-intents.matches('Help', [
-    function (session, args, next) {
-        session.send('I can show you an amount in an account or update a balance in one of your accounts.');
-    }
-]);
-
-// List the user's accounts
-intents.matches('ListAccounts', [
-    function (session, args, next) {
-		var accountNamesString = listAccounts(session);
-        session.send('The accounts you have are ' + accountNamesString + ".");
-    }
-]);
-
-// Enquire about an account
-// (deprecated)
-/*
-intents.matches('AccountEnquiry', [
-	function (session, args, next) {
-		
-		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-		
-		// User did not state an account
-		if(accountType == null) {
-			if(getNumAccounts(session) == 0) {
-				session.endDialog("I'm sorry but you don't have any accounts.");
-			} else {
-				session.beginDialog('/getAccountName');
-			}
-		}
-		
-		// User states an account they do not have
-		else if(!checkValidAccountName(accountType.entity, session)) {
-			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
-		}
-		
-		// We have a valid account name, move onto the next step
-		else {
-			next({response: accountType.entity});
-		}
-    },
-	function (session, results) {
-		
-		// Display the amount to the user
-		session.send("Your " + results.response + " account is " + getAccountValue(results.response, session));
-    }
-]);
-*/
-
 // Enquire about an account discharge/payout amount
 // For auto and mortgage
+// #2 Enquiry (Auto)
+// #4 Enquiry (Mortgage)
 intents.matches('AccountDischarge', [
 	function (session, args, next) {
 		
@@ -193,46 +158,9 @@ intents.matches('AccountDischarge', [
     }
 ]);
 
-// Repayment for both auto and mortgage
-//intents.matches('Repayment', [
-  //  function (session, args, next) {
-		
-	//	var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-		
-		// User does not have any accoutns
-	//	if(accountType == null) {
-	//		if(getNumAccounts(session) == 0) {
-	//			session.endDialog("I'm sorry but you don't have any  accounts, if you want to open an account here is the link https://www.pepper.com.au");
-	//			builder.Prompts.confirm(session, "Do you want to create a new account ?");
-	//		} else {
-	//			session.beginDialog('/getAccountName');
-	//		}
-	//	}
-		
-		// User asks for an account they do not have
-	//	else if(!checkValidAccountName(accountType.entity, session)) {
-	//		session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account,if you want to open an account here is the link https://www.pepper.com.au ");
-	//	builder.Prompts.confirm(session, "Do you want to create a new account ?");
-		
-	//	}
-		
-		// everything is valid we can move to the next step
-	//	else {
-	//		next({response: accountType.entity});
-	//	}
-//	},
-//	//function (session, results) {
-//		
-//		// Get account info
-//		var accountInfo = getAccount(results.response, session);
-//		if (response != yes){
-//		// Show a text summary
-//		session.send("amount: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nBalance :"+accountInfo.balance);
-//		}else{ session.send("if you want to open an account here is the link https://www.pepper.com.au");
-//		}
-//	}
-//  ]);
 // Repayment for any account (auto and mortgage)
+// #1 Enquiry (Auto)
+// #3 Enquiry (Mortgage)
 intents.matches('Repayment', [
     function (session, args, next) {
 		
@@ -275,6 +203,8 @@ intents.matches('Repayment', [
 
 
 // Statement for any account (auto and mortgage)
+// #5 Enquiry (Mortgage)
+// #7 Enquiry (Auto)
 intents.matches('Statement', [
     function (session, args, next) {
 		
@@ -447,14 +377,14 @@ function sendAnEmail(p_fromEmail, p_toEmail, p_subject, p_content) {
     var subject = p_subject;
     var content = new helper.Content('text/plain', p_content);
     var mail = new helper.Mail(from_email, subject, to_email, content);
-    
-    var sg = require("sendgrid")("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");
+   
+    var sg = require("sendgrid")(process.env.SENDGRID);
     var request = sg.emptyRequest({
       method: 'POST',
       path: '/v3/mail/send',
       body: mail.toJSON(),
     });
-    sg.API(request, function(error, response) {
+    sg.API(request, function(error, response) {""
 		console.log(response.statusCode);
 		console.log(response.body);
 		console.log(response.headers);
