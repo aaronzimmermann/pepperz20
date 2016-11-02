@@ -275,14 +275,13 @@ bot.dialog('/generalAccountEnquiry', [
 			
 			// Show a text summary
 			session.send("Here is a summary of your " + results.response + " statement: ");
-			
-			console.log("Image URL: " + accountInfo.statement.img);
 		
 			// Send an image
 			var msg = new builder.Message(session).attachments([{
 				contentType: "image/png",
 				contentUrl: accountInfo.statement.img
 			}]);
+			session.send(msg);
 			
 		} else if(enquiryName == ENQUIRY_REPAYMENT) {
 			
