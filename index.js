@@ -360,7 +360,7 @@ bot.dialog('/generalAccountEnquiry', [
 		// Get account ID
 		var accountID = getAccountName(results.response);
 		
-		console.log("TOKEN: " _ accountID);
+		console.log("TOKEN: " + accountID);
 		
 		// Get account info
 		var accountInfo = getAccount(accountID, session);
