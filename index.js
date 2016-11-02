@@ -36,7 +36,7 @@ var phraseLists = null;
 
 // Load the file
 request({
-    url: url,
+    url: phraseListsUrl,
     json: true,
 	headers: {
 		'Ocp-Apim-Subscription-Key': process.env.LUIS_SUBSCRIPTION_KEY
