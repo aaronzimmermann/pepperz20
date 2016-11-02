@@ -284,17 +284,17 @@ bot.dialog('/generalAccountEnquiry', [
 				contentType: "image/png",
 				contentUrl: accountInfo.statement.img
 			}]);
-			session.send(msg);
+			session.endDialog(msg);
 			
 		} else if(enquiryName == ENQUIRY_REPAYMENT) {
 			
 			// Send message
-			session.send("Your next repayment amount for your " + results.response + " will be " + accountInfo.repaymentAmount + " due on " + accountInfo.repaymentDate + ".");
+			session.endDialog("Your next repayment amount for your " + results.response + " will be " + accountInfo.repaymentAmount + " due on " + accountInfo.repaymentDate + ".");
 		
 		} else if(enquiryName == ENQUIRY_DISCHARGE) {
 			
 			// Send message
-			session.send("You have " + accountInfo.dischargeAmount + " owing on your " + results.response + " account.");
+			session.endDialog("You have " + accountInfo.dischargeAmount + " owing on your " + results.response + " account.");
 		
 		}
 	}
