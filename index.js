@@ -686,7 +686,7 @@ function getAccountName(p_token) {
 			for(var j = 0; j < phraseList.length; j++) {
 				console.log("    Found phrase: " + phraseList[j]);
 				if(p_token == phraseList[j]) {
-					return phraseList[j];
+					return phraseList[0];
 				}
 			}
 		}
