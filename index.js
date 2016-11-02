@@ -542,7 +542,7 @@ function checkForQuit(p_message, p_session) {
 function checkValidAccountName(p_message, p_session) {
 	
 	// Convert input to lower case
-	var word = p_message.toLowerCase();
+	var word = getAccountName(p_message.toLowerCase());
 	
 	// Get data
 	var data = getCurrentUserData(p_session);
