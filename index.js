@@ -79,6 +79,14 @@ bot.dialog('/', intents );
 //=========================================================
 var quitWords = ["don't worry", "dont worry", "quit", "stop", "nevermind", "cancel", "exit", "changed my mind", "no"];
 
+//=========================================================
+// Constants
+//=========================================================
+
+// Eqnuiry ID's
+var ENQUIRY_STATEMENT = "statement";
+var ENQUIRY_REPAYMENT = "repayment";
+var ENQUIRY_DISCHARGE = "discharge";
 
 //=========================================================
 // Intents
@@ -151,32 +159,7 @@ intents.matches('NewLogin', [
 // #4 Enquiry (Mortgage)
 intents.matches('AccountDischarge', [
 	function (session, args, next) {
-		
-		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-		
-		// User did not state an account
-		if(accountType == null) {
-			if(getNumAccounts(session) == 0) {
-				session.endDialog("I'm sorry but you don't have any accounts.");
-			} else {
-				session.beginDialog('/getAccountName');
-			}
-		}
-		
-		// User states an account they do not have
-		else if(!checkValidAccountName(accountType.entity, session)) {
-			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
-		}
-		
-		// We have a valid account name, move onto the next step
-		else {
-			next({response: accountType.entity});
-		}
-    },
-	function (session, results) {
-		
-		// Display the discharge amount to the user
-		session.send("For your current " + results.response + " loan you have " + getAccountDischarge(results.response, session) + " to complete the loan.");
+		session.beginDialog('/generalAccountEnquiry', {enquiryName: ENQUIRY_DISCHARGE});
     }
 ]);
 
@@ -185,91 +168,17 @@ intents.matches('AccountDischarge', [
 // #3 Enquiry (Mortgage)
 intents.matches('Repayment', [
     function (session, args, next) {
-		
-		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-		
-		// User did not state an account
-		if(accountType == null) {
-			if(getNumAccounts(session) == 0) {
-				session.endDialog("I'm sorry but you don't have any accounts.if you want to open an account here is the link https://www.pepper.com.au");
-			} else {
-				session.beginDialog('/getAccountName');
-			}
-		}
-		
-		// User states an account they do not have
-		else if(!checkValidAccountName(accountType.entity, session)) {
-			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.if you want to open an account here is the link https://www.pepper.com.au");
-		}
-		
-		// We have a valid account name, move onto the next step
-		else {
-			next({response: accountType.entity});
-		}
-	},
-	function (session, results) {
-		
-		// Get account info
-		var accountInfo = getAccount(results.response, session);
-		
-		
-		session.send("Amount due for " + results.response + " is: ");
-		session.send("Amount that's going to be cut is : " + accountInfo.amount + "\n\n With an Interest of : " + accountInfo.interest + "\n\n\n Due on " + accountInfo.date+ "\n\n\n\nBalance left is: " + accountInfo.balance);
-		
-		// Send an image
-		//}]);
-		//session.send(msg);
+		session.beginDialog('/generalAccountEnquiry', {enquiryName: ENQUIRY_REPAYMENT});
 	}
 ]);
-
-
 
 // Statement for any account (auto and mortgage)
 // #5 Enquiry (Mortgage)
 // #7 Enquiry (Auto)
 intents.matches('Statement', [
     function (session, args, next) {
-		
-		session.beginDialog('/generalAccountEnquiry', {enquiryName: "statement"});
-		
-		/*
-		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-		
-		// User did not state an account
-		if(accountType == null) {
-			if(getNumAccounts(session) == 0) {
-				session.endDialog("I'm sorry but you don't have any accounts.if you want to open an account here is the link https://www.pepper.com.au");
-			} else {
-				session.beginDialog('/getAccountName');
-			}
-		}
-		
-		// User states an account they do not have
-		else if(!checkValidAccountName(accountType.entity, session)) {
-			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.if you want to open an account here is the link https://www.pepper.com.au");
-		}
-		
-		// We have a valid account name, move onto the next step
-		else {
-			next({response: accountType.entity});
-		}*/
-	}/*,
-	function (session, results) {
-		
-		// Get account info
-		var accountInfo = getAccount(results.response, session);
-		
-		// Show a text summary
-		session.send("Here is a summary of your " + results.response + " statement: ");
-		session.send("Balance: " + accountInfo.amount + "\n\nInterest: " + accountInfo.interest + "\n\nPayment summary:");
-		
-		// Send an image
-		var msg = new builder.Message(session).attachments([{
-			contentType: "image/png",
-			contentUrl: getStatementImageUrl(results.response, session)
-		}]);
-		session.send(msg);
-	}*/
+		session.beginDialog('/generalAccountEnquiry', {enquiryName: ENQUIRY_STATEMENT});
+	}
 ]);
 
 //=========================================================
@@ -355,21 +264,35 @@ bot.dialog('/generalAccountEnquiry', [
 		// Get enquiry name
 		var enquiryName = session.dialogData.enquiryName;
 		
-		console.log("RESPONSE: " + results.response);
-		
-		// Get account ID
+		// Get account name/ID
 		var accountID = getAccountName(results.response);
-		
-		console.log("TOKEN: " + accountID);
 		
 		// Get account info
 		var accountInfo = getAccount(accountID, session);
 		
-		// Show a text summary
-		session.send("Account: " + accountID);
+		// Do the enquiry
+		if(enquiryName == ENQUIRY_STATEMENT) {
+			
+			// Show a text summary
+			session.send("Here is a summary of your " + results.response + " statement: ");
 		
-		// Show a text summary
-		session.endDialog("Enquiry: " + enquiryName);
+			// Send an image
+			var msg = new builder.Message(session).attachments([{
+				contentType: "image/png",
+				contentUrl: accountInfo.statement.img
+			}]);
+			
+		} else if(enquiryName == ENQUIRY_REPAYMENT) {
+			
+			// Send message
+			session.send("Your next repayment amount for your " results.response + " will be " + accountInfo.repaymentAmount + " due on " + accountInfo.repaymentDate + ".");
+		
+		} else if(enquiryName == ENQUIRY_DISCHARGE) {
+			
+			// Send message
+			session.send("You have " + accountInfo.dischargeAmount + " owing on your " + results.response + " account.");
+		
+		}
 	}
 ]);
 
@@ -604,22 +527,6 @@ function getAccount(p_accountName, p_session) {
 	return null;
 }
 
-// Returns the discharge/payout amount for an account
-function getAccountDischarge(p_accountName, p_session) {
-	var accountData = getAccount(p_accountName, p_session);
-	return accountData.discharge;
-}
-
-// Returns the value in an account
-function getAccountValue(p_accountName, p_session) {
-	var accountData = getAccount(p_accountName, p_session);
-	if(accountData != null) {
-		return accountData.amount;
-	} else {
-		return null;
-	}
-}
-
 // Gets the number of accounts the user has
 function getNumAccounts(p_session) {
 	var data = getCurrentUserData(p_session);
@@ -636,12 +543,6 @@ function getDefaultAccountName(p_session) {
 		var data = getCurrentUserData(p_session);
 		return data.accounts[0].type;
 	}
-}
-
-// Returns the URL to the specified account's statement
-function getStatementImageUrl(p_accountName, p_session) {
-	var accountData = getAccount(p_accountName, p_session);
-	return accountData.statement.img;
 }
 
 // Checks if the user is authenthicated
