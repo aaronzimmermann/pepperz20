@@ -275,6 +275,8 @@ bot.dialog('/generalAccountEnquiry', [
 			
 			// Show a text summary
 			session.send("Here is a summary of your " + results.response + " statement: ");
+			
+			console.log("Image URL: " + accountInfo.statement.img);
 		
 			// Send an image
 			var msg = new builder.Message(session).attachments([{
