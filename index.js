@@ -159,7 +159,8 @@ intents.matches('NewLogin', [
 // #4 Enquiry (Mortgage)
 intents.matches('AccountDischarge', [
 	function (session, args, next) {
-		session.beginDialog('/generalAccountEnquiry', {enquiryName: ENQUIRY_DISCHARGE});
+		args.enquiryName = ENQUIRY_DISCHARGE;
+		session.beginDialog('/generalAccountEnquiry', args);
     }
 ]);
 
@@ -168,7 +169,8 @@ intents.matches('AccountDischarge', [
 // #3 Enquiry (Mortgage)
 intents.matches('Repayment', [
     function (session, args, next) {
-		session.beginDialog('/generalAccountEnquiry', {enquiryName: ENQUIRY_REPAYMENT});
+		args.enquiryName = ENQUIRY_REPAYMENT;
+		session.beginDialog('/generalAccountEnquiry', args);
 	}
 ]);
 
@@ -177,7 +179,8 @@ intents.matches('Repayment', [
 // #7 Enquiry (Auto)
 intents.matches('Statement', [
     function (session, args, next) {
-		session.beginDialog('/generalAccountEnquiry', {enquiryName: ENQUIRY_STATEMENT});
+		args.enquiryName = ENQUIRY_STATEMENT;
+		session.beginDialog('/generalAccountEnquiry', args);
 	}
 ]);
 
