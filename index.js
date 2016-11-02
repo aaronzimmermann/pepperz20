@@ -230,7 +230,7 @@ intents.matches('Repayment', [
 intents.matches('Statement', [
     function (session, args, next) {
 		
-		session.beginDialog('generalAccountEnquiry', {enquiryName: "statement"});
+		session.beginDialog('/generalAccountEnquiry', {enquiryName: "statement"});
 		
 		/*
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
