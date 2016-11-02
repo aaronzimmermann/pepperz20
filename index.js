@@ -369,7 +369,7 @@ bot.dialog('/generalAccountEnquiry', [
 		session.send("Account: " + accountID);
 		
 		// Show a text summary
-		session.send("Enquiry: " + enquiryName);
+		session.endDialog("Enquiry: " + enquiryName);
 	}
 ]);
 
