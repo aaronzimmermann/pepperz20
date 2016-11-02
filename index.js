@@ -677,7 +677,9 @@ function getUserEmail(p_session) {
 // gets an account name (auto or mortgage) from an account token e.g. car or house
 // if the token does not match either auto or mortgage null is returned
 function getAccountName(p_token) {
+	console.log("Finding token for: " + p_token);
 	for(var i = 0; i < phraseLists.length; i++) {
+		console.log(">>");
 		if(phraseLists[i].Name == "synonyms_auto" || phraseLists[i].Name == "synonyms_mortgage") {
 			console.log("Found list: " + phraseLists[i].Name);
 			var phraseList = phraseLists[i].Phrases.split(",");
