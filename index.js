@@ -102,7 +102,7 @@ intents.matches('Greeting', [
 // Help
 intents.matches('Help', [
     function (session, args, next) {
-        session.send('I can show you an amount in an account or update a balance in one of your accounts.');
+        session.send('I can help you with any enquiries you have about an account, just type in your question.');
     }
 ]);
 
@@ -110,7 +110,7 @@ intents.matches('Help', [
 intents.matches('ListAccounts', [
     function (session, args, next) {
 		var accountNamesString = listAccounts(session);
-        session.send('The accounts you have are ' + accountNamesString + ".");
+        session.send('You have a ' + accountNamesString + " account.");
     }
 ]);
 
@@ -122,7 +122,7 @@ intents.matches(/authenticate/i, [
 			session.send("Before we get started we need to authenticate who you are and which Pepper Money account you are using :)");
 			session.beginDialog('/authentication');
 		} else {
-			session.send('You are authenthicated');
+			session.send('You are authenthicated.');
 		}
 	}
 ]);
