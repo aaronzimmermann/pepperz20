@@ -29,6 +29,28 @@ request({
 })
 
 //=========================================================
+// Load Phrase Lists
+//=========================================================
+var phraseListsUrl = "https://api.projectoxford.ai/luis/v1.0/prog/apps/9eec8197-9eaa-49e2-8d39-69c6807bba42/phraselists";
+var phraseLists = null;
+
+// Load the file
+request({
+    url: url,
+    json: true,
+	headers: {
+		'Ocp-Apim-Subscription-Key': process.env.LUIS_SUBSCRIPTION_KEY
+	}
+}, function (error, response, body) {
+
+    if (!error && response.statusCode === 200) {
+		phraseLists = body;
+		console.log("Phrase lists loaded.");
+		console.log(phraseLists);
+    }
+})
+
+//=========================================================
 // Bot Setup
 //=========================================================
 
