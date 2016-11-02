@@ -230,6 +230,9 @@ intents.matches('Repayment', [
 intents.matches('Statement', [
     function (session, args, next) {
 		
+		session.beginDialog('generalAccountEnquiry', {enquiryName: "statement"});
+		
+		/*
 		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
 		
 		// User did not state an account
@@ -249,8 +252,8 @@ intents.matches('Statement', [
 		// We have a valid account name, move onto the next step
 		else {
 			next({response: accountType.entity});
-		}
-	},
+		}*/
+	}/*,
 	function (session, results) {
 		
 		// Get account info
@@ -266,7 +269,7 @@ intents.matches('Statement', [
 			contentUrl: getStatementImageUrl(results.response, session)
 		}]);
 		session.send(msg);
-	}
+	}*/
 ]);
 
 //=========================================================
@@ -309,6 +312,60 @@ bot.dialog('/authentication', [
 		else {
 			session.endDialog('Oops that code was incorrect. Authentication failed');
 		}
+	}
+]);
+
+// A general bot dialogue for an account enquiry such as statement or repayment
+// the ID of the account enquiry must be passed as in args
+bot.dialog('/generalAccountEnquiry', [
+   function (session, args, next) {
+	   
+	   // Pass the name of the enquiry
+	   session.dialogData.enquiryName = args.enquiryName;
+		
+		// Get account type
+		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
+		
+		// User did not state an account
+		if(accountType == null) {
+			
+			// User doesn't have any accounts
+			if(getNumAccounts(session) == 0) {
+				session.endDialog("I'm sorry but you don't have any accounts.");
+			} 
+			
+			// Get the account name
+			else {
+				session.beginDialog('/getAccountName');
+			}
+		}
+		
+		// User states an account they do not have
+		else if(!checkValidAccountName(accountType.entity, session)) {
+			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
+		}
+		
+		// We have a valid account name, move onto the next step
+		else {
+			next({response: accountType.entity});
+		}
+	},
+	function (session, results) {
+		
+		// Get enquiry name
+		var enquiryName = session.dialogData.enquiryName;
+		
+		// Get account ID
+		var accountID = getAccountName(results.response);
+		
+		// Get account info
+		var accountInfo = getAccount(accountID, session);
+		
+		// Show a text summary
+		session.send("Account: " + accountID);
+		
+		// Show a text summary
+		session.send("Enquiry: " + enquiryName);
 	}
 ]);
 
@@ -611,4 +668,22 @@ function getEmailFromID(p_session, p_id) {
 function getUserEmail(p_session) {
 	var data = getCurrentUserData(p_session);
 	return data.email;
+}
+
+// gets an account name (auto or mortgage) from an account token e.g. car or house
+// if the token does not match either auto or mortgage null is returned
+function getAccountName(p_token) {
+	for(var i = 0; i < phraseLists.length; i++) {
+		if(phraseLists[i].Name == "synonyms_auto" || phraseLists[i].Name == "synonyms_mortgage") {
+			console.log("Found list: " + phraseLists[i].Name);
+			var phraseList = phraseLists[i].Phrases.split(",");
+			for(var j = 0; j < phraseList.length; j++) {
+				console.log("    Found phrase: " + phraseList[j]);
+				if(p_token == phraseList[j]) {
+					return phraseList[j];
+				}
+			}
+		}
+	}
+	return null;
 }
