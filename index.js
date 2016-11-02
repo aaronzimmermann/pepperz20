@@ -277,7 +277,7 @@ bot.dialog('/generalAccountEnquiry', [
 		if(enquiryName == ENQUIRY_STATEMENT) {
 			
 			// Show a text summary
-			session.send("Here is a summary of your " + results.response + " statement: ");
+			session.send("Here is a summary of your " + accountID + " account statement: ");
 		
 			// Send an image
 			var msg = new builder.Message(session).attachments([{
@@ -289,12 +289,12 @@ bot.dialog('/generalAccountEnquiry', [
 		} else if(enquiryName == ENQUIRY_REPAYMENT) {
 			
 			// Send message
-			session.endDialog("Your next repayment amount for your " + results.response + " will be " + accountInfo.repaymentAmount + " due on " + accountInfo.repaymentDate + ".");
+			session.endDialog("Your next repayment amount for your " + accountID + " account will be " + accountInfo.repaymentAmount + " due on " + accountInfo.repaymentDate + ".");
 		
 		} else if(enquiryName == ENQUIRY_DISCHARGE) {
 			
 			// Send message
-			session.endDialog("You have " + accountInfo.dischargeAmount + " owing on your " + results.response + " account.");
+			session.endDialog("You have " + accountInfo.dischargeAmount + " owing on your " + accountID + " account.");
 		
 		}
 	}
