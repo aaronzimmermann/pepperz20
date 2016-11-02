@@ -355,6 +355,8 @@ bot.dialog('/generalAccountEnquiry', [
 		// Get enquiry name
 		var enquiryName = session.dialogData.enquiryName;
 		
+		console.log("RESPONSE: " + results.response);
+		
 		// Get account ID
 		var accountID = getAccountName(results.response);
 		
