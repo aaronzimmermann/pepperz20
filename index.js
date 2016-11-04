@@ -90,8 +90,6 @@ var ENQUIRY_DISCHARGE = "discharge";
 intents.matches('Greeting', [
     function (session, args, next) {
         session.send('Hi how can I help you?');
-		
-		builder.Prompts.choice(session, "Which color?", ["Email Me","Send Here","Hi"]);
     }
 ]);
 
