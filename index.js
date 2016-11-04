@@ -450,8 +450,8 @@ bot.dialog('/generalAccountEnquiry', [
 		
 			// Send an image
 			var msg = new builder.Message(session).attachments([{
-				contentType: "image/png",
-				contentUrl: accountInfo.statement.img
+				contentType: "application/pdf",
+				contentUrl: accountInfo.statement.pdf
 			}]);
 			session.endDialog(msg);
 			
