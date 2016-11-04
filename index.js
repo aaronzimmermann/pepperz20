@@ -90,6 +90,11 @@ var ENQUIRY_DISCHARGE = "discharge";
 intents.matches('Greeting', [
     function (session, args, next) {
         session.send('Hi how can I help you?');
+		
+		// Check if the user is not authenthicated
+		if(!isUserAuthenticated(session)) {
+			session.beginDialog('/authentication');
+		}
     }
 ]);
 
@@ -97,27 +102,33 @@ intents.matches('Greeting', [
 intents.matches('CheckAccountExists', [
     function (session, args, next) {
 		
-        // Get account type
-		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-		
-		// User does not have this account
-		if(!checkValidAccountName(accountType.entity, session)) {
-			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
+		// Check if the user is not authenthicated
+		if(!isUserAuthenticated(session)) {
+			session.beginDialog('/authentication');
 		} else {
+		
+			// Get account type
+			var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
 			
-			// Set account context
-			session.userData.accountContext = getAccountName(accountType.entity.toLowerCase());
-			
-			// If there is an enquiry context then trigger that enquiry
-			if(session.userData.enquiryContext != null) {
-				var args = {};
-				args.enquiryName = session.userData.enquiryContext;
-				session.beginDialog('/generalAccountEnquiry', args);
-			}
-			
-			// Prompt the user for an enquiry
-			else {
-				session.endDialog("You do indeed have an " + accountType.entity + " account. What would you like to know?");
+			// User does not have this account
+			if(!checkValidAccountName(accountType.entity, session)) {
+				session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
+			} else {
+				
+				// Set account context
+				session.userData.accountContext = getAccountName(accountType.entity.toLowerCase());
+				
+				// If there is an enquiry context then trigger that enquiry
+				if(session.userData.enquiryContext != null) {
+					var args = {};
+					args.enquiryName = session.userData.enquiryContext;
+					session.beginDialog('/generalAccountEnquiry', args);
+				}
+				
+				// Prompt the user for an enquiry
+				else {
+					session.endDialog("You do indeed have an " + accountType.entity + " account. What would you like to know?");
+				}
 			}
 		}
     }
@@ -140,13 +151,19 @@ intents.matches('Help', [
 intents.matches('ListAccounts', [
     function (session, args, next) {
 		
-		// Clear the context
-		session.userData.accountContext = null;
-		session.userData.enquiryContext = null;
-		
-		// List all the users accounts
-		var accountNamesString = listAccounts(session);
-        session.send('You have a ' + accountNamesString + " account.");
+		// Check if the user is not authenthicated
+		if(!isUserAuthenticated(session)) {
+			session.beginDialog('/authentication');
+		} else {
+			
+			// Clear the context
+			session.userData.accountContext = null;
+			session.userData.enquiryContext = null;
+			
+			// List all the users accounts
+			var accountNamesString = listAccounts(session);
+			session.send('You have a ' + accountNamesString + " account.");
+		}
     }
 ]);
 
@@ -161,13 +178,6 @@ intents.matches('ListEnquiries', [
 		// Send basic message
         session.endDialog("You can ask about your next repayment, payout or discharge amount or get a general account statement.");
     }
-]);
-
-// Check if the user is authenticated
-intents.matches(/authenticate/i, [
-	function (session, args, next) {
-		session.beginDialog('/authentication');
-	}
 ]);
 
 // Default message
@@ -208,8 +218,16 @@ intents.matches('NewLogin', [
 // #4 Enquiry (Mortgage)
 intents.matches('AccountDischarge', [
 	function (session, args, next) {
-		args.enquiryName = ENQUIRY_DISCHARGE;
-		session.beginDialog('/generalAccountEnquiry', args);
+		
+		// Check if the user is not authenthicated
+		if(!isUserAuthenticated(session)) {
+			session.beginDialog('/authentication');
+		} else {
+			
+			// Do enquiry
+			args.enquiryName = ENQUIRY_DISCHARGE;
+			session.beginDialog('/generalAccountEnquiry', args);
+		}
     }
 ]);
 
@@ -218,8 +236,16 @@ intents.matches('AccountDischarge', [
 // #3 Enquiry (Mortgage)
 intents.matches('Repayment', [
     function (session, args, next) {
-		args.enquiryName = ENQUIRY_REPAYMENT;
-		session.beginDialog('/generalAccountEnquiry', args);
+		
+		// Check if the user is not authenthicated
+		if(!isUserAuthenticated(session)) {
+			session.beginDialog('/authentication');
+		} else {
+			
+			// Do enquiry
+			args.enquiryName = ENQUIRY_REPAYMENT;
+			session.beginDialog('/generalAccountEnquiry', args);
+		}
 	}
 ]);
 
@@ -228,8 +254,16 @@ intents.matches('Repayment', [
 // #7 Enquiry (Auto)
 intents.matches('Statement', [
     function (session, args, next) {
-		args.enquiryName = ENQUIRY_STATEMENT;
-		session.beginDialog('/generalAccountEnquiry', args);
+		
+		// Check if the user is not authenthicated
+		if(!isUserAuthenticated(session)) {
+			session.beginDialog('/authentication');
+		} else {
+			
+			// Do enquiry
+			args.enquiryName = ENQUIRY_STATEMENT;
+			session.beginDialog('/generalAccountEnquiry', args);
+		}
 	}
 ]);
 
@@ -701,6 +735,12 @@ function getDefaultAccountName(p_session) {
 function isUserAuthenticated(p_session) {
 	var data = getCurrentUserData(p_session);
 	return data.authenticated;
+}
+
+// Set whether or not the user is authentcated
+function setUserAuthenticated(p_session, p_isAuthenticated) {
+	var data = getCurrentUserData(p_session);
+	data.authenticated = p_isAuthenticated;
 }
 
 // gets the user's first name
