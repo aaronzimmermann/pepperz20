@@ -155,6 +155,19 @@ intents.matches('ListAccounts', [
     }
 ]);
 
+// List the enquiries
+intents.matches('ListEnquiries', [
+    function (session, args, next) {
+		
+		// Clear the context
+		session.userData.accountContext = null;
+		session.userData.enquiryContext = null;
+		
+		// Send basic message
+        session.endDialog("You can ask about your next repayment, payout or discharge amount or get a general account statement.");
+    }
+]);
+
 // Check if the user is authenticated
 intents.matches(/authenticate/i, [
 	function (session, args, next) {
