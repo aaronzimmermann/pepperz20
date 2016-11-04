@@ -46,7 +46,6 @@ request({
     if (!error && response.statusCode === 200) {
 		phraseLists = body;
 		console.log("Phrase lists loaded.");
-		console.log(phraseLists);
     }
 })
 
@@ -114,7 +113,6 @@ intents.matches('CheckAccountExists', [
 			
 			// Set account context
 			session.userData.accountContext = getAccountName(accountType.entity.toLowerCase());
-			console.log("Account context: " + session.userData.accountContext);
 		}
     }
 ]);
@@ -273,17 +271,32 @@ bot.dialog('/generalAccountEnquiry', [
 			
 			// Get the account name
 			else {
+				
+				// Clear the account context
+				session.userData.accountContext = null;
+				
+				// Ask the user which account they would like
 				session.beginDialog('/getAccountName');
 			}
 		}
 		
 		// User states an account they do not have
 		else if(!checkValidAccountName(accountType.entity, session)) {
+			
+			// Clear the account context
+			session.userData.accountContext = null;
+			
+			// Send message
 			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
 		}
 		
 		// We have a valid account name, move onto the next step
 		else {
+			
+			// Clear the account context
+			session.userData.accountContext = null;
+			
+			// Next waterfall step
 			next({response: accountType.entity});
 		}
 	},
@@ -436,11 +449,9 @@ function loginAsUser(p_newUserName, p_session) {
 	for(var i = 0; i < customerData.customers.length; i++) {
 		if(customerData.customers[i].firstName.toLowerCase() == p_newUserName.toLowerCase()) {
 			p_session.userData.currentUser = customerData.customers[i].id;
-			console.log("Found " + customerData.customers[i].firstName)
 			return true;
 		}
 	}
-	console.log("User not found");
 	return false;
 }
 
@@ -607,14 +618,10 @@ function getUserEmail(p_session) {
 // gets an account name (auto or mortgage) from an account token e.g. car or house
 // if the token does not match either auto or mortgage null is returned
 function getAccountName(p_token) {
-	console.log("Finding token for: " + p_token);
 	for(var i = 0; i < phraseLists.length; i++) {
-		console.log(">>");
 		if(phraseLists[i].Name == "synonyms_auto" || phraseLists[i].Name == "synonyms_mortgage") {
-			console.log("Found list: " + phraseLists[i].Name);
 			var phraseList = phraseLists[i].Phrases.split(",");
 			for(var j = 0; j < phraseList.length; j++) {
-				console.log("    Found phrase: " + phraseList[j]);
 				if(p_token == phraseList[j]) {
 					return phraseList[0];
 				}
