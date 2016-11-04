@@ -315,8 +315,12 @@ bot.dialog('/authenticationCode', [
 		
 		// Code fails
 		else {
+			
+			// Reprompt for authentcation code
 			session.send('Oops that code was incorrect. Please try and enter it again.');
-			session.replaceDialog('/authenticationCode');
+			var args = {};
+			args.acode = acode;
+			session.beginDialog('/authenticationCode', args);
 		}
 	}
 ]);
