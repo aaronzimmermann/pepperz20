@@ -277,23 +277,22 @@ bot.dialog('/authenticationUserID', [
 		
 		// Check if the user has used a quit word
 		// If they have then quit
-		if(checkForQuit(results.response, session)) { 
-			session.endDialog();
-			console.log("after quit");
-		}
+		if(checkForQuit(results.response, session)) {}
+		else {
 		
-		// Get the user's response
-		var enteredUserId = results.response;
-		
-		// Get the authentcation code
-		var acode = sendAuthenticationEmail(session, enteredUserId);
-		
-		// There was a problem getting the user's email
-		if(acode == null) {
-			session.send("There was a problem looking up this UserID. Let's try again.")
-			session.replaceDialog('/authenticationUserID');
-		} else {
-			session.endDialogWithResult({response: acode});
+			// Get the user's response
+			var enteredUserId = results.response;
+			
+			// Get the authentcation code
+			var acode = sendAuthenticationEmail(session, enteredUserId);
+			
+			// There was a problem getting the user's email
+			if(acode == null) {
+				session.send("There was a problem looking up this UserID. Let's try again.")
+				session.replaceDialog('/authenticationUserID');
+			} else {
+				session.endDialogWithResult({response: acode});
+			}
 		}
     }
 ]);
@@ -312,26 +311,27 @@ bot.dialog('/authenticationCode', [
 		
 		// Check if the user has used a quit word
 		// If they have then quit
-		if(checkForQuit(results.response, session)) { 
-			console.log("after quit");
-		}
-		
-		// Get the code the user entered
-		var userEnteredCode = results.response;
-		
-		// Code matches
-		if(userEnteredCode == "" + session.dialogData.code) {
-			session.endDialog('Thank you, that authentcation code is correct.'); 
-		} 
-		
-		// Code fails
+		if(checkForQuit(results.response, session)) {}
 		else {
 			
-			// Reprompt for authentcation code
-			session.send('Oops that code was incorrect. Try again.');
-			var args = {};
-			args.acode = session.dialogData.code;
-			session.beginDialog('/authenticationCode', args);
+			
+			// Get the code the user entered
+			var userEnteredCode = results.response;
+			
+			// Code matches
+			if(userEnteredCode == "" + session.dialogData.code) {
+				session.endDialog('Thank you, that authentcation code is correct.'); 
+			} 
+			
+			// Code fails
+			else {
+				
+				// Reprompt for authentcation code
+				session.send('Oops that code was incorrect. Try again.');
+				var args = {};
+				args.acode = session.dialogData.code;
+				session.beginDialog('/authenticationCode', args);
+			}
 		}
 	}
 ]);
