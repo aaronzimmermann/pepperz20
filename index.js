@@ -278,6 +278,7 @@ bot.dialog('/authenticationUserID', [
 		// Check if the user has used a quit word
 		// If they have then quit
 		if(checkForQuit(results.response, session)) { 
+			session.endDialog();
 			console.log("after quit");
 		}
 		
@@ -599,8 +600,7 @@ function checkForQuit(p_message, p_session) {
 	
 	for(var i = 0; i < quitWords.length; i++) {
 		if(word == quitWords[i]) {
-			p_session.cancelDialog(0);
-			//p_session.cancelDialog(0, '/endCurrentDialog');
+			p_session.cancelDialog(0, '/endCurrentDialog');
 			return true;
 		}
 	}
