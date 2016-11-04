@@ -447,6 +447,8 @@ bot.dialog('/generalAccountEnquiry', [
 			
 			// Show a text summary
 			session.send("Here is a summary of your " + accountID + " account statement: ");
+			
+			builder.Prompts.choice(session, "Which color?", ["red","green","blue"]);
 		
 			// Send an image
 			var msg = new builder.Message(session).attachments([{
