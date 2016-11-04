@@ -99,6 +99,26 @@ intents.matches('Greeting', [
     }
 ]);
 
+// Check if an account exists
+intents.matches('CheckAccountExists', [
+    function (session, args, next) {
+		
+        // Get account type
+		var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
+		
+		// User does not have this account
+		if(!checkValidAccountName(accountType.entity, session)) {
+			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
+		} else {
+			session.endDialog("You do indeed have an " + accountType.entity + " account. What would you like to know?");
+			
+			// Set account context
+			session.userData.accountContext = getAccountName(accountType.entity.toLowerCase());
+			console.log("Account context:" + session.userData.accountContext);
+		}
+    }
+]);
+
 // Help
 intents.matches('Help', [
     function (session, args, next) {
