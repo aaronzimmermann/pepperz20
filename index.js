@@ -171,13 +171,7 @@ intents.matches('ListEnquiries', [
 // Check if the user is authenticated
 intents.matches(/authenticate/i, [
 	function (session, args, next) {
-		if(!isUserAuthenticated(session)) {
-			session.send("Hi " + getUserFirstName(session) + "! We've noticed this is your first time using the Pepper Money Chatbot.");
-			session.send("Before we get started we need to authenticate who you are and which Pepper Money account you are using :)");
-			session.beginDialog('/authentication');
-		} else {
-			session.send('You are authenthicated.');
-		}
+		session.beginDialog('/authentication');
 	}
 ]);
 
@@ -251,9 +245,37 @@ intents.matches('Statement', [
 // Authentication
 bot.dialog('/authentication', [
     function (session, args, next) {
-		builder.Prompts.text(session, "Please enter in your Pepper Money UserID.");
+		
+		// Authentication intro
+		session.send("Hi, we've noticed this is your first time using the Pepper Money Chatbot.");
+		session.send("Before we get started we need to authenticate who you are and which Pepper Money account you are using. :)");
+		
+		// Prompt for the userID
+		session.beginDialog('/authenticationUserID');
     },
 	function (session, results, next) {
+		
+		// Get the user's response
+		var acode = results.response;
+		
+		// Prompt for the authentcation code
+		var args = {};
+		args.acode = acode;
+		session.beginDialog('/authenticationCode', args);
+    },
+	function (session, results) {
+		
+		// Tell the user authentcation is complete
+		session.endDialog('We have successfully linked your Facebook account with Pepper Money.');
+	}
+]);
+
+// Dialog for getting the user to enter their user id
+bot.dialog('/authenticationUserID', [
+    function (session, args, next) {
+		builder.Prompts.text(session, "Please enter in your Pepper Money UserID.");
+    },
+	function (session, results) {
 		
 		// Get the user's response
 		var enteredUserId = results.response;
@@ -264,11 +286,22 @@ bot.dialog('/authentication', [
 		// There was a problem getting the user's email
 		if(acode == null) {
 			session.send("There was a problem looking up this UserID. Let's try again.")
-			session.replaceDialog('/authentication');
+			session.replaceDialog('/authenticationUserID');
 		} else {
-			session.dialogData.code = acode;
-			builder.Prompts.text(session, "We are going to authenticate your ID via your E-mail. Next you will need to enter the authentication code you receive via email into this chat. You should receive an email shortly, please enter the authentcation code below.");
+			session.endDialogWithResult({response: acode});
 		}
+    }
+]);
+
+// Dialog for getting the user to enter the authentication code
+bot.dialog('/authenticationCode', [
+	function (session, args, next) {
+		
+		// Save authentcation code
+		session.dialogData.code = args.acode;
+		
+		// Prompt for authentcation code
+		builder.Prompts.text(session, "We are going to authenticate your ID via your E-mail. Next you will need to enter the authentication code you receive via email into this chat. You should receive an email shortly, please enter the authentcation code below.");
     },
 	function (session, results) {
 		
@@ -277,12 +310,13 @@ bot.dialog('/authentication', [
 		
 		// Code matches
 		if(userEnteredCode == "" + session.dialogData.code) {
-			session.endDialog('Awesome! Welcome ' + getUserFirstName(session) + '! We have successfully authenticated and linked your Facebook account with Pepper Money.');
+			session.endDialog('Thank you, that authentcation code is correct.'); 
 		} 
 		
 		// Code fails
 		else {
-			session.endDialog('Oops that code was incorrect. Authentication failed');
+			session.send('Oops that code was incorrect. Please try and enter it again.');
+			session.replaceDialog('/authenticationCode');
 		}
 	}
 ]);
