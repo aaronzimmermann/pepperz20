@@ -137,7 +137,7 @@ intents.matches('Help', [
 		session.userData.enquiryContext = null;
 		
 		// Send basic message
-        session.endDialog('I can help you with any enquiries you have about an account, just type in your question.');
+        session.endDialog('I can help you with any enquiries you have about an account, just type in your question. You can try starting with stating which account you are interested in or what you would like to know.');
     }
 ]);
 
@@ -408,7 +408,7 @@ bot.dialog('/getAccountName', [
 		
 		// The account name is not valid
 		else {
-			session.send("You don't have an " + results.response + " account. Could you try rephrasing that account.")
+			session.send("You don't have an " + results.response + " account. Could you try rephrasing that account?")
 			//session.replaceDialog('/getAccountName');
 			session.cancelDialog(0);
 		}
