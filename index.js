@@ -91,10 +91,7 @@ intents.matches('Greeting', [
     function (session, args, next) {
         session.send('Hi how can I help you?');
 		
-		// Check if the user is not authenthicated
-		if(!isUserAuthenticated(session)) {
-			session.beginDialog('/authentication');
-		}
+		builder.Prompts.choice(session, "Which color?", ["Email Me","Send Here","Hi"]);
     }
 ]);
 
@@ -447,8 +444,6 @@ bot.dialog('/generalAccountEnquiry', [
 			
 			// Show a text summary
 			session.send("Here is a summary of your " + accountID + " account statement: ");
-			
-			builder.Prompts.choice(session, "Which color?", ["red","green","blue"]);
 		
 			// Send an image
 			var msg = new builder.Message(session).attachments([{
