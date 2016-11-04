@@ -297,6 +297,9 @@ bot.dialog('/authentication', [
     },
 	function (session, results) {
 		
+		// Set the user is authenthicated
+		setUserAuthenticated(session, true);
+		
 		// Tell the user authentcation is complete
 		session.endDialog('We have successfully linked your Facebook account with Pepper Money.');
 	}
@@ -505,7 +508,6 @@ bot.dialog('/getAccountName', [
 		// The account name is not valid
 		else {
 			session.send("You don't have an " + results.response + " account. Could you try rephrasing that account?")
-			//session.replaceDialog('/getAccountName');
 			session.cancelDialog(0);
 		}
     }
