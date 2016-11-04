@@ -109,10 +109,21 @@ intents.matches('CheckAccountExists', [
 		if(!checkValidAccountName(accountType.entity, session)) {
 			session.endDialog("I'm sorry but you don't have an " + accountType.entity + " account.");
 		} else {
-			session.endDialog("You do indeed have an " + accountType.entity + " account. What would you like to know?");
 			
 			// Set account context
 			session.userData.accountContext = getAccountName(accountType.entity.toLowerCase());
+			
+			// If there is an enquiry context then trigger that enquiry
+			if(session.userData.enquiryContext != null) {
+				var args = {};
+				args.enquiryName = session.userData.enquiryContext;
+				session.beginDialog('/generalAccountEnquiry', args);
+			}
+			
+			// Prompt the user for an enquiry
+			else {
+				session.endDialog("You do indeed have an " + accountType.entity + " account. What would you like to know?");
+			}
 		}
     }
 ]);
@@ -120,13 +131,25 @@ intents.matches('CheckAccountExists', [
 // Help
 intents.matches('Help', [
     function (session, args, next) {
-        session.send('I can help you with any enquiries you have about an account, just type in your question.');
+		
+		// Clear the context
+		session.userData.accountContext = null;
+		session.userData.enquiryContext = null;
+		
+		// Send basic message
+        session.endDialog('I can help you with any enquiries you have about an account, just type in your question.');
     }
 ]);
 
 // List the user's accounts
 intents.matches('ListAccounts', [
     function (session, args, next) {
+		
+		// Clear the context
+		session.userData.accountContext = null;
+		session.userData.enquiryContext = null;
+		
+		// List all the users accounts
 		var accountNamesString = listAccounts(session);
         session.send('You have a ' + accountNamesString + " account.");
     }
@@ -166,6 +189,12 @@ intents.matches('NewLogin', [
 		if(!loginAsUser(userName.entity, session)) {
 			session.send('That user does not exist.');
 		} else {
+			
+			// Clear the context
+			session.userData.accountContext = null;
+			session.userData.enquiryContext = null;
+			
+			// Send message
 			session.send('Now logged in as: ' + getUserFirstName(session));
 		}
     }
@@ -275,6 +304,9 @@ bot.dialog('/generalAccountEnquiry', [
 				// Clear the account context
 				session.userData.accountContext = null;
 				
+				// Set enquiry context
+				session.userData.enquiryContext = args.enquiryName;
+				
 				// Ask the user which account they would like
 				session.beginDialog('/getAccountName');
 			}
@@ -335,6 +367,9 @@ bot.dialog('/generalAccountEnquiry', [
 			session.endDialog("You have " + accountInfo.dischargeAmount + " owing on your " + accountID + " account.");
 		
 		}
+		
+		// Clear enquiry context
+		session.userData.enquiryContext = null;
 	}
 ]);
 
@@ -374,7 +409,8 @@ bot.dialog('/getAccountName', [
 		// The account name is not valid
 		else {
 			session.send("You don't have an " + results.response + " account. Could you try rephrasing that account.")
-			session.replaceDialog('/getAccountName');
+			//session.replaceDialog('/getAccountName');
+			session.cancelDialog(0);
 		}
     }
 ]);
@@ -545,7 +581,7 @@ function listAccounts(p_session) {
 	}
 	
 	if(accountNamesString == "") {
-		return "no accounts"
+		return "no accounts";
 	} else {
 		return accountNamesString;
 	}
