@@ -74,11 +74,6 @@ var intents  = new builder.IntentDialog({ recognizers: [recognizer] });
 bot.dialog('/', intents );
 
 //=========================================================
-// In the future these should be added to Luis
-//=========================================================
-var quitWords = ["don't worry", "dont worry", "quit", "stop", "nevermind", "cancel", "exit", "changed my mind", "no"];
-
-//=========================================================
 // Constants
 //=========================================================
 
@@ -280,6 +275,10 @@ bot.dialog('/authenticationUserID', [
     },
 	function (session, results) {
 		
+		// Check if the user has used a quit word
+		// If they have then quit
+		if(checkForQuit(results.response, session)) { }
+		
 		// Get the user's response
 		var enteredUserId = results.response;
 		
@@ -307,6 +306,10 @@ bot.dialog('/authenticationCode', [
 		builder.Prompts.text(session, "Please enter the authentcation code below.");
     },
 	function (session, results) {
+		
+		// Check if the user has used a quit word
+		// If they have then quit
+		if(checkForQuit(results.response, session)) { }
 		
 		// Get the code the user entered
 		var userEnteredCode = results.response;
@@ -472,7 +475,7 @@ bot.dialog('/getAccountName', [
 // End the conversation
 bot.dialog('/endCurrentDialog', [
     function (session) {
-		session.endDialog('Okay no worries. Let me know if there is anything else I can help with.');
+		session.endDialog('Okay sure.');
     }
 ]);
 
@@ -577,6 +580,18 @@ function getCurrentUserData(p_session) {
 // Should be done a better way
 function checkForQuit(p_message, p_session) {
 	var word = p_message.toLowerCase();
+	
+	// get quit phrases
+	var quitWords = null;
+	for(var i = 0; i < phraseLists.length; i++) {
+		if(phraseLists[i].Name == "quit_words") {
+			quitWords = phraseLists[i].Phrases.split(",");
+		}
+	}
+	if(quitWords == null) {
+		return false;
+	}
+	
 	
 	for(var i = 0; i < quitWords.length; i++) {
 		if(word == quitWords[i]) {
