@@ -114,7 +114,7 @@ intents.matches('CheckAccountExists', [
 			
 			// Set account context
 			session.userData.accountContext = getAccountName(accountType.entity.toLowerCase());
-			console.log("Account context:" + session.userData.accountContext);
+			console.log("Account context: " + session.userData.accountContext);
 		}
     }
 ]);
@@ -265,6 +265,11 @@ bot.dialog('/generalAccountEnquiry', [
 			if(getNumAccounts(session) == 0) {
 				session.endDialog("I'm sorry but you don't have any accounts.");
 			} 
+			
+			// Use the account in the account context
+			else if(session.userData.accountContext != null) {
+				next({response: session.userData.accountContext});
+			}
 			
 			// Get the account name
 			else {
