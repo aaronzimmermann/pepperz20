@@ -255,6 +255,9 @@ bot.dialog('/authentication', [
     },
 	function (session, results, next) {
 		
+		// Send a message
+		session.send("We are going to authenticate your ID via your E-mail. Next you will need to enter the authentication code you receive via email into this chat. You should receive an email shortly.");
+		
 		// Get the user's response
 		var acode = results.response;
 		
@@ -301,7 +304,7 @@ bot.dialog('/authenticationCode', [
 		session.dialogData.code = args.acode;
 		
 		// Prompt for authentcation code
-		builder.Prompts.text(session, "We are going to authenticate your ID via your E-mail. Next you will need to enter the authentication code you receive via email into this chat. You should receive an email shortly, please enter the authentcation code below.");
+		builder.Prompts.text(session, "Please enter the authentcation code below.");
     },
 	function (session, results) {
 		
@@ -317,7 +320,7 @@ bot.dialog('/authenticationCode', [
 		else {
 			
 			// Reprompt for authentcation code
-			session.send('Oops that code was incorrect. Please try and enter it again.');
+			session.send('Oops that code was incorrect. Try again.');
 			var args = {};
 			args.acode = session.dialogData.code;
 			session.beginDialog('/authenticationCode', args);
