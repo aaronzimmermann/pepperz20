@@ -330,7 +330,7 @@ bot.dialog('/authenticationUserID', [
 			
 			// There was a problem getting the user's email
 			if(acode == null) {
-				session.send("There was a problem looking up this UserID. Let's try again.")
+				session.send("That UserID is not valid, let's try again.")
 				session.replaceDialog('/authenticationUserID');
 			} else {
 				session.endDialogWithResult({response: acode});
