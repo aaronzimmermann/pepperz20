@@ -306,7 +306,7 @@ bot.dialog('/authentication', [
 		setUserAuthenticated(session, true);
 		
 		// Tell the user authentcation is complete
-		session.endDialog('We have successfully linked your Facebook account with Pepper Money.');
+		session.endDialog('I have successfully authentcated you. Now, how can I help you?');
 	}
 ]);
 
@@ -362,7 +362,7 @@ bot.dialog('/authenticationCode', [
 			
 			// Code matches
 			if(userEnteredCode == "" + session.dialogData.code) {
-				session.endDialog('Thank you, that authentcation code is correct.'); 
+				session.endDialog('Thank you, that verification code is correct.'); 
 			} 
 			
 			// Code fails
@@ -550,8 +550,8 @@ function sendAuthenticationEmail(p_session, p_id) {
 	var acode = randomInt(10000, 99999);
 	
 	// Send email
-	var emailMessage = "Hi, please find below your authentication code:\n\n" + acode + "\n\nKind regads,\n\nPepper Chatbot";
-	sendAnEmail("noreply@pepperbot.com", userEmail, "Pepper Bot Authentication Code", emailMessage);
+	var emailMessage = "Hi, please find below your verification code:\n\n" + acode + "\n\nKind regads,\n\nPepper Chatbot";
+	sendAnEmail("noreply@pepperbot.com", userEmail, "Pepper Chatbot Verification Code", emailMessage);
 	
 	return acode;
 }
