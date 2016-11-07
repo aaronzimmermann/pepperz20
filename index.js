@@ -290,7 +290,7 @@ bot.dialog('/authentication', [
 	function (session, results, next) {
 		
 		// Send a message
-		session.send("We are going to authenticate your ID via your E-mail. Next you will need to enter the authentication code you receive via email into this chat. You should receive an email shortly.");
+		session.send("We have just sent a verification code to the email address linked to this UserID. Please enter this verification code below.");
 		
 		// Get the user's response
 		var acode = results.response;
