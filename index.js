@@ -412,7 +412,8 @@ bot.dialog('/generalAccountEnquiry', [
 				session.userData.enquiryContext = args.enquiryName;
 				
 				// Ask the user which account they would like
-				session.beginDialog('/getAccountName');
+				//session.beginDialog('/getAccountName');
+				session.endDialog('Which account are you interested in?');
 			}
 		}
 		
