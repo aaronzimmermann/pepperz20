@@ -347,7 +347,7 @@ bot.dialog('/authenticationCode', [
 		session.dialogData.code = args.acode;
 		
 		// Prompt for authentcation code
-		builder.Prompts.text(session, "Please enter the authentcation code below.");
+		builder.Prompts.text(session, "Please enter the verification code below.");
     },
 	function (session, results) {
 		
