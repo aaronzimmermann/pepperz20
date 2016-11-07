@@ -89,7 +89,17 @@ var ENQUIRY_DISCHARGE = "discharge";
 // Greeting
 intents.matches('Greeting', [
     function (session, args, next) {
-        session.send('Hi how can I help you?');
+		
+		// User is not authenticated
+		if(!isUserAuthenticated(session)) {
+			session.send('Hi');
+			session.beginDialog('/authentication');
+		} 
+		
+		// User is authentcated
+		else {
+			session.endDialog('Hi how can I help you?');
+		}
     }
 ]);
 
@@ -271,8 +281,8 @@ bot.dialog('/authentication', [
     function (session, args, next) {
 		
 		// Authentication intro
-		session.send("Hi, we've noticed this is your first time using the Pepper Money Chatbot.");
-		session.send("Before we get started we need to authenticate who you are and which Pepper Money account you are using. :)");
+		session.send("Welcome to Pepper Money Chatbot.");
+		session.send("Before I can help you I need to authenticate who you are and which Pepper Money account you are using. :)");
 		
 		// Prompt for the userID
 		session.beginDialog('/authenticationUserID');
