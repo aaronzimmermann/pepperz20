@@ -1,0 +1,1718 @@
+{
+  "luis_schema_version": "1.3.0",
+  "name": "Demo",
+  "desc": "",
+  "culture": "en-us",
+  "intents": [
+    {
+      "name": "AccountDischarge"
+    },
+    {
+      "name": "CheckAccountExists"
+    },
+    {
+      "name": "CurrentUser"
+    },
+    {
+      "name": "Greeting"
+    },
+    {
+      "name": "Help"
+    },
+    {
+      "name": "ListAccounts"
+    },
+    {
+      "name": "ListEnquiries"
+    },
+    {
+      "name": "NewLogin"
+    },
+    {
+      "name": "None"
+    },
+    {
+      "name": "Repayment"
+    },
+    {
+      "name": "Statement"
+    }
+  ],
+  "entities": [
+    {
+      "name": "AccountType"
+    },
+    {
+      "name": "User"
+    }
+  ],
+  "composites": [],
+  "bing_entities": [
+    "money"
+  ],
+  "actions": [
+    {
+      "actionName": "Statement",
+      "intentName": "Statement",
+      "actionParameters": [
+        {
+          "parameterName": "AccountName",
+          "entityName": "AccountType",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "model_features": [
+    {
+      "name": "Greeting Phrases",
+      "mode": true,
+      "words": "hi,hello,greetings,hey,sup,hay,hello there,hi there",
+      "activated": true
+    },
+    {
+      "name": "synonyms_mortgage",
+      "mode": true,
+      "words": "mortgage,house . home",
+      "activated": true
+    },
+    {
+      "name": "synonyms_auto",
+      "mode": true,
+      "words": "auto,car,vehicle",
+      "activated": true
+    },
+    {
+      "name": "quit_words",
+      "mode": true,
+      "words": "nevermind,stop,quit,no,never mind,don ' t worry,dont worry,back,go back,cancel,halt,exit",
+      "activated": true
+    }
+  ],
+  "regex_features": [],
+  "utterances": [
+    {
+      "text": "these are nice labels",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what is my payout figure",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "check value in repayment",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "i need to check my balance",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 5,
+          "endPos": 5
+        }
+      ]
+    },
+    {
+      "text": "update my repayment to $100",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 2,
+          "endPos": 2
+        }
+      ]
+    },
+    {
+      "text": "list all the accounts i own please",
+      "intent": "ListAccounts",
+      "entities": []
+    },
+    {
+      "text": "please list all my accounts",
+      "intent": "ListAccounts",
+      "entities": []
+    },
+    {
+      "text": "i need help",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "how much money is in my credit account",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "check value in savings",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "mortgage",
+      "intent": "CheckAccountExists",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "what is my savings account",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "please update my balance to 100",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "i want a coffee",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what are my accounts",
+      "intent": "ListAccounts",
+      "entities": []
+    },
+    {
+      "text": "hey",
+      "intent": "Greeting",
+      "entities": []
+    },
+    {
+      "text": "how much is in my mortgage",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 5,
+          "endPos": 5
+        }
+      ]
+    },
+    {
+      "text": "hi",
+      "intent": "Greeting",
+      "entities": []
+    },
+    {
+      "text": "please update my account to 40",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "which accounts belong to me?",
+      "intent": "ListAccounts",
+      "entities": []
+    },
+    {
+      "text": "payout set to $5000",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "what is the value in my wallet",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "what car should i buy",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what are all my accounts",
+      "intent": "ListAccounts",
+      "entities": []
+    },
+    {
+      "text": "mortgage to $100",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "wassup",
+      "intent": "Greeting",
+      "entities": []
+    },
+    {
+      "text": "update balance to $100",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 1,
+          "endPos": 1
+        }
+      ]
+    },
+    {
+      "text": "what is the value of my balance",
+      "intent": "Repayment",
+      "entities": []
+    },
+    {
+      "text": "what is my mortgage",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "update credit to 50",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 1,
+          "endPos": 1
+        }
+      ]
+    },
+    {
+      "text": "what is the meaning of life",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "which accounts do i own?",
+      "intent": "ListAccounts",
+      "entities": []
+    },
+    {
+      "text": "i want to turn off my auto repayment",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "what is the value of my rent",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "payout to $500",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "hi there i'm new",
+      "intent": "Greeting",
+      "entities": []
+    },
+    {
+      "text": "debit",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "what is the value of my savings",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "how much do i have in my debit",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 7,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "assistance please",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "hello",
+      "intent": "Greeting",
+      "entities": []
+    },
+    {
+      "text": "i need some help",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "update repayment to 10",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 1,
+          "endPos": 1
+        }
+      ]
+    },
+    {
+      "text": "update value in credit to $10",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "value of my awesome savings account",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "get my credit amount",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 2,
+          "endPos": 2
+        }
+      ]
+    },
+    {
+      "text": "how much do i still have in my savings",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 8,
+          "endPos": 8
+        }
+      ]
+    },
+    {
+      "text": "debit to $500",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "update repayment to 100",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 1,
+          "endPos": 1
+        }
+      ]
+    },
+    {
+      "text": "how much do i have in my savings",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 7,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "how much is in my savings",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 5,
+          "endPos": 5
+        }
+      ]
+    },
+    {
+      "text": "i am wondering how much money is in my debit",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 9,
+          "endPos": 9
+        }
+      ]
+    },
+    {
+      "text": "get my balance",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 2,
+          "endPos": 2
+        }
+      ]
+    },
+    {
+      "text": "what is my repayment",
+      "intent": "Repayment",
+      "entities": []
+    },
+    {
+      "text": "can you tell me what accounts i own",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what is the weather today",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "savings",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "what is my current repayment",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "i want to ride a bike",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "savings to $100",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "who am i",
+      "intent": "CurrentUser",
+      "entities": []
+    },
+    {
+      "text": "update balance to 10",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 1,
+          "endPos": 1
+        }
+      ]
+    },
+    {
+      "text": "what is the amount in my repayment",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "i need some assistance",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "chair",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "how much is in credit account",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "what is my repayment amount",
+      "intent": "Repayment",
+      "entities": []
+    },
+    {
+      "text": "hi how are you",
+      "intent": "Greeting",
+      "entities": []
+    },
+    {
+      "text": "what is my balance",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "change the amount in my savings to $1000",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 5,
+          "endPos": 5
+        }
+      ]
+    },
+    {
+      "text": "what is the amount in my credit",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "i want to eat some cheese",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "get my repayment",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 2,
+          "endPos": 2
+        }
+      ]
+    },
+    {
+      "text": "help me please",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "how much is in repayment",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "update bike to 10000",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 1,
+          "endPos": 1
+        }
+      ]
+    },
+    {
+      "text": "i need assistance",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "find out how much is in my mortgage",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 7,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "$100",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "what is the amount in my debit",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "update balance to 1000",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 1,
+          "endPos": 1
+        }
+      ]
+    },
+    {
+      "text": "help me",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "what is my balance amount",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "log in as bob",
+      "intent": "NewLogin",
+      "entities": [
+        {
+          "entity": "User",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "log in as alice",
+      "intent": "NewLogin",
+      "entities": [
+        {
+          "entity": "User",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "what is the value in my auto account",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "statement please",
+      "intent": "Statement",
+      "entities": []
+    },
+    {
+      "text": "last bank statement",
+      "intent": "Statement",
+      "entities": []
+    },
+    {
+      "text": "can i get my bank statement",
+      "intent": "Statement",
+      "entities": []
+    },
+    {
+      "text": "send last bank statement",
+      "intent": "Statement",
+      "entities": []
+    },
+    {
+      "text": "statement",
+      "intent": "Statement",
+      "entities": []
+    },
+    {
+      "text": "funds in my savings",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "balance of my savings",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "balance of my auto",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "balance of my mortgage",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "yo dawg send me my bank statement",
+      "intent": "Statement",
+      "entities": []
+    },
+    {
+      "text": "list",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "give me a list",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "auto repayment date",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "repayment date",
+      "intent": "Repayment",
+      "entities": []
+    },
+    {
+      "text": "what is my auto repayment date",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "when is my auto repayment",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "how much will i owe for the auto",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "auto amount",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "auto repayment amount",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "how much do i owe for auto",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "auto repayment account",
+      "intent": "ListAccounts",
+      "entities": []
+    },
+    {
+      "text": "view statement for auto account",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "what is my statement",
+      "intent": "Statement",
+      "entities": []
+    },
+    {
+      "text": "view the statement for my mortgage account",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 5,
+          "endPos": 5
+        }
+      ]
+    },
+    {
+      "text": "i would like to view my auto account statement",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "mortgage statement",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "statement for my auto account",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "auto statement",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "auto",
+      "intent": "CheckAccountExists",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "auto repayment",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "mortgage repayment",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "how much do i owe in mortgage",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "auto payout interest",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "interest in auto payout",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 2,
+          "endPos": 2
+        }
+      ]
+    },
+    {
+      "text": "auto payout balance",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "how much left on my auto loan",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 5,
+          "endPos": 5
+        }
+      ]
+    },
+    {
+      "text": "discharge amount on my auto loan",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "what is my auto payout amount",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "how much left in my auto account",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 5,
+          "endPos": 5
+        }
+      ]
+    },
+    {
+      "text": "how much left in my mortgage account",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 5,
+          "endPos": 5
+        }
+      ]
+    },
+    {
+      "text": "discharge amount for my mortgage account",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "discharge amount for my auto account",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "payout amount for my auto loan",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "amount due",
+      "intent": "Repayment",
+      "entities": []
+    },
+    {
+      "text": "due amount",
+      "intent": "Repayment",
+      "entities": []
+    },
+    {
+      "text": "how much do i owe",
+      "intent": "Repayment",
+      "entities": []
+    },
+    {
+      "text": "what is my next auto repayment",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "when is my next auto repayment due",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "repayment",
+      "intent": "Repayment",
+      "entities": []
+    },
+    {
+      "text": "what is my next mortgage repyment",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "how much left to pay for my auto loan",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 7,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "how much left to pay on my mortgage",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 7,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "how much is left on my loan",
+      "intent": "AccountDischarge",
+      "entities": []
+    },
+    {
+      "text": "what is my mortgage payout value",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "discharge",
+      "intent": "AccountDischarge",
+      "entities": []
+    },
+    {
+      "text": "payout",
+      "intent": "AccountDischarge",
+      "entities": []
+    },
+    {
+      "text": "mortgage payment",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "when is my payment due",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "when is my next payment due",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "when do i owe my next payment",
+      "intent": "Repayment",
+      "entities": []
+    },
+    {
+      "text": "what is my auto repayment",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "what is my car statement",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "hi what is my discharge please",
+      "intent": "AccountDischarge",
+      "entities": []
+    },
+    {
+      "text": "what is my payout amount",
+      "intent": "AccountDischarge",
+      "entities": []
+    },
+    {
+      "text": "what is my payout amount for my auto account",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 7,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "what is my repayment amount for my mortgage account",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 7,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "what is my statement for my mortgage account",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "when is my next repayment for my car loan",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 7,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "what is the payout amount for my car loan",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 7,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "how much should i pay for my next payment for my auto account",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 11,
+          "endPos": 11
+        }
+      ]
+    },
+    {
+      "text": "what do i owe for my next car repayment",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 7,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "car",
+      "intent": "CheckAccountExists",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "car account",
+      "intent": "CheckAccountExists",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "auto loan",
+      "intent": "CheckAccountExists",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "do i have a mortgage loan",
+      "intent": "CheckAccountExists",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "do i have a car loan",
+      "intent": "CheckAccountExists",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "what is the repayment amount on my car loan",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 7,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "what is the discharge amount on my car loan",
+      "intent": "AccountDischarge",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 7,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "what is my next mortgage repayment",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 4,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "what enquiries are there",
+      "intent": "ListEnquiries",
+      "entities": []
+    },
+    {
+      "text": "what questions can i ask",
+      "intent": "ListEnquiries",
+      "entities": []
+    },
+    {
+      "text": "what can you help me with",
+      "intent": "ListEnquiries",
+      "entities": []
+    },
+    {
+      "text": "what questions am i allowed to ask",
+      "intent": "ListEnquiries",
+      "entities": []
+    },
+    {
+      "text": "list all the enquiries",
+      "intent": "ListEnquiries",
+      "entities": []
+    },
+    {
+      "text": "which accounts belong to me",
+      "intent": "ListAccounts",
+      "entities": []
+    },
+    {
+      "text": "which questions can i ask",
+      "intent": "ListEnquiries",
+      "entities": []
+    },
+    {
+      "text": "what are the enquiries does this support",
+      "intent": "ListEnquiries",
+      "entities": []
+    },
+    {
+      "text": "enquiries",
+      "intent": "ListEnquiries",
+      "entities": []
+    },
+    {
+      "text": "i have a question about my mortgage account",
+      "intent": "CheckAccountExists",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "i would like to know something about my mortgage account",
+      "intent": "CheckAccountExists",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 8,
+          "endPos": 8
+        }
+      ]
+    },
+    {
+      "text": "i would like to know something about my auto account",
+      "intent": "CheckAccountExists",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 8,
+          "endPos": 8
+        }
+      ]
+    },
+    {
+      "text": "i have a question about my auto account",
+      "intent": "CheckAccountExists",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "i have a question about auto",
+      "intent": "CheckAccountExists",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 5,
+          "endPos": 5
+        }
+      ]
+    },
+    {
+      "text": "i would like to know about my auto account repayment please",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 7,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "do i owe anything on my auto loan",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "do i owe anything on my car loan",
+      "intent": "Repayment",
+      "entities": [
+        {
+          "entity": "AccountType",
+          "startPos": 6,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "gday mate",
+      "intent": "None",
+      "entities": []
+    }
+  ]
+}
